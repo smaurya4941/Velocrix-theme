@@ -1,7 +1,7 @@
 <?php
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-define( 'VX_VER', '1.0.2' );
+define( 'VX_VER', '1.0.3' );
 define( 'VX_URI', get_template_directory_uri() );
 
 require get_template_directory() . '/inc/content.php';
@@ -9,6 +9,7 @@ require get_template_directory() . '/inc/customizer.php';
 require get_template_directory() . '/inc/forms.php';
 require get_template_directory() . '/inc/registration.php';
 require get_template_directory() . '/inc/hardening.php';
+require get_template_directory() . '/inc/setup.php';
 
 /** Theme setup */
 function vx_setup() {
