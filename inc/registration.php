@@ -158,16 +158,16 @@ function vx_handle_registration() {
 	update_post_meta( $post_id, 'vx_form', 'registration' );
 	wp_update_post( array( 'ID' => $post_id, 'post_title' => "Registration $ref: " . $data['name'] ) );
 
-	$photo_url = '';
+	// Photo goes to a PRIVATE folder (not the media library, not publicly reachable)
+	$attach = array();
+	$tmp_mail_photo = '';
 	if ( $has_photo ) {
-		require_once ABSPATH . 'wp-admin/includes/file.php';
-		require_once ABSPATH . 'wp-admin/includes/media.php';
-		require_once ABSPATH . 'wp-admin/includes/image.php';
-		$att = media_handle_upload( 'photo', $post_id, array(), array( 'test_form' => false, 'mimes' => array( 'jpg|jpeg' => 'image/jpeg', 'png' => 'image/png' ) ) );
-		if ( ! is_wp_error( $att ) ) {
-			set_post_thumbnail( $post_id, $att );
-			$photo_url = wp_get_attachment_url( $att );
-			wp_update_post( array( 'ID' => $post_id, 'post_content' => implode( "\n", $lines ) . "\nPhoto: " . $photo_url ) );
+		$stored = vx_store_private_photo( $_FILES['photo']['tmp_name'], $post_id );
+		if ( $stored ) {
+			update_post_meta( $post_id, 'vx_photo_file', $stored );
+			$tmp_mail_photo = vx_private_photo_temp_copy( $stored, $ref );
+			if ( $tmp_mail_photo ) $attach[] = $tmp_mail_photo;
+			wp_update_post( array( 'ID' => $post_id, 'post_content' => implode( "\n", $lines ) . "\nPhoto: uploaded (view it on this entry in WP Admin)" ) );
 		}
 	}
 
@@ -175,7 +175,8 @@ function vx_handle_registration() {
 	$to  = vx( 'vx_email', get_option( 'admin_email' ) );
 	$hdr = array();
 	if ( $data['email'] ) $hdr[] = 'Reply-To: ' . $data['name'] . ' <' . $data['email'] . '>';
-	wp_mail( $to, "[Velocrix] New registration $ref: " . $data['name'], implode( "\n", $lines ) . ( $photo_url ? "\nPhoto: $photo_url" : '' ), $hdr );
+	wp_mail( $to, "[Velocrix] New registration $ref: " . $data['name'], implode( "\n", $lines ) . ( $attach ? "\nPhoto: attached" : '' ), $hdr, $attach );
+	if ( $tmp_mail_photo && file_exists( $tmp_mail_photo ) ) @unlink( $tmp_mail_photo );
 	if ( $data['email'] ) {
 		wp_mail(
 			$data['email'],
@@ -203,3 +204,105 @@ function vx_reg_state() {
 	}
 	return $state;
 }
+
+/* =====================================================================
+ * PRIVATE PHOTO STORAGE
+ * Photos are re-encoded (max 600px, metadata/GPS removed), stored under a random
+ * name with a non-image extension in wp-content/uploads/vx-private/, blocked from
+ * direct web access, and shown only to logged-in admins on the Enquiry screen.
+ * ===================================================================== */
+
+function vx_private_dir() {
+	$u   = wp_upload_dir( null, false );
+	$dir = trailingslashit( $u['basedir'] ) . 'vx-private';
+	if ( ! is_dir( $dir ) ) {
+		wp_mkdir_p( $dir );
+	}
+	// Block direct access (Apache) + no directory listing
+	if ( ! file_exists( $dir . '/.htaccess' ) ) {
+		@file_put_contents( $dir . '/.htaccess', "Options -Indexes\n<IfModule mod_authz_core.c>\nRequire all denied\n</IfModule>\n<IfModule !mod_authz_core.c>\nOrder allow,deny\nDeny from all\n</IfModule>\n" );
+	}
+	if ( ! file_exists( $dir . '/index.html' ) ) {
+		@file_put_contents( $dir . '/index.html', '' );
+	}
+	return $dir;
+}
+
+/** Re-encode the uploaded image and save it privately. Returns the stored file name or ''. */
+function vx_store_private_photo( $tmp_path, $post_id ) {
+	if ( ! $tmp_path || ! is_uploaded_file( $tmp_path ) && ! file_exists( $tmp_path ) ) return '';
+	require_once ABSPATH . 'wp-admin/includes/file.php';
+	require_once ABSPATH . 'wp-admin/includes/image.php';
+
+	$dir  = vx_private_dir();
+	$name = wp_generate_password( 32, false, false ) . '.vxp';
+	$dest = $dir . '/' . $name;
+
+	$editor = wp_get_image_editor( $tmp_path );
+	if ( ! is_wp_error( $editor ) ) {
+		$editor->resize( 600, 800, false );
+		$editor->set_quality( 85 );
+		$tmp_jpg = wp_tempnam( 'vxphoto' ) . '.jpg';
+		$saved   = $editor->save( $tmp_jpg, 'image/jpeg' );        // re-encoding drops EXIF/GPS
+		if ( ! is_wp_error( $saved ) && ! empty( $saved['path'] ) && file_exists( $saved['path'] ) ) {
+			$ok = @rename( $saved['path'], $dest ) || ( @copy( $saved['path'], $dest ) && @unlink( $saved['path'] ) );
+			if ( $ok ) return $name;
+		}
+	}
+	// Fallback: keep the original bytes (already validated as an image above)
+	return @move_uploaded_file( $tmp_path, $dest ) || @copy( $tmp_path, $dest ) ? $name : '';
+}
+
+/** Temporary .jpg copy, used only as an email attachment */
+function vx_private_photo_temp_copy( $stored, $ref ) {
+	$src = vx_private_dir() . '/' . basename( $stored );
+	if ( ! file_exists( $src ) ) return '';
+	$tmp = trailingslashit( get_temp_dir() ) . sanitize_file_name( $ref ) . '-photo.jpg';
+	return @copy( $src, $tmp ) ? $tmp : '';
+}
+
+/** Admin-only image viewer: admin-post.php?action=vx_reg_photo&id=123&_wpnonce=... */
+function vx_serve_private_photo() {
+	if ( ! is_user_logged_in() || ! current_user_can( 'edit_others_posts' ) ) {
+		wp_die( 'Forbidden', 'Forbidden', array( 'response' => 403 ) );
+	}
+	$id = isset( $_GET['id'] ) ? absint( $_GET['id'] ) : 0;
+	if ( ! $id || ! isset( $_GET['_wpnonce'] ) || ! wp_verify_nonce( $_GET['_wpnonce'], 'vx_photo_' . $id ) ) {
+		wp_die( 'Link expired. Reopen the entry and try again.', 'Forbidden', array( 'response' => 403 ) );
+	}
+	$file = get_post_meta( $id, 'vx_photo_file', true );
+	$path = $file ? vx_private_dir() . '/' . basename( $file ) : '';
+	if ( ! $path || ! file_exists( $path ) ) {
+		wp_die( 'Photo not found.', 'Not found', array( 'response' => 404 ) );
+	}
+	nocache_headers();
+	header( 'Content-Type: image/jpeg' );
+	header( 'X-Content-Type-Options: nosniff' );
+	header( 'Content-Length: ' . filesize( $path ) );
+	readfile( $path );
+	exit;
+}
+add_action( 'admin_post_vx_reg_photo', 'vx_serve_private_photo' );
+
+/** Show the photo (admin only) on the Enquiry edit screen */
+function vx_photo_metabox() {
+	add_meta_box( 'vx_photo', 'Trainee photo (private)', function ( $post ) {
+		$file = get_post_meta( $post->ID, 'vx_photo_file', true );
+		if ( ! $file ) { echo '<p>No photo uploaded.</p>'; return; }
+		$url = wp_nonce_url( admin_url( 'admin-post.php?action=vx_reg_photo&id=' . $post->ID ), 'vx_photo_' . $post->ID );
+		echo '<a href="' . esc_url( $url ) . '" target="_blank" rel="noopener"><img src="' . esc_url( $url ) . '" alt="Trainee photo" style="max-width:100%;height:auto;border-radius:6px"></a>';
+		echo '<p class="description">Visible only to logged-in administrators.</p>';
+	}, 'vx_enquiry', 'side', 'high' );
+}
+add_action( 'add_meta_boxes', 'vx_photo_metabox' );
+
+/** Delete the private photo when the entry is deleted */
+function vx_delete_private_photo( $post_id ) {
+	if ( get_post_type( $post_id ) !== 'vx_enquiry' ) return;
+	$file = get_post_meta( $post_id, 'vx_photo_file', true );
+	if ( $file ) {
+		$p = vx_private_dir() . '/' . basename( $file );
+		if ( file_exists( $p ) ) @unlink( $p );
+	}
+}
+add_action( 'before_delete_post', 'vx_delete_private_photo' );
