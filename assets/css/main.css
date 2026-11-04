@@ -543,7 +543,7 @@ a:hover>.round-btn,.round-btn:hover{background:var(--lime);transform:rotate(45de
 
 /* ===== Shared image CTA (before footer) ===== */
 .cta-img{position:relative;min-height:clamp(480px,52vw,735px);display:flex;align-items:flex-end;color:#fff;padding:60px 0 80px;
-  background:linear-gradient(180deg,rgba(11,11,13,.15) 0%,rgba(11,11,13,.8) 100%),linear-gradient(90deg,rgba(11,11,13,.5),transparent 70%),var(--cta) center/cover no-repeat}
+  background:linear-gradient(180deg,rgba(11,11,13,.15) 0%,rgba(11,11,13,.8) 100%),linear-gradient(90deg,rgba(11,11,13,.5),transparent 70%),var(--cta) center/cover no-repeat;background-attachment:scroll,scroll,fixed}
 .cta-img .cta-inner{width:100%;display:flex;align-items:flex-end;justify-content:space-between;gap:30px;flex-wrap:wrap}
 .cta-img h2{margin:0;font-size:clamp(2.2rem,4.2vw,4rem);max-width:900px}
 .cta-img h2 i{color:var(--lime);font-style:normal}
@@ -556,3 +556,6 @@ a:hover>.round-btn,.round-btn:hover{background:var(--lime);transform:rotate(45de
   .pr-body p{font-size:1.05rem}
   .recent{border-radius:28px;padding:28px}
 }
+/* Touch devices ignore fixed backgrounds (iOS) - fall back to normal scrolling */
+@media (hover:none),(max-width:1024px){.cta-img{background-attachment:scroll,scroll,scroll}}
+@media (prefers-reduced-motion:reduce){.cta-img{background-attachment:scroll,scroll,scroll}}

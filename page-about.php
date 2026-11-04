@@ -109,4 +109,6 @@ get_template_part( 'template-parts/faq', null, array( 'faqs' => array(
 	</div>
 </section>
 
+<?php get_template_part( "template-parts/cta" ); ?>
+
 <?php get_footer(); ?>

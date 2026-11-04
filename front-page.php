@@ -216,4 +216,6 @@ if ( $q->have_posts() ) : ?>
 </section>
 <?php endif; ?>
 
+<?php get_template_part( "template-parts/cta" ); ?>
+
 <?php get_footer(); ?>

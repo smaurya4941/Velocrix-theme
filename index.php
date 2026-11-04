@@ -33,4 +33,6 @@ get_template_part( 'template-parts/hero-page', null, $hero );
 	</div>
 </section>
 
+<?php get_template_part( "template-parts/cta" ); ?>
+
 <?php get_footer(); ?>
