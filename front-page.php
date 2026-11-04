@@ -5,7 +5,7 @@ $hero = vx( 'vx_hero_img' ) ?: $img . 'training-2.jpg';
 $mentor_name = vx( 'vx_mentor_name', 'Ms. Meghna Singh' );
 $mentor_role = vx( 'vx_mentor_role', 'International Cricketer' );
 $mentor_img  = vx( 'vx_mentor_img' );
-$join = home_url( '/admission/' );
+$join = home_url( '/registration/' );
 $title_lines = array_filter( array_map( 'trim', explode( "\n", vx( 'vx_hero_title', "Champions are not born\nThey are trained" ) ) ) );
 ?>
 
@@ -43,7 +43,7 @@ $title_lines = array_filter( array_map( 'trim', explode( "\n", vx( 'vx_hero_titl
 		<div class="about-top">
 			<div>
 				<span class="eyebrow">About Us</span>
-				<div class="pills"><?php foreach ( vx_copy( 'pillars' ) as $p ) echo '<span>' . esc_html( $p[0] ) . '</span>'; ?></div>
+				<div class="pills"><?php foreach ( array( 'Expert Coaching', 'Skill-Based Training', 'Fitness &amp; Performance', 'Match Practice &amp; Exposure', 'Individual Attention' ) as $p ) echo '<span>' . $p . '</span>'; ?></div>
 			</div>
 			<p class="big-text"><?php echo esc_html( vx_copy( 'about' ) ); ?></p>
 		</div>
@@ -74,7 +74,7 @@ $title_lines = array_filter( array_map( 'trim', explode( "\n", vx( 'vx_hero_titl
 		</div>
 		<div class="acc">
 			<?php
-			$why = vx_copy( "why" );
+			$why = array_slice( vx_copy( "why" ), 0, 4 ); // max 4 on Home
 			foreach ( $why as $i => $w ) : $open = ( $i === 0 ); ?>
 			<div class="acc-item<?php echo $open ? ' is-open' : ''; ?>">
 				<button class="acc-head" aria-expanded="<?php echo $open ? 'true' : 'false'; ?>"><span><?php echo esc_html( sprintf( '%02d. %s', $i + 1, $w[0] ) ); ?></span><?php echo vx_icon( 'arrow' ); // phpcs:ignore ?></button>
@@ -88,28 +88,23 @@ $title_lines = array_filter( array_map( 'trim', explode( "\n", vx( 'vx_hero_titl
 <!-- Partners -->
 <?php get_template_part( 'template-parts/partners' ); ?>
 
-<!-- 4. PROGRAMS -->
+<!-- 4. SERVICES -->
 <section class="section dark programs">
 	<div class="container">
 		<div class="sec-head center">
-			<span class="eyebrow">Our Programs</span>
-			<h2>Designed to Shape<br>Better Cricketers</h2>
+			<span class="eyebrow">Our Services</span>
+			<h2>Services Built to<br>Grow Your Game</h2>
 		</div>
 		<div class="prog-grid">
 			<?php
-			$pl    = vx_copy( "pillars" );
-			$progs = array(
-				array( $pl[1][0], $pl[1][1], "fac-nets.jpg", 0 ),
-				array( $pl[2][0], $pl[2][1], "prog-3.jpg", 1 ),
-				array( $pl[4][0], $pl[4][1], "prog-2.jpg", 0 ),
-			);
-			foreach ( $progs as $i => $p ) :
-				$im = '<a class="prog-img" href="' . esc_url( home_url( '/programs/' ) ) . '"><img src="' . esc_url( $img . $p[2] ) . '" alt="" loading="lazy" width="800" height="800"><span class="round-btn light">' . vx_icon( 'arrow' ) . '</span></a>';
+				foreach ( vx_services() as $i => $p ) :
+					$p[4] = ( $i === 1 ) ? 1 : 0;
+					$im = '<a class="prog-img" href="' . esc_url( home_url( $p[3] ) ) . '" aria-label="' . esc_attr( $p[0] ) . '"><img src="' . esc_url( $img . $p[2] ) . '" alt="" loading="lazy" width="800" height="800"><span class="round-btn light">' . vx_icon( 'arrow' ) . '</span></a>';
 				$tx = '<div class="prog-text"><h3>' . esc_html( sprintf( '%02d. %s', $i + 1, $p[0] ) ) . '</h3><p>' . esc_html( $p[1] ) . '</p></div>'; ?>
-				<div class="prog-col<?php echo $p[3] ? ' mid' : ''; ?>"><?php echo $p[3] ? $tx . $im : $im . $tx; // phpcs:ignore ?></div>
+				<div class="prog-col<?php echo $p[4] ? ' mid' : ''; ?>"><?php echo $p[4] ? $tx . $im : $im . $tx; // phpcs:ignore ?></div>
 			<?php endforeach; ?>
 		</div>
-		<p class="center"><a class="btn btn-ghost" href="<?php echo esc_url( home_url( '/programs/' ) ); ?>">View All Programs</a></p>
+		<p class="center"><a class="btn btn-ghost" href="<?php echo esc_url( home_url( '/services/' ) ); ?>">View All Services</a></p>
 	</div>
 </section>
 
@@ -121,19 +116,19 @@ $title_lines = array_filter( array_map( 'trim', explode( "\n", vx( 'vx_hero_titl
 			<p>From first-time drills to match-ready sessions &mdash; Velocrix offers a safe, professional space for every young cricketer.</p>
 		</div>
 		<div class="fac-top">
-			<a class="fac wide" href="<?php echo esc_url( home_url( '/facilities/' ) ); ?>">
+			<a class="fac wide" href="<?php echo esc_url( home_url( '/gallery/' ) ); ?>">
 				<img src="<?php echo esc_url( $img . 'fac-run.jpg' ); ?>" alt="Players running drills on the turf practice ground" loading="lazy" width="1400" height="620">
 				<span class="round-btn is-lime"><?php echo vx_icon( 'arrow' ); // phpcs:ignore ?></span>
 				<div class="fac-cap"><h3>Turf Practice Ground</h3><p>Open turf ground for fielding, fitness and drills.</p></div>
 			</a>
-			<a class="fac tall" href="<?php echo esc_url( home_url( '/facilities/' ) ); ?>">
+			<a class="fac tall" href="<?php echo esc_url( home_url( '/gallery/' ) ); ?>">
 				<img src="<?php echo esc_url( $img . 'fac-nets.jpg' ); ?>" alt="Batter training in the net practice cage" loading="lazy" width="800" height="800">
 				<span class="round-btn light"><?php echo vx_icon( 'arrow' ); // phpcs:ignore ?></span>
 			</a>
 		</div>
 		<div class="fac-row">
 			<?php foreach ( array( array( 'fac-3.jpg', 'Warm-up & Fitness Zone' ), array( 'fac-4.jpg', 'Drills & Conditioning' ), array( 'fac-5.jpg', 'Nets & Goal Area' ) ) as $f ) : ?>
-			<a class="fac" href="<?php echo esc_url( home_url( '/facilities/' ) ); ?>">
+			<a class="fac" href="<?php echo esc_url( home_url( '/gallery/' ) ); ?>">
 				<img src="<?php echo esc_url( $img . $f[0] ); ?>" alt="<?php echo esc_attr( $f[1] ); ?>" loading="lazy" width="800" height="800">
 				<span class="round-btn light"><?php echo vx_icon( 'arrow' ); // phpcs:ignore ?></span>
 				<div class="fac-cap"><h3><?php echo esc_html( $f[1] ); ?></h3></div>

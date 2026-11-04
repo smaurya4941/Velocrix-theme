@@ -1,18 +1,44 @@
-<?php get_header(); vx_page_hero( '<span class="lime">Gallery</span>', 'Moments from the training ground.' );
-// Shows images attached to this page; falls back to theme photos.
-$imgs = get_attached_media( 'image', get_the_ID() );
+<?php
+get_header();
+$img = VX_URI . '/assets/img/';
+
+// 1. HERO (shared part)
+get_template_part( 'template-parts/hero-page', null, array(
+	'eyebrow' => 'Gallery',
+	'title'   => 'Moments from<br>the Training Ground',
+	'text'    => 'Real sessions, real effort. A look at life at Velocrix Cricket Academy.',
+	'image'   => $img . 'training-1.jpg',
+) );
+
+// Photos attached to this page (Media > attach to Gallery page); falls back to theme photos.
+$items = array();
+foreach ( get_attached_media( 'image', get_the_ID() ) as $im ) {
+	$full = wp_get_attachment_image_src( $im->ID, 'full' );
+	$items[] = array( 'full' => $full[0], 'html' => wp_get_attachment_image( $im->ID, 'large', false, array( 'loading' => 'lazy', 'alt' => 'Velocrix Cricket Academy training' ) ) );
+}
+if ( ! $items ) {
+	foreach ( array( 'training-1', 'prog-1', 'fac-nets', 'training-2', 'prog-2', 'fac-run', 'prog-3', 'fac-2', 'about-wide', 'fac-3', 'fac-4', 'fac-5' ) as $n ) {
+		$p = $img . $n . '.jpg';
+		if ( ! file_exists( get_template_directory() . '/assets/img/' . $n . '.jpg' ) ) continue;
+		$items[] = array( 'full' => $p, 'html' => '<img src="' . esc_url( $p ) . '" alt="Velocrix Cricket Academy training" loading="lazy">' );
+	}
+}
 ?>
-<section class="section">
+
+<!-- 2. GALLERY -->
+<section class="section gal-sec">
 	<div class="container">
-		<div class="gallery">
-			<?php if ( $imgs ) : foreach ( $imgs as $im ) : ?>
-				<a href="<?php echo esc_url( wp_get_attachment_url( $im->ID ) ); ?>"><?php echo wp_get_attachment_image( $im->ID, 'vx-card', false, array( 'loading' => 'lazy' ) ); ?></a>
-			<?php endforeach; else :
-				foreach ( array( 'training-1', 'training-2' ) as $n ) : ?>
-				<a href="<?php echo esc_url( VX_URI . "/assets/img/$n.jpg" ); ?>"><img src="<?php echo esc_url( VX_URI . "/assets/img/$n-sm.jpg" ); ?>" alt="Training session" loading="lazy" width="800" height="600"></a>
-			<?php endforeach; endif; ?>
+		<div class="g-masonry">
+			<?php foreach ( $items as $it ) : ?>
+			<a class="g-item" href="<?php echo esc_url( $it['full'] ); ?>" aria-label="View photo">
+				<?php echo $it['html']; // phpcs:ignore -- built from escaped attachment/theme data ?>
+				<span class="round-btn is-lime"><?php echo vx_icon( 'arrow' ); // phpcs:ignore ?></span>
+			</a>
+			<?php endforeach; ?>
 		</div>
-		<p class="center muted small">Upload photos to this page in the admin (Media &rarr; attach to Gallery page) and they appear here automatically.</p>
 	</div>
 </section>
-<?php get_footer(); ?>
+
+<?php
+get_template_part( 'template-parts/cta' );
+get_footer();

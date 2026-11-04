@@ -13,9 +13,24 @@
     });
   }
 
+  // Dropdown parents ("#") should not jump to top; click keeps the menu open via focus
+  d.querySelectorAll('.nav-list .menu-item-has-children > a[href="#"]').forEach(function (a) {
+    a.addEventListener('click', function (e) { e.preventDefault(); });
+  });
+
   // Header turns solid after scrolling
   var h = d.querySelector('.site-header');
-  function onScroll() { if (h) h.classList.toggle('scrolled', window.scrollY > 60); }
+  var lastY = window.scrollY;
+  function onScroll() {
+    if (!h) return;
+    var y = window.scrollY;
+    h.classList.toggle('scrolled', y > 60);
+    // Hide header when scrolling down, show it when scrolling up (always shown near top / while menu is open)
+    var menuOpen = n && n.classList.contains('open');
+    if (y < 120 || menuOpen || y < lastY - 4) h.classList.remove('nav-hidden');
+    else if (y > lastY + 4) h.classList.add('nav-hidden');
+    lastY = y;
+  }
   onScroll();
   window.addEventListener('scroll', onScroll, { passive: true });
 
@@ -60,12 +75,19 @@
     var co = new IntersectionObserver(function (items) {
       items.forEach(function (i) {
         if (!i.isIntersecting) return;
-        var el = i.target, end = parseInt(el.dataset.count, 10), cur = 0, step = Math.max(1, Math.ceil(end / 25));
-        var id = setInterval(function () { cur += step; if (cur >= end) { cur = end; clearInterval(id); } el.textContent = cur; }, 45);
+        var el = i.target, end = parseInt(el.dataset.count, 10), t0 = null, dur = 1600;
+        function tick(t) {
+          if (t0 === null) t0 = t;
+          var p = Math.min(1, (t - t0) / dur), e = 1 - Math.pow(1 - p, 3);
+          el.textContent = Math.max(1, Math.round(end * e));
+          if (p < 1) requestAnimationFrame(tick); else el.textContent = end;
+        }
+        el.textContent = '1';
+        requestAnimationFrame(tick);
         co.unobserve(el);
       });
-    }, { threshold: 0.6 });
-    cs.forEach(function (c) { co.observe(c); });
+    }, { threshold: 0.3 });
+    cs.forEach(function (c) { c.textContent = '1'; co.observe(c); });
   }
 
   // Registration form: photo preview, live validation, submit only after both consents
@@ -110,4 +132,48 @@
     });
     rf.addEventListener('input', function (e) { e.target.classList.remove('is-bad'); });
   }
+})();
+
+/* Gallery lightbox */
+(function () {
+  var items = document.querySelectorAll('.g-item');
+  if (!items.length) return;
+  items.forEach(function (a) {
+    a.addEventListener('click', function (e) {
+      e.preventDefault();
+      var o = document.createElement('div');
+      o.className = 'vx-lb';
+      o.innerHTML = '<img alt=""><button type="button" aria-label="Close">&times;</button>';
+      o.firstChild.src = a.href;
+      function close() { o.remove(); document.removeEventListener('keydown', k); }
+      function k(ev) { if (ev.key === 'Escape') close(); }
+      o.addEventListener('click', close);
+      document.addEventListener('keydown', k);
+      document.body.appendChild(o);
+    });
+  });
+})();
+
+/* Keep the header visible for keyboard users */
+(function () {
+  var h = document.querySelector('.site-header');
+  if (h) h.addEventListener('focusin', function (e) { if (e.target.closest && e.target.closest('.nav-list, .brand, .nav-cta')) h.classList.remove('nav-hidden'); });
+})();
+
+/* Rules & terms dialog (registration) */
+(function () {
+  var dlg = document.getElementById('terms-dialog');
+  if (!dlg) return;
+  var last = null;
+  document.querySelectorAll('[data-terms-open]').forEach(function (b) {
+    b.addEventListener('click', function (e) {
+      e.preventDefault(); last = b;
+      if (typeof dlg.showModal === 'function') dlg.showModal(); else dlg.setAttribute('open', '');
+      document.documentElement.classList.add('modal-open');
+    });
+  });
+  function close() { if (dlg.close) dlg.close(); else dlg.removeAttribute('open'); }
+  dlg.querySelectorAll('[data-terms-close]').forEach(function (b) { b.addEventListener('click', close); });
+  dlg.addEventListener('click', function (e) { if (e.target === dlg) close(); });
+  dlg.addEventListener('close', function () { document.documentElement.classList.remove('modal-open'); if (last) last.focus(); });
 })();

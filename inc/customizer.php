@@ -24,8 +24,8 @@ function vx_customize( $wp ) {
 
 	/* Social */
 	$wp->add_section( 'vx_social', array( 'title' => 'Velocrix: Social Links', 'priority' => 31 ) );
-	foreach ( array( 'facebook', 'instagram', 'youtube', 'linkedin' ) as $s ) {
-		$add( 'vx_social', "vx_$s", ucfirst( $s ) . ' URL', '', 'url', 'esc_url_raw' );
+	foreach ( array( 'instagram', 'linkedin', 'x', 'facebook', 'youtube' ) as $s ) {
+		$add( 'vx_social', "vx_$s", ( $s === 'x' ? 'X (Twitter)' : ucfirst( $s ) ) . ' URL', '', 'url', 'esc_url_raw' );
 	}
 
 	/* Hero */

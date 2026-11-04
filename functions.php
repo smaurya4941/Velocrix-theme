@@ -1,13 +1,14 @@
 <?php
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-define( 'VX_VER', '1.0.0' );
+define( 'VX_VER', '1.0.2' );
 define( 'VX_URI', get_template_directory_uri() );
 
 require get_template_directory() . '/inc/content.php';
 require get_template_directory() . '/inc/customizer.php';
 require get_template_directory() . '/inc/forms.php';
 require get_template_directory() . '/inc/registration.php';
+require get_template_directory() . '/inc/hardening.php';
 
 /** Theme setup */
 function vx_setup() {
@@ -26,8 +27,8 @@ add_action( 'after_setup_theme', 'vx_setup' );
 /** Assets */
 function vx_assets() {
 	wp_enqueue_style( 'vx-fonts', 'https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,400;0,500;0,600;1,600&display=swap', array(), null );
-	wp_enqueue_style( 'vx-main', VX_URI . '/assets/css/main.css', array(), VX_VER );
-	wp_enqueue_script( 'vx-main', VX_URI . '/assets/js/main.js', array(), VX_VER, array( 'in_footer' => true, 'strategy' => 'defer' ) );
+	wp_enqueue_style( 'vx-main', VX_URI . '/assets/css/main.css', array(), VX_VER . '.' . filemtime( get_template_directory() . '/assets/css/main.css' ) );
+	wp_enqueue_script( 'vx-main', VX_URI . '/assets/js/main.js', array(), VX_VER . '.' . filemtime( get_template_directory() . '/assets/js/main.js' ), array( 'in_footer' => true, 'strategy' => 'defer' ) );
 }
 add_action( 'wp_enqueue_scripts', 'vx_assets' );
 
@@ -63,15 +64,31 @@ function vx_phone_href( $num ) {
 /** Default menu items (used until a menu is assigned in Appearance > Menus) */
 function vx_default_menu() {
 	return array(
-		'Home'     => home_url( '/' ),
-		'About'    => home_url( '/about/' ),
-		'Programs' => home_url( '/programs/' ),
-		'Coaches'  => home_url( '/coaches/' ),
-		'Facilities' => home_url( '/facilities/' ),
-		'Pricing'  => home_url( '/pricing/' ),
-		'Gallery'  => home_url( '/gallery/' ),
-		'Blog'     => home_url( '/blog/' ),
-		'Contact'  => home_url( '/contact/' ),
+		'Home'        => home_url( '/' ),
+		'About'       => home_url( '/about/' ),
+		'Our Mentor'  => home_url( '/meghna-singh/' ),
+		'Packages'    => home_url( '/pricing/' ),
+		'Services'    => array( '_url' => home_url( '/services/' ),
+			'Corporate Tournament' => home_url( '/corporate-tournament/' ),
+			'Workshops'            => home_url( '/workshops/' ),
+			'Guest Lectures'       => home_url( '/guest-lectures/' ),
+		),
+		'Resources'   => array(
+			'Gallery' => home_url( '/gallery/' ),
+			'Team'    => home_url( '/coaches/' ),
+			'FAQ'     => home_url( '/faq/' ),
+			'Blog'    => home_url( '/blog/' ),
+		),
+		'Contact'     => home_url( '/contact/' ),
+	);
+}
+
+/** The three services (shared by the Home "Our Services" section and the Services page): title, text, image file, page path */
+function vx_services() {
+	return array(
+		array( 'Corporate Tournament', 'Competitive cricket for corporate teams, built around fitness, fun and fair play.', 'fac-nets.jpg', '/corporate-tournament/' ),
+		array( 'Workshops', 'Hands-on sessions focused on skills, fitness and the fundamentals of the game.', 'prog-3.jpg', '/workshops/' ),
+		array( 'Guest Lectures', 'Talks from cricket experts to inspire and guide the next generation of players.', 'prog-2.jpg', '/guest-lectures/' ),
 	);
 }
 
@@ -82,6 +99,15 @@ function vx_primary_menu() {
 	}
 	echo '<ul class="nav-list">';
 	foreach ( vx_default_menu() as $label => $url ) {
+		if ( is_array( $url ) ) {
+			echo '<li class="menu-item-has-children"><a href="' . esc_url( isset( $url['_url'] ) ? $url['_url'] : '#' ) . '" aria-haspopup="true">' . esc_html( $label ) . '</a><ul class="sub-menu">';
+			unset( $url['_url'] );
+			foreach ( $url as $sl => $su ) {
+				echo '<li><a href="' . esc_url( $su ) . '">' . esc_html( $sl ) . '</a></li>';
+			}
+			echo '</ul></li>';
+			continue;
+		}
 		echo '<li><a href="' . esc_url( $url ) . '">' . esc_html( $label ) . '</a></li>';
 	}
 	echo '</ul>';

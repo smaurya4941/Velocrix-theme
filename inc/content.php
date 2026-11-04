@@ -22,6 +22,7 @@ function vx_defaults() {
 		'vx_facebook'  => '',
 		'vx_youtube'   => '',
 		'vx_linkedin'  => '',
+		'vx_x'         => '',
 		// Fees
 		'vx_status'  => 'Registrations are open. Early bird discount available.',
 		'vx_regfee'  => '1,999',

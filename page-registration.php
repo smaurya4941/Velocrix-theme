@@ -91,8 +91,8 @@ function vx_chips( $name, $values, $selected ) {
 						</label>
 					</div>
 					<div class="tf-row">
-						<label><span>Father's name <i class="req">*</i></span><input type="text" name="father" value="<?php echo esc_attr( $o( 'father' ) ); ?>" required autocomplete="off"></label>
-						<label><span>Mother's name <i class="req">*</i></span><input type="text" name="mother" value="<?php echo esc_attr( $o( 'mother' ) ); ?>" required autocomplete="off"></label>
+						<label><span>Father's name <i class="req">*</i></span><input type="text" name="father" value="<?php echo esc_attr( $o( 'father' ) ); ?>" placeholder="Father's full name" required autocomplete="off"></label>
+						<label><span>Mother's name <i class="req">*</i></span><input type="text" name="mother" value="<?php echo esc_attr( $o( 'mother' ) ); ?>" placeholder="Mother's full name" required autocomplete="off"></label>
 					</div>
 					<div class="tf-row">
 						<label><span>Contact number <i class="req">*</i></span><input type="tel" name="phone" value="<?php echo esc_attr( $o( 'phone' ) ); ?>" placeholder="10-digit mobile number" inputmode="tel" required autocomplete="tel"></label>
@@ -119,15 +119,11 @@ function vx_chips( $name, $values, $selected ) {
 						</select></label>
 				</fieldset>
 
-				<!-- 04 Terms -->
-				<fieldset class="reg-block">
-					<legend><span class="num">04</span> Rules, terms &amp; declaration</legend>
-					<div class="terms-box" tabindex="0" role="region" aria-label="Academy rules and terms">
-						<ol><?php foreach ( vx_terms() as $t ) echo '<li>' . esc_html( $t ) . '</li>'; ?></ol>
-					</div>
+					<!-- 04 Consent (rules open in a dialog) -->
+					<fieldset class="reg-block reg-consent">
 
 					<label class="consent"><input type="checkbox" name="agree" value="1" <?php checked( $o( 'agree' ), 1 ); ?> required>
-						<span>I/We have read the rules, guidelines, terms and conditions of the academy and undertake to abide by them. <i class="req">*</i></span></label>
+						<span>I/We have read <button type="button" class="terms-link" data-terms-open>the rules, guidelines, terms and conditions</button> of the academy and undertake to abide by them. <i class="req">*</i></span></label>
 					<label class="consent"><input type="checkbox" name="declare" value="1" <?php checked( $o( 'declare' ), 1 ); ?> required>
 						<span>I/We hereby declare that the date of birth and other relevant information given above is correct to the best of our knowledge. <i class="req">*</i></span></label>
 
@@ -141,5 +137,16 @@ function vx_chips( $name, $values, $selected ) {
 		</div>
 	</div>
 </section>
+
+<dialog class="terms-dialog" id="terms-dialog" aria-labelledby="terms-title">
+	<div class="td-head">
+		<h3 id="terms-title">Rules, Guidelines, Terms &amp; Conditions</h3>
+		<button type="button" class="td-close" data-terms-close aria-label="Close">&times;</button>
+	</div>
+	<div class="td-body" tabindex="0">
+		<ol><?php foreach ( vx_terms() as $t ) echo '<li>' . esc_html( $t ) . '</li>'; ?></ol>
+	</div>
+	<div class="td-foot"><button type="button" class="btn btn-sm" data-terms-close>Close</button></div>
+</dialog>
 
 <?php get_footer(); ?>

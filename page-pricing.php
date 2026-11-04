@@ -4,7 +4,7 @@ $img      = VX_URI . '/assets/img/';
 $plans    = vx_plans();
 $badge    = vx( 'vx_plan_badge', 'Best Value' );
 $regfee   = vx( 'vx_regfee', '1,999' );
-$join     = home_url( '/admission/' );
+$join     = home_url( '/registration/' );
 $phone    = vx( 'vx_phone', '+91 879 644 7595' );
 $mentor   = vx( 'vx_mentor_name', 'Ms. Meghna Singh' );
 
