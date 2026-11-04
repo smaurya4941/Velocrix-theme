@@ -432,3 +432,46 @@ a:hover>.round-btn,.round-btn:hover{background:var(--lime);transform:rotate(45de
   .cc-social{opacity:1;transform:none;bottom:16px}.cc-social a{width:48px;height:48px}
 }
 .hero-about{background-position:center bottom,center bottom,center bottom}
+
+/* ===== Contact page ===== */
+.hero-contact{background-position:center bottom,center bottom,center bottom}
+.connect-card{background:var(--lime);color:#000;border-radius:var(--r);padding:36px 32px 32px;min-width:376px;margin-bottom:6px}
+.connect-card h3{font-size:1.9rem;margin:0 0 22px}
+.connect-icons{display:flex;gap:14px;flex-wrap:wrap}
+.connect-icons a{width:60px;height:60px;border-radius:50%;background:var(--ink2);color:#fff;display:grid;place-items:center;transition:.25s}
+.connect-icons a:hover{background:#fff;color:#000;transform:translateY(-3px)}
+.contact-sec{background:#0e1015;padding-bottom:clamp(70px,9vw,130px)}
+.contact-grid{display:grid;grid-template-columns:1fr 1.5fr;gap:80px;align-items:start}
+.acc.on-dark .acc-item{border-bottom:1px solid rgba(255,255,255,.14)}
+.acc.on-dark .acc-item.is-open{border-bottom-color:rgba(255,255,255,.7)}
+.acc.on-dark .acc-head{color:#5d6068;font-size:clamp(1.3rem,1.8vw,1.7rem);padding:34px 0}
+.acc.on-dark .acc-item.is-open .acc-head{color:var(--lime)}
+.acc.on-dark .acc-head:hover{color:#fff}
+.acc.on-dark .acc-item.is-open .acc-head:hover{color:var(--lime)}
+.c-val{font-size:clamp(1.8rem,2.8vw,2.7rem);font-weight:500;color:#fff;margin:0;padding:6px 0 12px;line-height:1.2}
+.c-val.c-sm{font-size:clamp(1.2rem,1.7vw,1.5rem);line-height:1.5;font-weight:400;color:#d3d5da}
+.c-val a:hover{color:var(--lime)}
+.acc.on-dark .acc-body .c-val{max-width:none;font-size:clamp(1.8rem,2.8vw,2.7rem);font-weight:500;color:#fff;line-height:1.2;padding:4px 0 14px;margin:0}
+.acc.on-dark .acc-body .c-val.c-sm{font-size:clamp(1.2rem,1.6vw,1.45rem);font-weight:400;line-height:1.5;color:#d3d5da}
+.acc.on-dark .acc-item.is-open .acc-body>div{padding-bottom:22px}
+.talk-card{background:#2b2e36;border:1px solid rgba(255,255,255,.14);border-radius:40px;padding:clamp(28px,5vw,66px)}
+.talk-card h2{font-size:clamp(2.4rem,4vw,4rem);margin:0 0 34px}
+.talk-form label{display:block;margin-bottom:26px}
+.talk-form label span{display:block;color:var(--lime);font-size:1.08rem;margin-bottom:12px}
+.talk-form input,.talk-form textarea{width:100%;background:#fff;color:var(--ink);border:2px solid transparent;border-radius:99px;padding:16px 22px;font:inherit;font-size:1.1rem;height:58px}
+.talk-form textarea{height:auto;min-height:250px;border-radius:20px;resize:vertical}
+.talk-form input::placeholder,.talk-form textarea::placeholder{color:#9a9da4}
+.talk-form input:focus,.talk-form textarea:focus{outline:0;border-color:var(--lime)}
+.tf-row{display:grid;grid-template-columns:1fr 1fr;gap:0 40px}
+.btn-block{display:block;width:100%;text-align:center;font-size:1.15rem;padding:22px 30px;margin-top:10px}
+.talk-card .notice{margin-bottom:24px}
+.map-sec{background:#0e1015;padding-top:0}
+.map-sec iframe{display:block;width:100%;height:clamp(380px,45vw,625px);border:0}
+@media (max-width:980px){
+  .contact-grid{grid-template-columns:1fr;gap:40px}
+  .connect-card{min-width:0;width:100%;max-width:420px}
+}
+@media (max-width:640px){
+  .tf-row{grid-template-columns:1fr;gap:0}
+  .talk-card{border-radius:28px}
+}

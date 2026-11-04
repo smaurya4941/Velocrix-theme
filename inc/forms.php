@@ -68,6 +68,35 @@ function vx_form( $type = 'contact' ) {
 	<?php
 }
 
+/** Contact page form: "Let's Talk" (First/Last name, Email, optional Phone, Message) */
+function vx_contact_form() {
+	$state = isset( $_GET['vx'] ) ? sanitize_key( $_GET['vx'] ) : '';
+	if ( $state === 'sent' ) {
+		echo '<div class="notice ok">Thank you! Your message has been received. We will get back to you shortly.</div>';
+	} elseif ( $state === 'err' ) {
+		echo '<div class="notice err">Please enter your name and a valid email or phone number, then try again.</div>';
+	}
+	?>
+	<form class="talk-form" method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>">
+		<input type="hidden" name="action" value="vx_enquiry">
+		<input type="hidden" name="form_type" value="contact">
+		<input type="hidden" name="_back" value="<?php echo esc_url( get_permalink() ); ?>">
+		<?php wp_nonce_field( 'vx_enquiry', 'vx_nonce' ); ?>
+		<div class="hp" aria-hidden="true"><label>Leave empty<input type="text" name="website" tabindex="-1" autocomplete="off"></label></div>
+		<div class="tf-row">
+			<label><span>First Name</span><input type="text" name="first_name" placeholder="Your First Name" required autocomplete="given-name"></label>
+			<label><span>Last Name</span><input type="text" name="last_name" placeholder="Your Last Name" autocomplete="family-name"></label>
+		</div>
+		<div class="tf-row">
+			<label><span>Email Address</span><input type="email" name="email" placeholder="Enter Your Email" autocomplete="email"></label>
+			<label><span>Phone Number</span><input type="tel" name="phone" placeholder="Enter Your Phone" autocomplete="tel"></label>
+		</div>
+		<label><span>Message or Feedback</span><textarea name="message" rows="6" placeholder="Your Message or Feedback"></textarea></label>
+		<button class="btn btn-block" type="submit">Send Message</button>
+	</form>
+	<?php
+}
+
 function vx_handle_enquiry() {
 	$back = isset( $_POST['_back'] ) ? esc_url_raw( wp_unslash( $_POST['_back'] ) ) : home_url( '/' );
 	$back = wp_validate_redirect( $back, home_url( '/' ) );
@@ -92,9 +121,13 @@ function vx_handle_enquiry() {
 		wp_safe_redirect( add_query_arg( 'nl', 'sent', $back ) . '#newsletter' ); exit;
 	}
 
-	$name  = $f( 'name' );
+	$name  = $f( 'name' ) ?: trim( $f( 'first_name' ) . ' ' . $f( 'last_name' ) );
 	$phone = $f( 'phone' );
-	if ( $name === '' || strlen( preg_replace( '/\D/', '', $phone ) ) < 8 ) {
+	$phone_ok = strlen( preg_replace( '/\D/', '', $phone ) ) >= 8;
+	$email_ok = is_email( sanitize_email( $f( 'email' ) ) );
+	$is_adm   = ( $f( 'form_type' ) === 'admission' );
+	// Admission needs a phone number; contact needs a phone OR a valid email.
+	if ( $name === '' || ( $is_adm ? ! $phone_ok : ! ( $phone_ok || $email_ok ) ) ) {
 		wp_safe_redirect( add_query_arg( 'vx', 'err', $back ) . '#form' ); exit;
 	}
 
@@ -111,7 +144,7 @@ function vx_handle_enquiry() {
 	wp_insert_post( array(
 		'post_type'    => 'vx_enquiry',
 		'post_status'  => 'publish',
-		'post_title'   => "$type: $name ($phone)",
+		'post_title'   => "$type: $name (" . ( $phone ?: $email ) . ')',
 		'post_content' => $body,
 	) );
 

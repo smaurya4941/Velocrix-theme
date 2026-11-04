@@ -1,6 +1,6 @@
 </main>
 
-<?php get_template_part( 'template-parts/cta' ); ?>
+<?php if ( ! is_page( 'contact' ) ) get_template_part( 'template-parts/cta' ); ?>
 
 <footer class="site-footer">
 	<div class="container">
