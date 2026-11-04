@@ -9,25 +9,26 @@ $address = vx( 'vx_address', 'Sarvottam International School, Sector 10 Campus, 
 $map     = vx( 'vx_map' ) ?: 'https://maps.google.com/maps?q=' . rawurlencode( $address ) . '&output=embed';
 ?>
 
-<!-- 1. HERO -->
-<section class="hero hero-about hero-contact" style="--hero:url('<?php echo esc_url( $img . 'training-2.jpg' ); ?>')">
-	<div class="container hero-inner">
-		<div class="ha-row">
-			<div>
-				<span class="eyebrow light">Contact Us</span>
-				<h1>We&rsquo;re Here<br>to Help You<i class="dot">.</i></h1>
-			</div>
-			<div class="connect-card">
-				<h3>Let&rsquo;s Connect!</h3>
-				<div class="connect-icons">
-					<?php foreach ( array( 'instagram' => 'Instagram', 'facebook' => 'Facebook', 'youtube' => 'YouTube', 'linkedin' => 'LinkedIn' ) as $k => $label ) : ?>
-						<a href="<?php echo esc_url( vx( "vx_$k", '#' ) ); ?>" target="_blank" rel="noopener" aria-label="<?php echo esc_attr( $label ); ?>"><?php echo vx_icon( $k ); // phpcs:ignore ?></a>
-					<?php endforeach; ?>
-				</div>
-			</div>
-		</div>
+<!-- 1. HERO (shared part) -->
+<?php
+ob_start(); ?>
+<div class="connect-card">
+	<h3>Let&rsquo;s Connect!</h3>
+	<div class="connect-icons">
+		<?php foreach ( array( "instagram" => "Instagram", "facebook" => "Facebook", "youtube" => "YouTube", "linkedin" => "LinkedIn" ) as $k => $label ) : ?>
+			<a href="<?php echo esc_url( vx( "vx_$k", "#" ) ); ?>" target="_blank" rel="noopener" aria-label="<?php echo esc_attr( $label ); ?>"><?php echo vx_icon( $k ); // phpcs:ignore ?></a>
+		<?php endforeach; ?>
 	</div>
-</section>
+</div>
+<?php
+get_template_part( "template-parts/hero-page", null, array(
+	"eyebrow" => "Contact Us",
+	"title"   => "We&rsquo;re Here<br>to Help You",
+	"image"   => $img . "training-2.jpg",
+	"class"   => "hero-contact",
+	"side"    => ob_get_clean(),
+) );
+?>
 
 <!-- 2. INFO + FORM -->
 <section class="section dark contact-sec" id="form">

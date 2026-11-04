@@ -103,6 +103,7 @@ function vx_icon( $name ) {
 		'pin'      => '<svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7Zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5Z"/></svg>',
 		'calendar' => '<svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M7 2v2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-2V2h-2v2H9V2H7Zm-2 8h14v10H5V10Z"/></svg>',
 		'clock'    => '<svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm1 5v5.4l3.6 2.1-1 1.6L11 13V7h2Z"/></svg>',
+		'check'    => '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9.5"/><path d="m8 12.3 2.8 2.8L16 9.5"/></svg>',
 		'play'     => '<svg viewBox="0 0 24 24" width="26" height="26" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7L8 5Z"/></svg>',
 		'facebook' => '<svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor" aria-hidden="true"><path d="M14 8V6.5c0-.7.3-1 1-1h2V2h-3c-3 0-4.5 1.8-4.5 4.4V8H7v3.5h2.5V22H14V11.5h2.8L17 8h-3Z"/></svg>',
 		'instagram'=> '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>',
@@ -117,23 +118,43 @@ function vx_heading( $eyebrow, $title, $center = false ) {
 	echo '<div class="sec-head' . ( $center ? ' center' : '' ) . '"><span class="eyebrow">' . esc_html( $eyebrow ) . '</span><h2>' . wp_kses_post( $title ) . '</h2></div>';
 }
 
-/** Get the 4 pricing plans (editable in Customizer) */
+/** The 4 training plans (all editable in Customizer > Velocrix: Fees & Admission) */
 function vx_plans() {
+	$base = array( 'Expert coaching', 'Fitness & skill development', 'Teamwork & character building', 'Professional training environment' );
 	$defaults = array(
-		array( '1 Month',  '2,999',  'Ideal for beginners to explore and build basics' ),
-		array( '3 Months', '7,999',  'Structured training to improve skills consistently' ),
-		array( '6 Months', '14,999', 'Advanced coaching for performance enhancement' ),
-		array( '1 Year',   '27,999', 'Complete development program for long-term excellence' ),
+		array( '1 Month',  '2,999',  'Ideal for beginners to explore and build basics', $base ),
+		array( '3 Months', '7,999',  'Structured training to improve skills consistently', array_merge( $base, array( 'Structured skill progression' ) ) ),
+		array( '6 Months', '14,999', 'Advanced coaching for performance enhancement', array_merge( $base, array( 'Performance-focused coaching' ) ) ),
+		array( '1 Year',   '27,999', 'Complete development program for long-term excellence', array_merge( $base, array( 'Pathway to a professional career' ) ) ),
 	);
-	$plans = array();
+	$popular = (int) vx( 'vx_plan_popular', 4 );
+	$plans   = array();
 	foreach ( $defaults as $i => $d ) {
-		$n = $i + 1;
+		$n    = $i + 1;
+		$feat = vx( "vx_plan{$n}_features", '' );
 		$plans[] = array(
-			'name'  => vx( "vx_plan{$n}_name", $d[0] ),
-			'price' => vx( "vx_plan{$n}_price", $d[1] ),
-			'desc'  => vx( "vx_plan{$n}_desc", $d[2] ),
-			'feat'  => $n === 3,
+			'name'     => vx( "vx_plan{$n}_name", $d[0] ),
+			'price'    => vx( "vx_plan{$n}_price", $d[1] ),
+			'desc'     => vx( "vx_plan{$n}_desc", $d[2] ),
+			'features' => $feat ? array_filter( array_map( 'trim', explode( "\n", $feat ) ) ) : $d[3],
+			'feat'     => ( $n === $popular ),
 		);
 	}
 	return $plans;
+}
+
+/** Pricing card (shared by every plan + the registration card) */
+function vx_plan_card( $p, $url, $btn = 'Choose Plan', $unit = '', $badge = '' ) {
+	?>
+	<article class="pcard<?php echo $p['feat'] ? ' is-popular' : ''; ?>">
+		<?php if ( $p['feat'] && $badge ) echo '<span class="p-badge">' . esc_html( $badge ) . '</span>'; ?>
+		<h3><?php echo esc_html( $p['name'] ); ?></h3>
+		<p class="p-desc"><?php echo esc_html( $p['desc'] ); ?></p>
+		<div class="p-price"><span class="cur">&#8377;</span><?php echo esc_html( $p['price'] ); ?><?php if ( $unit ) echo '<small>' . esc_html( $unit ) . '</small>'; ?></div>
+		<a class="btn btn-block" href="<?php echo esc_url( $url ); ?>"><?php echo esc_html( $btn ); ?></a>
+		<ul class="p-list">
+			<?php foreach ( $p['features'] as $f ) echo '<li>' . vx_icon( 'check' ) . esc_html( $f ) . '</li>'; // phpcs:ignore ?>
+		</ul>
+	</article>
+	<?php
 }

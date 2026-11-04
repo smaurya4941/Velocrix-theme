@@ -42,10 +42,13 @@ function vx_customize( $wp ) {
 	$add( 'vx_fees', 'vx_status',  'Top announcement bar (empty = hidden)', 'Registrations are open. Early bird discount available.' );
 	$add( 'vx_fees', 'vx_regfee',  'Registration fee (number only)', '1,999' );
 	$add( 'vx_fees', 'vx_regnote', 'Registration note', 'Early bird discount available. *Terms & conditions apply.' );
+	$add( "vx_fees", "vx_plan_popular", "Highlighted plan number (1-4, 0 = none)", "4", "number", "absint" );
+	$add( "vx_fees", "vx_plan_badge", "Highlight badge text", "Best Value" );
 	for ( $n = 1; $n <= 4; $n++ ) {
 		$add( 'vx_fees', "vx_plan{$n}_name",  "Plan $n: name" );
 		$add( 'vx_fees', "vx_plan{$n}_price", "Plan $n: price (number only)" );
 		$add( 'vx_fees', "vx_plan{$n}_desc",  "Plan $n: description" );
+		$add( "vx_fees", "vx_plan{$n}_features", "Plan $n: features (one per line; empty = default)", "", "textarea", "sanitize_textarea_field" );
 	}
 
 	/* Mentor */

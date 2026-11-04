@@ -5,18 +5,15 @@ $mentor_name = vx( 'vx_mentor_name', 'Ms. Meghna Singh' );
 $mentor_role = vx( 'vx_mentor_role', 'International Cricketer' );
 $mentor_img  = vx( 'vx_mentor_img' );
 $contact     = home_url( '/contact/' );
-?>
 
-<!-- 1. HERO -->
-<section class="hero hero-about" style="--hero:url('<?php echo esc_url( $img . 'training-1.jpg' ); ?>')">
-	<div class="container hero-inner">
-		<span class="eyebrow light">About Us</span>
-		<div class="ha-row">
-			<h1>Where Every Player<br>Connects and Grows<i class="dot">.</i></h1>
-			<p class="ha-text">Velocrix brings young cricketers together under expert coaching and a culture of discipline &mdash; building skill, fitness and character on and off the field.</p>
-		</div>
-	</div>
-</section>
+// 1. HERO (shared part)
+get_template_part( 'template-parts/hero-page', null, array(
+	'eyebrow' => 'About Us',
+	'title'   => 'Where Every Player<br>Connects and Grows',
+	'text'    => 'Velocrix brings young cricketers together under expert coaching and a culture of discipline — building skill, fitness and character on and off the field.',
+	'image'   => $img . 'training-1.jpg',
+) );
+?>
 
 <!-- 2. VISION & MISSION -->
 <section class="section vm">
@@ -63,42 +60,21 @@ $contact     = home_url( '/contact/' );
 	</div>
 </section>
 
-<!-- 4. FAQ -->
-<section class="section faq-sec">
-	<div class="container">
-		<div class="sec-head center">
-			<span class="eyebrow">FAQ</span>
-			<h2>Get the Answers You Need</h2>
-		</div>
-		<?php
-		$faqs = array(
-			array(
-				array( 'What do players get at Velocrix?', 'Expert coaching, scientific training, fitness and skill development, and teamwork and character building, all in a professional training environment.' ),
-				array( 'Is the registration fee separate?', 'Yes. Registration is a one-time fee of ₹' . vx( 'vx_regfee', '1,999' ) . ' and training plans are paid separately. Early bird discounts may be available, so please confirm current terms with us.' ),
-				array( 'How do I register?', 'Fill in the admission form on our Admission page or call us on ' . vx( 'vx_phone', '+91 879 644 7595' ) . ' and our team will guide you.' ),
-			),
-			array(
-				array( 'Who can join the academy?', 'Players of all levels are welcome, from beginners to those aiming for a professional pathway. Contact us to find the right batch.' ),
-				array( 'Where is the academy located?', 'At Sarvottam International School, Sector 10 Campus, Greater Noida West.' ),
-				array( 'Who mentors the academy?', 'Velocrix functions under the mentorship of ' . $mentor_name . ', ' . $mentor_role . '.' ),
-			),
-		);
-		?>
-		<div class="faq-grid">
-			<?php foreach ( $faqs as $col ) : ?>
-			<div class="acc">
-				<?php foreach ( $col as $i => $f ) : $open = ( $i === 0 ); ?>
-				<div class="acc-item<?php echo $open ? ' is-open' : ''; ?>">
-					<button class="acc-head" aria-expanded="<?php echo $open ? 'true' : 'false'; ?>"><span><?php echo esc_html( $f[0] ); ?></span><?php echo vx_icon( 'arrow' ); // phpcs:ignore ?></button>
-					<div class="acc-body"><div><p><?php echo esc_html( $f[1] ); ?></p></div></div>
-				</div>
-				<?php endforeach; ?>
-			</div>
-			<?php endforeach; ?>
-		</div>
-		<p class="center muted faq-more">Have more questions? <a href="<?php echo esc_url( $contact ); ?>">Contact our team</a></p>
-	</div>
-</section>
+<?php
+// 4. FAQ (shared part)
+get_template_part( 'template-parts/faq', null, array( 'faqs' => array(
+	array(
+		array( 'What do players get at Velocrix?', 'Expert coaching, scientific training, fitness and skill development, and teamwork and character building, all in a professional training environment.' ),
+		array( 'Is the registration fee separate?', 'Yes. Registration is a one-time fee of ₹' . vx( 'vx_regfee', '1,999' ) . ' and training plans are paid separately. Early bird discounts may be available, so please confirm current terms with us.' ),
+		array( 'How do I register?', 'Fill in the admission form on our Admission page or call us on ' . vx( 'vx_phone', '+91 879 644 7595' ) . ' and our team will guide you.' ),
+	),
+	array(
+		array( 'Who can join the academy?', 'Players of all levels are welcome, from beginners to those aiming for a professional pathway. Contact us to find the right batch.' ),
+		array( 'Where is the academy located?', 'At Sarvottam International School, Sector 10 Campus, Greater Noida West.' ),
+		array( 'Who mentors the academy?', 'Velocrix functions under the mentorship of ' . $mentor_name . ', ' . $mentor_role . '.' ),
+	),
+) ) );
+?>
 
 <!-- 5. COACHES -->
 <section class="section coaches">

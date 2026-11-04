@@ -1,34 +1,72 @@
-<?php get_header(); vx_page_hero( 'Training <span class="lime">Fees</span>', 'Choose a plan that fits your goals.' ); ?>
-<section class="section">
+<?php
+get_header();
+$img      = VX_URI . '/assets/img/';
+$plans    = vx_plans();
+$badge    = vx( 'vx_plan_badge', 'Best Value' );
+$regfee   = vx( 'vx_regfee', '1,999' );
+$join     = home_url( '/admission/' );
+$phone    = vx( 'vx_phone', '+91 879 644 7595' );
+$mentor   = vx( 'vx_mentor_name', 'Ms. Meghna Singh' );
+
+// 1. HERO (shared part)
+get_template_part( 'template-parts/hero-page', null, array(
+	'eyebrow' => 'Our Pricing Plans',
+	'title'   => 'Your Easy Access to<br>Cricket Excellence',
+	'text'    => 'Choose a training plan that powers your progress, built for consistent improvement and growth.',
+	'image'   => $img . 'hero-pricing.jpg',
+) );
+?>
+
+<!-- 2. PRICING (tabs) -->
+<section class="section pricing-sec" id="plans">
 	<div class="container">
-		<div class="grid-4">
-			<?php foreach ( vx_plans() as $p ) : ?>
-			<div class="plan<?php echo $p['feat'] ? ' feat' : ''; ?>">
-				<?php if ( $p['feat'] ) echo '<span class="tag">Popular</span>'; ?>
-				<h3><?php echo esc_html( $p['name'] ); ?></h3>
-				<div class="price"><sup>&#8377;</sup><?php echo esc_html( $p['price'] ); ?></div>
-				<p><?php echo esc_html( $p['desc'] ); ?></p>
-				<a class="btn btn-sm" href="<?php echo esc_url( home_url( '/admission/' ) ); ?>">Enrol</a>
+		<div class="p-tabs" role="tablist" aria-label="Pricing categories">
+			<button class="p-tab is-active" role="tab" aria-selected="true" aria-controls="tab-plans" id="t-plans">Training Plans</button>
+			<button class="p-tab" role="tab" aria-selected="false" aria-controls="tab-reg" id="t-reg">Registration</button>
+		</div>
+
+		<div class="p-panel" id="tab-plans" role="tabpanel" aria-labelledby="t-plans">
+			<div class="pgrid p4">
+				<?php foreach ( $plans as $p ) vx_plan_card( $p, add_query_arg( 'plan', rawurlencode( $p['name'] ), $join ) . '#form', 'Choose Plan', '', $badge ); ?>
 			</div>
-			<?php endforeach; ?>
 		</div>
-		<div class="reg-box">
-			<div><small>One-time registration fee</small><strong>&#8377;<?php echo esc_html( vx( 'vx_regfee', '1,999' ) ); ?></strong></div>
-			<p><?php echo wp_kses_post( vx_lime( vx( 'vx_regnote', 'Early bird discount available. *Terms & conditions apply.' ) ) ); ?></p>
+
+		<div class="p-panel" id="tab-reg" role="tabpanel" aria-labelledby="t-reg">
+			<div class="pgrid p1">
+				<?php vx_plan_card( array(
+					'name'     => 'Registration',
+					'price'    => $regfee,
+					'desc'     => 'One-time fee to join Velocrix Cricket Academy.',
+					'features' => array( 'Paid once, separate from training plans', 'Early bird discount available', 'Open to players of all levels', 'Terms & conditions apply' ),
+					'feat'     => true,
+				), $join . '#form', 'Register Now', '/one-time', 'Early Bird Offer' ); ?>
+			</div>
 		</div>
+
+		<p class="center muted small p-note">Fees shown are subject to change. Please confirm current fees and early bird terms by calling <a href="<?php echo esc_url( vx_phone_href( $phone ) ); ?>"><?php echo esc_html( $phone ); ?></a>.</p>
 	</div>
 </section>
 
-<section class="section dark">
-	<div class="container narrow">
-		<?php vx_heading( 'FAQ', 'Common <span class="lime">questions</span>', true ); ?>
-		<?php foreach ( array(
-			array( 'Is the registration fee separate from training fees?', 'Yes. Registration is a one-time fee, and the training plan is paid separately.' ),
-			array( 'Who can join?', 'Players of all levels, from complete beginners to advanced. Contact us to find the right batch.' ),
-			array( 'Is the early bird discount still available?', 'Please call the academy to confirm current offers and terms.' ),
-		) as $f ) : ?>
-			<details class="faq"><summary><?php echo esc_html( $f[0] ); ?></summary><p><?php echo esc_html( $f[1] ); ?></p></details>
-		<?php endforeach; ?>
-	</div>
-</section>
-<?php get_footer(); ?>
+<?php
+// 3. MENTOR / TESTIMONIAL SLOT (shared part)
+get_template_part( 'template-parts/quote-split', null, array(
+	'eyebrow' => 'Our Mentor',
+	'text'    => 'Every plan at Velocrix is built on expert coaching, scientific training and all-round development, guided by the mentorship of ' . $mentor . '. Pick the duration that suits your goals and grow with a supportive team.',
+	'image'   => $img . 'training-2.jpg',
+) );
+
+// 4. FAQ (shared part)
+get_template_part( 'template-parts/faq', null, array( 'faqs' => array(
+	array(
+		array( 'What is included in every plan?', 'Expert coaching, fitness and skill development, teamwork and character building, and a professional training environment with qualified, experienced coaches.' ),
+		array( 'Is the registration fee separate?', 'Yes. Registration is a one-time fee of ₹' . $regfee . ' and training plans are paid separately.' ),
+		array( 'Is there an early bird discount?', 'Early bird discounts are available for a limited period. Please contact us to confirm current offers and terms.' ),
+	),
+	array(
+		array( 'Which plan should I choose?', 'Start with 1 Month to explore the basics, choose 3 Months for structured progress, 6 Months for advanced performance coaching, or 1 Year for complete long-term development.' ),
+		array( 'How do I enrol?', 'Choose a plan on this page or fill in the admission form. You can also call us on ' . $phone . ' and our team will guide you.' ),
+		array( 'Where do the sessions take place?', 'At Sarvottam International School, Sector 10 Campus, Greater Noida West.' ),
+	),
+) ) );
+
+get_footer();

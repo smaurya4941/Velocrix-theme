@@ -148,19 +148,11 @@ $title_lines = array_filter( array_map( 'trim', explode( "\n", vx( 'vx_hero_titl
 </section>
 
 <!-- 6. MENTOR (replaces testimonials until real ones exist) -->
-<section class="quote-split">
-	<div class="qs-text">
-		<div>
-			<span class="eyebrow light">Our Mentor</span>
-			<p class="qs-quote">Velocrix Cricket Academy functions under the mentorship of <?php echo esc_html( $mentor_name ); ?>. Our coaches care about every player&rsquo;s progress, making each session challenging yet enjoyable &mdash; a supportive family that grows stronger together.</p>
-			<div class="qs-by">
-				<span class="avatar"><?php echo $mentor_img ? '<img src="' . esc_url( $mentor_img ) . '" alt="">' : esc_html( strtoupper( substr( preg_replace( '/^(Ms|Mr|Dr)\.?\s*/i', '', $mentor_name ), 0, 1 ) ) ); // phpcs:ignore ?></span>
-				<div><b><?php echo esc_html( $mentor_name ); ?></b><small><?php echo esc_html( $mentor_role ); ?></small></div>
-			</div>
-		</div>
-	</div>
-	<div class="qs-img" style="background-image:url('<?php echo esc_url( $img . 'training-1.jpg' ); ?>')" role="img" aria-label="Coach and players on the practice ground"></div>
-</section>
+<?php get_template_part( "template-parts/quote-split", null, array(
+	"eyebrow" => "Our Mentor",
+	"text"    => "Velocrix Cricket Academy functions under the mentorship of " . $mentor_name . ". Our coaches care about every player’s progress, making each session challenging yet enjoyable — a supportive family that grows stronger together.",
+	"image"   => $img . "training-1.jpg",
+) ); ?>
 
 <!-- 7. HOW TO JOIN -->
 <section class="section join">

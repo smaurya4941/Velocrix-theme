@@ -54,7 +54,7 @@ function vx_form( $type = 'contact' ) {
 			<label><span>Interested plan</span>
 				<select name="plan">
 					<option value="">Not sure yet</option>
-					<?php foreach ( vx_plans() as $p ) echo '<option>' . esc_html( $p['name'] ) . '</option>'; ?>
+					<?php $sel = isset( $_GET["plan"] ) ? sanitize_text_field( wp_unslash( $_GET["plan"] ) ) : ""; foreach ( vx_plans() as $p ) echo "<option" . selected( $sel, $p["name"], false ) . ">" . esc_html( $p["name"] ) . "</option>"; ?>
 				</select>
 			</label>
 			<label><span>Experience level</span>

@@ -19,6 +19,17 @@
   onScroll();
   window.addEventListener('scroll', onScroll, { passive: true });
 
+  // Pricing tabs
+  d.querySelectorAll(".p-tabs").forEach(function (tabs) {
+    var btns = tabs.querySelectorAll(".p-tab"), panels = d.querySelectorAll(".p-panel");
+    function show(i) {
+      btns.forEach(function (b, k) { b.classList.toggle("is-active", k === i); b.setAttribute("aria-selected", k === i ? "true" : "false"); });
+      panels.forEach(function (p, k) { p.classList.toggle("is-active", k === i); if (k === i) p.querySelectorAll(".reveal").forEach(function (r) { r.classList.add("in"); }); });
+    }
+    btns.forEach(function (b, i) { b.addEventListener("click", function () { show(i); }); });
+    show(0);
+  });
+
   // Accordion (one open at a time)
   d.querySelectorAll('.acc').forEach(function (acc) {
     acc.addEventListener('click', function (e) {
@@ -34,7 +45,7 @@
   });
 
   // Reveal on scroll
-  var els = d.querySelectorAll('.stat-card,.about-media,.prog-col,.fac,.steps li,.blog-feat,.blog-item,.sec-head,.card,.plan,.photo-card,.coach,.vm-card,.imp-photo,.imp-stats>div,.cc,.talk-card,.connect-card');
+  var els = d.querySelectorAll('.stat-card,.about-media,.prog-col,.fac,.steps li,.blog-feat,.blog-item,.sec-head,.card,.plan,.photo-card,.coach,.vm-card,.imp-photo,.imp-stats>div,.cc,.talk-card,.connect-card,.pcard');
   els.forEach(function (e) { e.classList.add('reveal'); });
   if ('IntersectionObserver' in window) {
     var io = new IntersectionObserver(function (items) {
