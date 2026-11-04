@@ -25,7 +25,7 @@
 				<h4>Let&rsquo;s Connect!</h4>
 				<div class="social">
 					<?php foreach ( array( 'instagram' => 'Instagram', 'linkedin' => 'LinkedIn', 'youtube' => 'YouTube', 'facebook' => 'Facebook' ) as $k => $label ) :
-						$u = vx( "vx_$k", '#' ); ?>
+						$u = vx( "vx_$k" ); if ( ! $u ) continue; ?>
 						<a href="<?php echo esc_url( $u ); ?>" target="_blank" rel="noopener" aria-label="<?php echo esc_attr( $label ); ?>"><?php echo vx_icon( $k ); // phpcs:ignore ?></a>
 					<?php endforeach; ?>
 				</div>
@@ -46,7 +46,7 @@
 				<h4>Get in Touch</h4>
 				<ul class="foot-list">
 					<li><?php echo esc_html( vx( 'vx_address', 'Sarvottam International School, Sector 10 Campus, Greater Noida West' ) ); ?></li>
-					<li><?php echo esc_html( vx( 'vx_hours', 'Mon - Sat: 6:00 AM - 8:00 PM' ) ); ?></li>
+					<?php if ( $hrs = vx( 'vx_hours' ) ) : ?><li><?php echo esc_html( $hrs ); ?></li><?php endif; ?>
 					<?php if ( $em = vx( 'vx_email' ) ) : ?><li><a href="mailto:<?php echo esc_attr( $em ); ?>"><?php echo esc_html( $em ); ?></a></li><?php endif; ?>
 					<li><a href="<?php echo esc_url( vx_phone_href( vx( 'vx_phone', '+91 879 644 7595' ) ) ); ?>"><?php echo esc_html( vx( 'vx_phone', '+91 879 644 7595' ) ); ?></a><?php if ( $p2 = vx( 'vx_phone2', '+91 7017810766' ) ) : ?> &middot; <a href="<?php echo esc_url( vx_phone_href( $p2 ) ); ?>"><?php echo esc_html( $p2 ); ?></a><?php endif; ?></li>
 				</ul>

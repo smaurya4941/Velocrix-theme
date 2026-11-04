@@ -4,6 +4,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 define( 'VX_VER', '1.0.0' );
 define( 'VX_URI', get_template_directory_uri() );
 
+require get_template_directory() . '/inc/content.php';
 require get_template_directory() . '/inc/customizer.php';
 require get_template_directory() . '/inc/forms.php';
 
@@ -47,9 +48,11 @@ add_action( 'wp_enqueue_scripts', function () {
 }, 100 );
 
 /** Theme-mod helper */
-function vx( $key, $default = '' ) {
+function vx( $key, $default = "" ) {
+	$d = vx_defaults();
+	if ( array_key_exists( $key, $d ) ) $default = $d[ $key ];
 	$v = get_theme_mod( $key, $default );
-	return ( $v === '' || $v === false ) ? $default : $v;
+	return ( $v === "" || $v === false ) ? $default : $v;
 }
 
 function vx_phone_href( $num ) {
@@ -124,12 +127,12 @@ function vx_heading( $eyebrow, $title, $center = false ) {
 
 /** The 4 training plans (all editable in Customizer > Velocrix: Fees & Admission) */
 function vx_plans() {
-	$base = array( 'Expert coaching', 'Fitness & skill development', 'Teamwork & character building', 'Professional training environment' );
+	$base = vx_copy( "plan_features" );
 	$defaults = array(
-		array( '1 Month',  '2,999',  'Ideal for beginners to explore and build basics', $base ),
-		array( '3 Months', '7,999',  'Structured training to improve skills consistently', array_merge( $base, array( 'Structured skill progression' ) ) ),
-		array( '6 Months', '14,999', 'Advanced coaching for performance enhancement', array_merge( $base, array( 'Performance-focused coaching' ) ) ),
-		array( '1 Year',   '27,999', 'Complete development program for long-term excellence', array_merge( $base, array( 'Pathway to a professional career' ) ) ),
+		array( "1 Month",  "2,999",  "Ideal for beginners to explore and build basics", $base ),
+		array( "3 Months", "7,999",  "Structured training to improve skills consistently", $base ),
+		array( "6 Months", "14,999", "Advanced coaching for performance enhancement", $base ),
+		array( "1 Year",   "27,999", "Complete development program for long-term excellence", $base ),
 	);
 	$popular = (int) vx( 'vx_plan_popular', 4 );
 	$plans   = array();

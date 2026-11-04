@@ -51,14 +51,14 @@ get_template_part( 'template-parts/hero-page', null, array(
 // 3. MENTOR / TESTIMONIAL SLOT (shared part)
 get_template_part( 'template-parts/quote-split', null, array(
 	'eyebrow' => 'Our Mentor',
-	'text'    => 'Every plan at Velocrix is built on expert coaching, scientific training and all-round development, guided by the mentorship of ' . $mentor . '. Pick the duration that suits your goals and grow with a supportive team.',
+	'text'    => 'Mentorship that inspires. Training that transforms. Every plan is guided by the mentorship of ' . $mentor . ', International Cricketer, with expert coaching, scientific training and all-round development.',
 	'image'   => $img . 'training-2.jpg',
 ) );
 
 // 4. FAQ (shared part)
 get_template_part( 'template-parts/faq', null, array( 'faqs' => array(
 	array(
-		array( 'What is included in every plan?', 'Expert coaching, fitness and skill development, teamwork and character building, and a professional training environment with qualified, experienced coaches.' ),
+		array( 'What is included in every plan?', 'Expert coaching from qualified and experienced coaches, fitness and skill development, teamwork and character building, a professional training environment and a pathway to professional cricket.' ),
 		array( 'Is the registration fee separate?', 'Yes. Registration is a one-time fee of ₹' . $regfee . ' and training plans are paid separately.' ),
 		array( 'Is there an early bird discount?', 'Early bird discounts are available for a limited period. Please contact us to confirm current offers and terms.' ),
 	),

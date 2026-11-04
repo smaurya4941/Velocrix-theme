@@ -20,16 +20,16 @@ get_template_part( 'template-parts/hero-page', null, array(
 	<div class="container vm-grid">
 		<div class="vm-left">
 			<h3 class="vm-title">Where players train, grow, and compete.</h3>
-			<div class="pills"><?php foreach ( array( 'Training', 'Discipline', 'Passion', 'Academy', 'Coaching', 'Cricket' ) as $p ) echo '<span>' . esc_html( $p ) . '</span>'; ?></div>
+			<div class="pills"><?php foreach ( vx_copy( 'pillars' ) as $p ) echo '<span>' . esc_html( $p[0] ) . '</span>'; ?></div>
 		</div>
 		<a class="vm-card photo" href="<?php echo esc_url( home_url( '/programs/' ) ); ?>">
 			<img src="<?php echo esc_url( $img . 'prog-2.jpg' ); ?>" alt="Coach demonstrating a drill to young players" loading="lazy" width="800" height="800">
 			<span class="round-btn is-lime"><?php echo vx_icon( 'arrow' ); // phpcs:ignore ?></span>
-			<div class="vm-cap"><h3>Our Vision</h3><p>To nurture disciplined, focused and passionate cricketers who aim to be champions.</p></div>
+			<div class="vm-cap"><h3>Our Vision</h3><p>To develop disciplined, skilled and confident cricketers through world-class coaching and modern training methods.</p></div>
 		</a>
 		<a class="vm-card dk" href="<?php echo esc_url( home_url( '/pricing/' ) ); ?>">
 			<span class="round-btn light"><?php echo vx_icon( 'arrow' ); // phpcs:ignore ?></span>
-			<div class="vm-cap"><h3>Our Mission</h3><p>Expert coaching, scientific training and all-round development for every young cricketer.</p></div>
+			<div class="vm-cap"><h3>Our Mission</h3><p>Professional coaching, scientific training, real match exposure and a pathway to a brighter future.</p></div>
 		</a>
 	</div>
 </section>
@@ -53,7 +53,7 @@ get_template_part( 'template-parts/hero-page', null, array(
 				<div class="imp-stats">
 					<div><b><span data-count="1">1</span></b><small>International Mentor</small></div>
 					<div><b><span data-count="4">4</span></b><small>Flexible Plans</small></div>
-					<div><b><span data-count="8">8</span></b><small>Core Strengths</small></div>
+					<div><b><span data-count="<?php echo count( vx_copy( 'pillars' ) ); ?>"><?php echo count( vx_copy( 'pillars' ) ); ?></span></b><small>Training Pillars</small></div>
 				</div>
 			</div>
 		</div>
@@ -65,12 +65,12 @@ get_template_part( 'template-parts/hero-page', null, array(
 get_template_part( 'template-parts/faq', null, array( 'faqs' => array(
 	array(
 		array( 'What do players get at Velocrix?', 'Expert coaching, scientific training, fitness and skill development, and teamwork and character building, all in a professional training environment.' ),
-		array( 'Is the registration fee separate?', 'Yes. Registration is a one-time fee of ₹' . vx( 'vx_regfee', '1,999' ) . ' and training plans are paid separately. Early bird discounts may be available, so please confirm current terms with us.' ),
-		array( 'How do I register?', 'Fill in the admission form on our Admission page or call us on ' . vx( 'vx_phone', '+91 879 644 7595' ) . ' and our team will guide you.' ),
+		array( 'Is the registration fee separate?', 'Yes. Registration is a one-time fee of ₹' . vx( 'vx_regfee', '1,999' ) . ' and training plans are paid separately. Early bird discount is available and terms & conditions apply, so please confirm current terms with us.' ),
+		array( 'How do I register?', 'Fill in the admission form on our Admission page, call us on ' . vx( 'vx_phone' ) . ' or email ' . vx( 'vx_email' ) . ' and our team will guide you.' ),
 	),
 	array(
-		array( 'Who can join the academy?', 'Players of all levels are welcome, from beginners to those aiming for a professional pathway. Contact us to find the right batch.' ),
-		array( 'Where is the academy located?', 'At Sarvottam International School, Sector 10 Campus, Greater Noida West.' ),
+		array( 'Who can join the academy?', 'Aspiring cricketers who want to build skill, fitness and discipline. The 1 Month plan is ideal for beginners to explore and build basics. Contact us to find the right plan.' ),
+		array( 'Where is the academy located?', vx( 'vx_address' ) . '.' ),
 		array( 'Who mentors the academy?', 'Velocrix functions under the mentorship of ' . $mentor_name . ', ' . $mentor_role . '.' ),
 	),
 ) ) );

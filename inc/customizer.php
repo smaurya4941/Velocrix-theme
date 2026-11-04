@@ -8,6 +8,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 function vx_customize( $wp ) {
 
 	$add = function ( $section, $id, $label, $default = '', $type = 'text', $sanitize = 'sanitize_text_field' ) use ( $wp ) {
+		$dd = vx_defaults(); if ( array_key_exists( $id, $dd ) ) $default = $dd[ $id ];
 		$wp->add_setting( $id, array( 'default' => $default, 'sanitize_callback' => $sanitize ) );
 		$wp->add_control( $id, array( 'label' => $label, 'section' => $section, 'type' => $type ) );
 	};

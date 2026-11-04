@@ -14,7 +14,7 @@
 	<div class="bar">
 		<a class="brand" href="<?php echo esc_url( home_url( '/' ) ); ?>" aria-label="Velocrix Cricket Academy">
 			<?php if ( has_custom_logo() ) : the_custom_logo(); else : ?>
-				<span class="brand-mark">VELOCRIX</span><span class="brand-sub">Cricket Academy</span>
+				<img class="brand-logo" src="<?php echo esc_url( VX_URI . '/assets/img/logo-mark.png' ); ?>" alt="" width="54" height="50"><span class="brand-txt"><span class="brand-mark">VELOCRIX</span><span class="brand-sub">Cricket Academy</span></span>
 			<?php endif; ?>
 		</a>
 		<nav class="nav" id="nav" aria-label="Primary"><?php vx_primary_menu(); ?>

@@ -25,7 +25,7 @@ $title_lines = array_filter( array_map( 'trim', explode( "\n", vx( 'vx_hero_titl
 					<ul>
 						<li><?php echo vx_icon( 'pin' ); // phpcs:ignore ?> Sarvottam International School, Sector 10 Campus, GNW</li>
 						<li><?php echo vx_icon( 'calendar' ); // phpcs:ignore ?> <?php echo esc_html( str_replace( '.', '', explode( '.', vx( 'vx_status', 'Registrations are open. Early bird discount available.' ) )[1] ?? 'Early bird discount available' ) ); ?></li>
-						<li><?php echo vx_icon( 'clock' ); // phpcs:ignore ?> <?php echo esc_html( vx( 'vx_hours', 'Mon - Sat: 6:00 AM - 8:00 PM' ) ); ?></li>
+						<?php if ( $hrs = vx( 'vx_hours' ) ) : ?><li><?php echo vx_icon( 'clock' ); // phpcs:ignore ?> <?php echo esc_html( $hrs ); ?></li><?php else : ?><li><?php echo vx_icon( 'clock' ); // phpcs:ignore ?> Registrations are open</li><?php endif; ?>
 					</ul>
 				</div>
 			</div>
@@ -43,14 +43,14 @@ $title_lines = array_filter( array_map( 'trim', explode( "\n", vx( 'vx_hero_titl
 		<div class="about-top">
 			<div>
 				<span class="eyebrow">About Us</span>
-				<div class="pills"><?php foreach ( array( 'Training', 'Discipline', 'Passion', 'Academy', 'Coaching', 'Cricket' ) as $p ) echo '<span>' . esc_html( $p ) . '</span>'; ?></div>
+				<div class="pills"><?php foreach ( vx_copy( 'pillars' ) as $p ) echo '<span>' . esc_html( $p[0] ) . '</span>'; ?></div>
 			</div>
-			<p class="big-text">Velocrix is more than coaching &mdash; it&rsquo;s a place where young cricketers build skill, fitness and character through expert guidance, scientific training and a shared passion for the game.</p>
+			<p class="big-text"><?php echo esc_html( vx_copy( 'about' ) ); ?></p>
 		</div>
 		<div class="about-row">
 			<a class="stat-card" href="<?php echo esc_url( home_url( '/about/' ) ); ?>">
 				<span class="round-btn light"><?php echo vx_icon( 'arrow' ); // phpcs:ignore ?></span>
-				<b><span data-count="8">8</span></b><small>Core Strengths</small>
+				<b><span data-count="<?php echo count( vx_copy( "pillars" ) ); ?>"><?php echo count( vx_copy( "pillars" ) ); ?></span></b><small>Training Pillars</small>
 			</a>
 			<div class="about-media">
 				<img src="<?php echo esc_url( $img . 'about-wide.jpg' ); ?>" alt="Coach leading a stretching drill with young players" loading="lazy" width="1400" height="645">
@@ -74,12 +74,7 @@ $title_lines = array_filter( array_map( 'trim', explode( "\n", vx( 'vx_hero_titl
 		</div>
 		<div class="acc">
 			<?php
-			$why = array(
-				array( 'Expert Coaching', 'Learn from qualified, experienced coaches dedicated to refining your technique, building confidence and helping you reach your highest potential.' ),
-				array( 'International Standards', 'Get exposure to the training methods and standards followed at the top level of the game, right from the start.' ),
-				array( 'Professional Environment', 'Train in a disciplined, well-equipped setting that builds focus, teamwork and character alongside skill.' ),
-				array( 'Pathway to a Career', 'A structured route for passionate players who want to take their cricket to the next level.' ),
-			);
+			$why = vx_copy( "why" );
 			foreach ( $why as $i => $w ) : $open = ( $i === 0 ); ?>
 			<div class="acc-item<?php echo $open ? ' is-open' : ''; ?>">
 				<button class="acc-head" aria-expanded="<?php echo $open ? 'true' : 'false'; ?>"><span><?php echo esc_html( sprintf( '%02d. %s', $i + 1, $w[0] ) ); ?></span><?php echo vx_icon( 'arrow' ); // phpcs:ignore ?></button>
@@ -102,10 +97,11 @@ $title_lines = array_filter( array_map( 'trim', explode( "\n", vx( 'vx_hero_titl
 		</div>
 		<div class="prog-grid">
 			<?php
+			$pl    = vx_copy( "pillars" );
 			$progs = array(
-				array( 'Foundation Batch', 'Basics of batting, bowling and fielding in a fun, safe setting.', 'prog-1.jpg', 0 ),
-				array( 'Skill Development', 'Technique, game awareness and steady improvement for every player.', 'prog-2.jpg', 1 ),
-				array( 'Fitness & Conditioning', 'Strength, agility and endurance built around cricket.', 'prog-3.jpg', 0 ),
+				array( $pl[1][0], $pl[1][1], "fac-nets.jpg", 0 ),
+				array( $pl[2][0], $pl[2][1], "prog-3.jpg", 1 ),
+				array( $pl[4][0], $pl[4][1], "prog-2.jpg", 0 ),
 			);
 			foreach ( $progs as $i => $p ) :
 				$im = '<a class="prog-img" href="' . esc_url( home_url( '/programs/' ) ) . '"><img src="' . esc_url( $img . $p[2] ) . '" alt="" loading="lazy" width="800" height="800"><span class="round-btn light">' . vx_icon( 'arrow' ) . '</span></a>';
@@ -126,12 +122,12 @@ $title_lines = array_filter( array_map( 'trim', explode( "\n", vx( 'vx_hero_titl
 		</div>
 		<div class="fac-top">
 			<a class="fac wide" href="<?php echo esc_url( home_url( '/facilities/' ) ); ?>">
-				<img src="<?php echo esc_url( $img . 'fac-wide.jpg' ); ?>" alt="Net practice cage and training ground" loading="lazy" width="1400" height="620">
+				<img src="<?php echo esc_url( $img . 'fac-run.jpg' ); ?>" alt="Players running drills on the turf practice ground" loading="lazy" width="1400" height="620">
 				<span class="round-btn is-lime"><?php echo vx_icon( 'arrow' ); // phpcs:ignore ?></span>
-				<div class="fac-cap"><h3>Professional Practice Ground</h3><p>Open turf and net cage designed for comfort, safety and performance.</p></div>
+				<div class="fac-cap"><h3>Turf Practice Ground</h3><p>Open turf ground for fielding, fitness and drills.</p></div>
 			</a>
 			<a class="fac tall" href="<?php echo esc_url( home_url( '/facilities/' ) ); ?>">
-				<img src="<?php echo esc_url( $img . 'fac-2.jpg' ); ?>" alt="Player training at the nets" loading="lazy" width="800" height="800">
+				<img src="<?php echo esc_url( $img . 'fac-nets.jpg' ); ?>" alt="Batter training in the net practice cage" loading="lazy" width="800" height="800">
 				<span class="round-btn light"><?php echo vx_icon( 'arrow' ); // phpcs:ignore ?></span>
 			</a>
 		</div>
@@ -150,7 +146,7 @@ $title_lines = array_filter( array_map( 'trim', explode( "\n", vx( 'vx_hero_titl
 <!-- 6. MENTOR (replaces testimonials until real ones exist) -->
 <?php get_template_part( "template-parts/quote-split", null, array(
 	"eyebrow" => "Our Mentor",
-	"text"    => "Velocrix Cricket Academy functions under the mentorship of " . $mentor_name . ". Our coaches care about every player’s progress, making each session challenging yet enjoyable — a supportive family that grows stronger together.",
+	"text"    => "“" . vx( "vx_mentor_quote" ) . "”",
 	"image"   => $img . "training-1.jpg",
 ) ); ?>
 

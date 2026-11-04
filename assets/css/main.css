@@ -622,3 +622,7 @@ a:hover>.round-btn,.round-btn:hover{background:var(--lime);transform:rotate(45de
 }
 .post-content figure img{aspect-ratio:16/9;object-fit:cover}
 .team-note{margin-top:40px}
+.p-sub{margin:-18px 0 30px}
+.site-header .brand{flex-direction:row;align-items:center;gap:12px}
+.brand-logo{width:auto;height:46px}
+.brand-txt{display:flex;flex-direction:column;line-height:1}
