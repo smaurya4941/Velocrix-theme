@@ -45,7 +45,7 @@
   });
 
   // Reveal on scroll
-  var els = d.querySelectorAll('.stat-card,.about-media,.prog-col,.fac,.steps li,.blog-feat,.blog-item,.sec-head,.card,.plan,.photo-card,.coach,.vm-card,.imp-photo,.imp-stats>div,.cc,.talk-card,.connect-card,.pcard');
+  var els = d.querySelectorAll('.stat-card,.about-media,.prog-col,.fac,.steps li,.blog-feat,.blog-item,.sec-head,.card,.plan,.photo-card,.coach,.vm-card,.imp-photo,.imp-stats>div,.cc,.talk-card,.connect-card,.pcard,.post-row,.recent');
   els.forEach(function (e) { e.classList.add('reveal'); });
   if ('IntersectionObserver' in window) {
     var io = new IntersectionObserver(function (items) {
