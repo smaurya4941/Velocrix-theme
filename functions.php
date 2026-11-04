@@ -7,6 +7,7 @@ define( 'VX_URI', get_template_directory_uri() );
 require get_template_directory() . '/inc/content.php';
 require get_template_directory() . '/inc/customizer.php';
 require get_template_directory() . '/inc/forms.php';
+require get_template_directory() . '/inc/registration.php';
 
 /** Theme setup */
 function vx_setup() {

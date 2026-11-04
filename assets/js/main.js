@@ -67,4 +67,47 @@
     }, { threshold: 0.6 });
     cs.forEach(function (c) { co.observe(c); });
   }
+
+  // Registration form: photo preview, live validation, submit only after both consents
+  var rf = d.querySelector('.reg-form');
+  if (rf) {
+    var btn = d.getElementById('reg-submit'),
+        agree = rf.querySelector('[name=agree]'), decl = rf.querySelector('[name=declare]'),
+        photo = rf.querySelector('#photo'), drop = rf.querySelector('.photo-drop'), prev = rf.querySelector('.pd-prev');
+
+    function consentOk() { return agree.checked && decl.checked; }
+    function syncBtn() { btn.disabled = !consentOk(); }
+    agree.addEventListener('change', syncBtn);
+    decl.addEventListener('change', syncBtn);
+    syncBtn();
+
+    if (photo) {
+      photo.addEventListener('change', function () {
+        var f = photo.files && photo.files[0];
+        if (!f) { drop.classList.remove('has-img'); prev.hidden = true; return; }
+        if (!/^image\/(jpeg|png)$/.test(f.type) || f.size > 2 * 1024 * 1024) {
+          alert('Please choose a JPG or PNG photo up to 2 MB.');
+          photo.value = ''; drop.classList.remove('has-img'); prev.hidden = true; return;
+        }
+        var r = new FileReader();
+        r.onload = function (e) { prev.src = e.target.result; prev.hidden = false; drop.classList.add('has-img'); };
+        r.readAsDataURL(f);
+      });
+    }
+
+    rf.addEventListener('submit', function (e) {
+      var bad = null;
+      rf.querySelectorAll('[required]').forEach(function (el) {
+        var ok = true;
+        if (el.type === 'radio') { ok = !!rf.querySelector('[name="' + el.name + '"]:checked'); }
+        else if (el.type === 'checkbox') { ok = el.checked; }
+        else { ok = el.value.trim() !== ''; }
+        if (el.type === 'tel' && ok) ok = el.value.replace(/\D/g, '').length >= 10;
+        el.classList.toggle('is-bad', !ok && el.type !== 'radio' && el.type !== 'checkbox');
+        if (!ok && !bad) bad = el;
+      });
+      if (bad) { e.preventDefault(); bad.scrollIntoView({ behavior: 'smooth', block: 'center' }); if (bad.focus) bad.focus({ preventScroll: true }); }
+    });
+    rf.addEventListener('input', function (e) { e.target.classList.remove('is-bad'); });
+  }
 })();

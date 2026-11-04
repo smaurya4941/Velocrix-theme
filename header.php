@@ -18,7 +18,7 @@
 			<?php endif; ?>
 		</a>
 		<nav class="nav" id="nav" aria-label="Primary"><?php vx_primary_menu(); ?>
-			<a class="btn btn-sm nav-cta" href="<?php echo esc_url( home_url( '/admission/' ) ); ?>">Join Academy</a>
+			<a class="btn btn-sm nav-cta" href="<?php echo esc_url( home_url( '/registration/' ) ); ?>">Join Academy</a>
 		</nav>
 		<button class="nav-toggle" aria-expanded="false" aria-controls="nav" aria-label="Menu"><span></span><span></span><span></span></button>
 	</div>

@@ -13,7 +13,7 @@ function vx_register_enquiry_cpt() {
 		'show_ui'      => true,
 		'menu_icon'    => 'dashicons-email-alt',
 		'menu_position'=> 25,
-		'supports'     => array( 'title', 'editor' ),
+		'supports'     => array( 'title', 'editor', 'thumbnail' ),
 		'capability_type' => 'post',
 		'capabilities' => array( 'create_posts' => 'do_not_allow' ),
 		'map_meta_cap' => true,
