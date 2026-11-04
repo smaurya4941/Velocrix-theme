@@ -162,3 +162,17 @@ function vx_plan_card( $p, $url, $btn = 'Choose Plan', $unit = '', $badge = '' )
 	</article>
 	<?php
 }
+
+/** Coaches list shared by About and Team pages. Add real coaches here (name, role, photo URL). */
+function vx_coaches() {
+	return array(
+		array(
+			'name'  => vx( 'vx_mentor_name', 'Ms. Meghna Singh' ),
+			'role'  => vx( 'vx_mentor_role', 'International Cricketer' ) . ' & Mentor',
+			'photo' => vx( 'vx_mentor_img' ),
+			'soon'  => false,
+		),
+		array( 'name' => 'Head Coach', 'role' => 'Profile coming soon', 'photo' => '', 'soon' => true ),
+		array( 'name' => 'Coach',      'role' => 'Profile coming soon', 'photo' => '', 'soon' => true ),
+	);
+}

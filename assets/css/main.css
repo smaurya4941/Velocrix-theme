@@ -621,3 +621,4 @@ a:hover>.round-btn,.round-btn:hover{background:var(--lime);transform:rotate(45de
   .post-content{font-size:1.15rem}
 }
 .post-content figure img{aspect-ratio:16/9;object-fit:cover}
+.team-note{margin-top:40px}

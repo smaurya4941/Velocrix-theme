@@ -84,27 +84,7 @@ get_template_part( 'template-parts/faq', null, array( 'faqs' => array(
 			<h2>Power Your Game with<br>Our Professionals</h2>
 		</div>
 		<div class="cc-grid">
-			<?php
-			$coaches = array(
-				array( $mentor_name, $mentor_role . ' &amp; Mentor', $mentor_img, true ),
-				array( 'Head Coach', 'Profile coming soon', '', false ),
-				array( 'Coach', 'Profile coming soon', '', false ),
-			);
-			foreach ( $coaches as $c ) : ?>
-			<article class="cc<?php echo $c[3] ? '' : ' soon'; ?>">
-				<div class="cc-photo">
-					<?php if ( $c[2] ) : ?><img src="<?php echo esc_url( $c[2] ); ?>" alt="<?php echo esc_attr( $c[0] ); ?>" loading="lazy">
-					<?php else : ?><svg class="sil" viewBox="0 0 200 240" aria-hidden="true"><circle cx="100" cy="85" r="48"/><path d="M20 240c0-56 36-92 80-92s80 36 80 92z"/></svg><?php endif; ?>
-					<div class="cc-social">
-						<?php foreach ( array( 'instagram', 'facebook', 'youtube' ) as $s ) if ( $u = vx( "vx_$s", '#' ) ) echo '<a href="' . esc_url( $u ) . '" target="_blank" rel="noopener" aria-label="' . esc_attr( ucfirst( $s ) ) . '">' . vx_icon( $s ) . '</a>'; // phpcs:ignore ?>
-					</div>
-				</div>
-				<a class="cc-name" href="<?php echo esc_url( $contact ); ?>">
-					<span><b><?php echo esc_html( $c[0] ); ?></b><small><?php echo wp_kses_post( $c[1] ); ?></small></span>
-					<span class="round-btn light"><?php echo vx_icon( 'arrow' ); // phpcs:ignore ?></span>
-				</a>
-			</article>
-			<?php endforeach; ?>
+			<?php foreach ( vx_coaches() as $c ) get_template_part( "template-parts/coach-card", null, $c ); ?>
 		</div>
 	</div>
 </section>
