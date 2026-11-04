@@ -174,6 +174,7 @@ function vx_coaches() {
 			'role'  => vx( 'vx_mentor_role', 'International Cricketer' ) . ' & Mentor',
 			'photo' => vx( 'vx_mentor_img' ),
 			'soon'  => false,
+			'url'   => home_url( '/meghna-singh/' ),
 		),
 		array( 'name' => 'Head Coach', 'role' => 'Profile coming soon', 'photo' => '', 'soon' => true ),
 		array( 'name' => 'Coach',      'role' => 'Profile coming soon', 'photo' => '', 'soon' => true ),

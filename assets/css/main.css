@@ -626,3 +626,19 @@ a:hover>.round-btn,.round-btn:hover{background:var(--lime);transform:rotate(45de
 .site-header .brand{flex-direction:row;align-items:center;gap:12px}
 .brand-logo{width:auto;height:46px}
 .brand-txt{display:flex;flex-direction:column;line-height:1}
+
+/* ===== Mentor page ===== */
+.profile-grid{display:grid;grid-template-columns:minmax(0,480px) 1fr;gap:clamp(40px,7vw,100px);align-items:center}
+.profile-photo{position:relative;border-radius:var(--r);overflow:hidden;background:var(--ink)}
+.profile-photo img{width:100%;aspect-ratio:4/5;object-fit:cover;object-position:top;display:block}
+.profile-tag{position:absolute;left:20px;right:20px;bottom:20px;background:rgba(70,76,88,.55);border:1px solid rgba(255,255,255,.26);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-radius:var(--r-sm);padding:18px 22px;color:#fff}
+.profile-tag b{display:block;font-size:1.4rem;font-weight:500}
+.profile-tag small{color:var(--lime);font-size:1rem}
+.profile-body h2{margin:0 0 16px}
+.profile-body .chip{margin-bottom:24px}
+.big-text.sm{font-size:clamp(1.2rem,1.7vw,1.6rem);line-height:1.5;margin-bottom:28px}
+.profile-facts{margin:0 0 30px;border-top:1px solid rgba(11,11,13,.14)}
+.profile-facts li{display:grid;grid-template-columns:130px 1fr;gap:20px;padding:16px 0;border-bottom:1px solid rgba(11,11,13,.14)}
+.profile-facts span{color:#6b6e75;font-size:.95rem}
+.profile-facts b{font-weight:500;font-size:1.1rem}
+@media (max-width:900px){.profile-grid{grid-template-columns:1fr}.profile-photo{max-width:440px}.profile-facts li{grid-template-columns:1fr;gap:4px}}
