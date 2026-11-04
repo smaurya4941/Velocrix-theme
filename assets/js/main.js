@@ -1,10 +1,11 @@
 /* Velocrix theme: small vanilla JS (no libraries) */
 (function () {
   'use strict';
-  document.documentElement.classList.add('js');
+  var d = document;
+  d.documentElement.classList.add('js');
 
   // Mobile menu
-  var t = document.querySelector('.nav-toggle'), n = document.getElementById('nav');
+  var t = d.querySelector('.nav-toggle'), n = d.getElementById('nav');
   if (t && n) {
     t.addEventListener('click', function () {
       var o = n.classList.toggle('open');
@@ -12,27 +13,47 @@
     });
   }
 
+  // Header turns solid after scrolling
+  var h = d.querySelector('.site-header');
+  function onScroll() { if (h) h.classList.toggle('scrolled', window.scrollY > 60); }
+  onScroll();
+  window.addEventListener('scroll', onScroll, { passive: true });
+
+  // Accordion (one open at a time)
+  d.querySelectorAll('.acc').forEach(function (acc) {
+    acc.addEventListener('click', function (e) {
+      var btn = e.target.closest('.acc-head');
+      if (!btn) return;
+      var item = btn.parentElement, wasOpen = item.classList.contains('is-open');
+      acc.querySelectorAll('.acc-item').forEach(function (i) {
+        i.classList.remove('is-open');
+        i.querySelector('.acc-head').setAttribute('aria-expanded', 'false');
+      });
+      if (!wasOpen) { item.classList.add('is-open'); btn.setAttribute('aria-expanded', 'true'); }
+    });
+  });
+
   // Reveal on scroll
-  var els = document.querySelectorAll('.card,.photo-card,.plan,.step,.sec-head,.stats>div,.coach');
+  var els = d.querySelectorAll('.stat-card,.about-media,.prog-col,.fac,.steps li,.blog-feat,.blog-item,.sec-head,.card,.plan,.photo-card,.coach');
   els.forEach(function (e) { e.classList.add('reveal'); });
   if ('IntersectionObserver' in window) {
     var io = new IntersectionObserver(function (items) {
       items.forEach(function (i) { if (i.isIntersecting) { i.target.classList.add('in'); io.unobserve(i.target); } });
-    }, { threshold: 0.12 });
+    }, { threshold: 0.1 });
     els.forEach(function (e) { io.observe(e); });
   } else { els.forEach(function (e) { e.classList.add('in'); }); }
 
   // Count-up numbers
-  var cs = document.querySelectorAll('[data-count]');
+  var cs = d.querySelectorAll('[data-count]');
   if ('IntersectionObserver' in window && cs.length) {
     var co = new IntersectionObserver(function (items) {
       items.forEach(function (i) {
         if (!i.isIntersecting) return;
-        var el = i.target, end = parseInt(el.dataset.count, 10), cur = 0, step = Math.max(1, Math.ceil(end / 30));
-        var id = setInterval(function () { cur += step; if (cur >= end) { cur = end; clearInterval(id); } el.textContent = cur; }, 40);
+        var el = i.target, end = parseInt(el.dataset.count, 10), cur = 0, step = Math.max(1, Math.ceil(end / 25));
+        var id = setInterval(function () { cur += step; if (cur >= end) { cur = end; clearInterval(id); } el.textContent = cur; }, 45);
         co.unobserve(el);
       });
     }, { threshold: 0.6 });
-    cs.forEach(function (c) { c.textContent = '0'; co.observe(c); });
+    cs.forEach(function (c) { co.observe(c); });
   }
 })();

@@ -72,14 +72,26 @@ function vx_handle_enquiry() {
 	$back = isset( $_POST['_back'] ) ? esc_url_raw( wp_unslash( $_POST['_back'] ) ) : home_url( '/' );
 	$back = wp_validate_redirect( $back, home_url( '/' ) );
 
+	$f = function ( $k ) { return isset( $_POST[ $k ] ) ? sanitize_text_field( wp_unslash( $_POST[ $k ] ) ) : ''; };
+	$is_news = ( $f( 'form_type' ) === 'newsletter' );
+	$qk      = $is_news ? 'nl' : 'vx';
+	$anchor  = $is_news ? '#newsletter' : '#form';
+
 	if ( ! isset( $_POST['vx_nonce'] ) || ! wp_verify_nonce( $_POST['vx_nonce'], 'vx_enquiry' ) ) {
-		wp_safe_redirect( add_query_arg( 'vx', 'err', $back ) ); exit;
+		wp_safe_redirect( add_query_arg( $qk, 'err', $back ) . $anchor ); exit;
 	}
 	if ( ! empty( $_POST['website'] ) ) { // honeypot: bots fill this
-		wp_safe_redirect( add_query_arg( 'vx', 'sent', $back ) ); exit;
+		wp_safe_redirect( add_query_arg( $qk, 'sent', $back ) . $anchor ); exit;
 	}
 
-	$f = function ( $k ) { return isset( $_POST[ $k ] ) ? sanitize_text_field( wp_unslash( $_POST[ $k ] ) ) : ''; };
+	if ( $is_news ) {
+		$email = sanitize_email( $f( 'email' ) );
+		if ( ! is_email( $email ) ) { wp_safe_redirect( add_query_arg( 'nl', 'err', $back ) . '#newsletter' ); exit; }
+		wp_insert_post( array( 'post_type' => 'vx_enquiry', 'post_status' => 'publish', 'post_title' => "Newsletter: $email", 'post_content' => "Newsletter signup\nEmail: $email" ) );
+		wp_mail( vx( 'vx_email', get_option( 'admin_email' ) ), '[Velocrix] New newsletter signup', "Email: $email" );
+		wp_safe_redirect( add_query_arg( 'nl', 'sent', $back ) . '#newsletter' ); exit;
+	}
+
 	$name  = $f( 'name' );
 	$phone = $f( 'phone' );
 	if ( $name === '' || strlen( preg_replace( '/\D/', '', $phone ) ) < 8 ) {

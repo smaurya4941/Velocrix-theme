@@ -30,7 +30,8 @@ function vx_customize( $wp ) {
 	/* Hero */
 	$wp->add_section( 'vx_hero', array( 'title' => 'Velocrix: Home Hero', 'priority' => 32 ) );
 	$add( 'vx_hero', 'vx_hero_eyebrow', 'Small top text', 'Under the mentorship of Ms. Meghna Singh' );
-	$add( 'vx_hero', 'vx_hero_title',   'Headline (wrap lime words in *stars*)', 'Champions are not born, *they are trained!*' );
+	$add( 'vx_hero', 'vx_hero_title',   'Headline (one line per row; a lime dot is added after each)', "Champions are not born\nThey are trained", 'textarea', 'sanitize_textarea_field' );
+	$add( 'vx_hero', 'vx_video',        'Intro video link (YouTube/MP4). Empty = no play button', '', 'url', 'esc_url_raw' );
 	$add( 'vx_hero', 'vx_hero_sub',     'Sub text', 'Expert coaching, scientific training and all-round development for young cricketers.', 'textarea', 'sanitize_textarea_field' );
 	$add( 'vx_hero', 'vx_hero_btn',     'Button text', 'Join the Academy' );
 	$wp->add_setting( 'vx_hero_img', array( 'default' => '', 'sanitize_callback' => 'esc_url_raw' ) );

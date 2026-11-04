@@ -2,8 +2,8 @@
 	<div class="container cta-inner">
 		<div>
 			<span class="eyebrow">Your cricket journey starts here</span>
-			<h2>Ready to <span class="lime">train like a champion?</span></h2>
+			<h2>Ready to train like a champion?</h2>
 		</div>
-		<a class="btn" href="<?php echo esc_url( home_url( '/admission/' ) ); ?>">Register Now</a>
+		<a class="btn btn-dark" href="<?php echo esc_url( home_url( '/admission/' ) ); ?>">Join Our Academy</a>
 	</div>
 </section>
