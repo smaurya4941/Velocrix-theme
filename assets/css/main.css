@@ -370,3 +370,65 @@ a:hover>.round-btn,.round-btn:hover{background:var(--lime);transform:rotate(45de
   .join-photo{padding:20px}
   .acc-head{padding:20px 0}
 }
+
+/* ===== About page ===== */
+.hero-about .ha-row{display:flex;justify-content:space-between;align-items:flex-end;gap:40px;flex-wrap:wrap}
+.hero-about h1{margin:0;max-width:980px}
+.hero-about h1 i.dot{color:var(--lime);font-style:normal}
+.ha-text{max-width:470px;font-size:1.3rem;color:#e0e2e6;margin:0 0 14px}
+.vm-grid{display:grid;grid-template-columns:1fr 1.1fr 1.1fr;gap:40px;align-items:stretch}
+.vm-left{display:flex;flex-direction:column;justify-content:space-between;gap:30px}
+.vm-title{font-size:clamp(1.7rem,2.6vw,2.6rem);font-weight:500;line-height:1.2;margin:0}
+.vm-left .pills{margin:0;max-width:440px}
+.vm-card{position:relative;display:block;border-radius:var(--r);overflow:hidden;min-height:440px;color:#fff;background:var(--ink)}
+.vm-card img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .5s}
+.vm-card:hover img{transform:scale(1.05)}
+.vm-card .round-btn{position:absolute;top:40px;right:40px;z-index:2}
+.vm-cap{position:absolute;left:0;right:0;bottom:0;padding:40px;z-index:1}
+.vm-card.photo .vm-cap{background:linear-gradient(transparent,rgba(11,11,13,.9));padding-top:110px}
+.vm-cap h3{font-size:clamp(1.8rem,2.6vw,2.6rem);margin-bottom:12px}
+.vm-cap p{margin:0;color:#d3d5da;font-size:1.15rem;max-width:380px}
+.vm-card.dk{background:var(--ink2)}
+.impact .imp-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:stretch}
+.imp-photo{position:relative;border-radius:var(--r);overflow:hidden;min-height:520px}
+.imp-photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.imp-body{display:flex;flex-direction:column;justify-content:space-between;gap:40px}
+.imp-body h2{margin:0}
+.imp-line{height:1px;background:rgba(255,255,255,.18);position:relative;margin-bottom:40px}
+.imp-line::before{content:"";position:absolute;left:0;top:0;height:1px;width:34%;background:var(--lime)}
+.imp-stats{display:flex;gap:clamp(24px,5vw,70px);flex-wrap:wrap}
+.imp-stats b{display:block;font:500 clamp(3.4rem,6vw,5.4rem)/1 var(--font)}
+.imp-stats small{font-size:1.2rem;color:#c7c9cf}
+.faq-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 80px;align-items:start}
+.faq-grid .acc-head{font-size:clamp(1.3rem,2vw,2rem);padding:26px 0}
+.faq-grid .acc-body p{font-size:1.1rem}
+.faq-more{margin-top:40px;font-size:1.15rem}.faq-more a{color:var(--ink);text-decoration:underline}
+.cc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:40px}
+.cc-photo{position:relative;aspect-ratio:460/563;border-radius:var(--r);background:var(--tint);overflow:hidden;display:flex;align-items:flex-end;justify-content:center}
+.cc-photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top}
+.cc-photo .sil{width:62%;fill:rgba(11,11,13,.1)}
+.cc-photo::after{content:"";position:absolute;inset:0;background:linear-gradient(transparent 40%,rgba(183,230,0,.95));opacity:0;transition:opacity .35s}
+.cc:hover .cc-photo::after{opacity:1}
+.cc-social{position:absolute;left:0;right:0;bottom:30px;display:flex;justify-content:center;gap:14px;z-index:2;opacity:0;transform:translateY(14px);transition:.35s}
+.cc:hover .cc-social,.cc:focus-within .cc-social{opacity:1;transform:none}
+.cc-social a{width:60px;height:60px;border-radius:50%;background:rgba(11,11,13,.82);color:#fff;display:grid;place-items:center;transition:.25s}
+.cc-social a:hover{background:#fff;color:#000}
+.cc-name{display:flex;justify-content:space-between;align-items:center;gap:20px;background:var(--ink2);color:#fff;border-radius:var(--r);padding:30px 32px;margin-top:30px}
+.cc-name b{display:block;font-size:clamp(1.4rem,2vw,1.9rem);font-weight:500;line-height:1.15}
+.cc-name small{color:#b6b8bf;font-size:1.05rem}
+.cc-name .round-btn{width:58px;height:58px}
+.cc.soon .cc-name b{color:#c7c9cf}
+@media (max-width:980px){
+  .vm-grid,.imp-grid,.faq-grid{grid-template-columns:1fr}
+  .vm-card{min-height:380px}
+  .imp-photo{min-height:380px}
+  .cc-grid{grid-template-columns:1fr 1fr}
+  .faq-grid{gap:0}
+}
+@media (max-width:640px){
+  .cc-grid{grid-template-columns:1fr}
+  .vm-cap{padding:26px}.vm-card .round-btn{top:20px;right:20px;width:54px;height:54px}
+  .ha-text{font-size:1.1rem}
+  .cc-social{opacity:1;transform:none;bottom:16px}.cc-social a{width:48px;height:48px}
+}
+.hero-about{background-position:center bottom,center bottom,center bottom}
