@@ -19,7 +19,7 @@ get_template_part( 'template-parts/hero-page', null, $hero );
 			<?php if ( have_posts() ) : ?>
 				<?php while ( have_posts() ) : the_post(); get_template_part( 'template-parts/post-row' ); endwhile; ?>
 				<?php if ( $GLOBALS['wp_query']->max_num_pages > 1 ) :
-					$prev = get_previous_posts_page_link(); $next = get_next_posts_page_link(); $paged = max( 1, get_query_var( 'paged' ) ); ?>
+					$paged = max( 1, get_query_var( "paged" ) ); $prev = get_previous_posts_page_link(); $next = ( $paged < $GLOBALS["wp_query"]->max_num_pages ) ? get_next_posts_page_link() : ""; ?>
 					<nav class="pg-btns" aria-label="Pagination">
 						<a class="btn<?php echo $paged > 1 ? '' : ' is-off'; ?>" <?php echo $paged > 1 ? 'href="' . esc_url( $prev ) . '"' : 'aria-disabled="true"'; ?>>&lsaquo; Prev</a>
 						<a class="btn<?php echo $next ? '' : ' is-off'; ?>" <?php echo $next ? 'href="' . esc_url( $next ) . '"' : 'aria-disabled="true"'; ?>>Next &rsaquo;</a>
