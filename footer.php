@@ -89,7 +89,7 @@
 
 	<div class="container copy">
 		<span>&copy; <?php echo esc_html( gmdate( 'Y' ) ); ?> Velocrix Cricket Academy. All rights reserved.</span>
-		<span class="copy-assoc">In association with <img src="<?php echo esc_url( VX_URI . '/assets/img/sarvottam-logo.png' ); ?>" alt="Sarvottam International School" width="400" height="100" loading="lazy"></span>
+		<span class="copy-assoc">In association with <img src="<?php echo esc_url( vx_asset( 'assets/img/sarvottam-logo.png' ) ); ?>" alt="Sarvottam International School" width="400" height="100" loading="lazy"></span>
 	</div>
 </footer>
 

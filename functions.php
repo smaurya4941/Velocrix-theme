@@ -1,7 +1,7 @@
 <?php
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-define( 'VX_VER', '1.0.4' );
+define( 'VX_VER', '1.0.5' );
 define( 'VX_URI', get_template_directory_uri() );
 
 require get_template_directory() . '/inc/content.php';
@@ -10,6 +10,7 @@ require get_template_directory() . '/inc/forms.php';
 require get_template_directory() . '/inc/registration.php';
 require get_template_directory() . '/inc/hardening.php';
 require get_template_directory() . '/inc/setup.php';
+require get_template_directory() . '/inc/services.php';
 
 /** Theme setup */
 function vx_setup() {
@@ -207,4 +208,11 @@ function vx_coaches() {
 		array( 'name' => 'Head Coach', 'role' => 'Profile coming soon', 'photo' => '', 'soon' => true ),
 		array( 'name' => 'Coach',      'role' => 'Profile coming soon', 'photo' => '', 'soon' => true ),
 	);
+}
+
+/** Asset URL with a file-modified version, so replaced images never get stuck in browser cache */
+function vx_asset( $path ) {
+	$file = get_template_directory() . '/' . ltrim( $path, '/' );
+	$v    = file_exists( $file ) ? filemtime( $file ) : VX_VER;
+	return VX_URI . '/' . ltrim( $path, '/' ) . '?v=' . $v;
 }
