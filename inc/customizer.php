@@ -18,6 +18,7 @@ function vx_customize( $wp ) {
 	$add( 'vx_contact', 'vx_phone',   'Primary phone',   '+91 879 644 7595' );
 	$add( 'vx_contact', 'vx_phone2',  'Secondary phone', '+91 7017810766' );
 	$add( 'vx_contact', 'vx_email',   'Email (enquiries are sent here)', '', 'email', 'sanitize_email' );
+	$add( 'vx_contact', 'vx_notify_email', 'Deliver form emails to (private; leave empty to use the email above)', '', 'email', 'sanitize_email' );
 	$add( 'vx_contact', 'vx_address', 'Address', 'Sarvottam International School, Sector 10 Campus, Greater Noida West', 'textarea', 'sanitize_textarea_field' );
 	$add( 'vx_contact', 'vx_hours',   'Timings', 'Mon - Sat: 6:00 AM - 8:00 PM' );
 	$add( 'vx_contact', 'vx_map',     'Google Maps embed URL (src only)', '', 'url', 'esc_url_raw' );

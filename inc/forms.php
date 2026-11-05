@@ -117,7 +117,7 @@ function vx_handle_enquiry() {
 		$email = sanitize_email( $f( 'email' ) );
 		if ( ! is_email( $email ) ) { wp_safe_redirect( add_query_arg( 'nl', 'err', $back ) . '#newsletter' ); exit; }
 		wp_insert_post( array( 'post_type' => 'vx_enquiry', 'post_status' => 'publish', 'post_title' => "Newsletter: $email", 'post_content' => "Newsletter signup\nEmail: $email" ) );
-		wp_mail( vx( 'vx_email', get_option( 'admin_email' ) ), '[Velocrix] New newsletter signup', "Email: $email" );
+		wp_mail( vx_notify_to(), '[Velocrix] New newsletter signup', "Email: $email" );
 		wp_safe_redirect( add_query_arg( 'nl', 'sent', $back ) . '#newsletter' ); exit;
 	}
 
@@ -148,7 +148,7 @@ function vx_handle_enquiry() {
 		'post_content' => $body,
 	) );
 
-	$to = vx( 'vx_email', get_option( 'admin_email' ) );
+	$to = vx_notify_to();
 	$headers = array();
 	if ( $email ) $headers[] = 'Reply-To: ' . $name . ' <' . $email . '>';
 	wp_mail( $to, "[Velocrix] New $type enquiry: $name", $body, $headers );

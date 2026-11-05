@@ -172,7 +172,7 @@ function vx_handle_registration() {
 	}
 
 	// ---- emails
-	$to  = vx( 'vx_email', get_option( 'admin_email' ) );
+	$to  = vx_notify_to();
 	$hdr = array();
 	if ( $data['email'] ) $hdr[] = 'Reply-To: ' . $data['name'] . ' <' . $data['email'] . '>';
 	wp_mail( $to, "[Velocrix] New registration $ref: " . $data['name'], implode( "\n", $lines ) . ( $attach ? "\nPhoto: attached" : '' ), $hdr, $attach );

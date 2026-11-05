@@ -47,3 +47,14 @@ add_action( 'wp_head', function () {
 	echo '<meta property="og:site_name" content="Velocrix Cricket Academy">' . "\n";
 	echo '<meta property="og:image" content="' . esc_url( VX_URI . '/assets/img/training-1.jpg' ) . '">' . "\n";
 }, 1 );
+
+/**
+ * Where form notifications are delivered. Defaults to the public contact email, but can be
+ * pointed at any inbox (Customizer > Velocrix: Contact > "Deliver form emails to") without
+ * changing the email shown on the website.
+ */
+function vx_notify_to() {
+	$n = trim( (string) get_theme_mod( 'vx_notify_email', '' ) );
+	if ( $n && is_email( $n ) ) return $n;
+	return vx( 'vx_email', get_option( 'admin_email' ) );
+}
