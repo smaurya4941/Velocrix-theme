@@ -1,7 +1,7 @@
 <?php
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-define( 'VX_VER', '1.0.6' );
+define( 'VX_VER', '1.0.7' );
 define( 'VX_URI', get_template_directory_uri() );
 
 require get_template_directory() . '/inc/content.php';

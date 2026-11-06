@@ -13,7 +13,7 @@ $map     = vx( 'vx_map' ) ?: 'https://maps.google.com/maps?q=' . rawurlencode( $
 <?php
 ob_start(); ?>
 <div class="connect-card">
-	<h3>Let&rsquo;s Connect!</h3>
+	<h2 class="cc-title">Let&rsquo;s Connect!</h2>
 	<div class="connect-icons">
 		<?php foreach ( array( "instagram" => "Instagram", "facebook" => "Facebook", "youtube" => "YouTube", "linkedin" => "LinkedIn" ) as $k => $label ) : ?>
 			<?php if ( $cu = vx( "vx_$k" ) ) : ?><a href="<?php echo esc_url( $cu ); ?>" target="_blank" rel="noopener" aria-label="<?php echo esc_attr( $label ); ?>"><?php echo vx_icon( $k ); // phpcs:ignore ?></a><?php endif; ?>

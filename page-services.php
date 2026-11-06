@@ -17,7 +17,8 @@ $services = vx_services();
 ?>
 <section class="section dark programs">
 	<div class="container">
-		<div class="prog-grid">
+		<h2 class="sr-only">Our services</h2>
+			<div class="prog-grid">
 			<?php foreach ( $services as $i => $s ) : $s[4] = ( $i === 1 ) ? 1 : 0;
 				$url = home_url( $s[3] );
 				$im  = '<a class="prog-img" href="' . esc_url( $url ) . '" aria-label="' . esc_attr( $s[0] ) . '"><img src="' . esc_url( $img . $s[2] ) . '" alt="" loading="lazy" width="800" height="800"><span class="round-btn light">' . vx_icon( 'arrow' ) . '</span></a>';

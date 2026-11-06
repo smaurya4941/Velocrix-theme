@@ -12,7 +12,7 @@ $title_lines = array_filter( array_map( 'trim', explode( "\n", vx( 'vx_hero_titl
 <!-- 1. HERO -->
 <section class="hero" style="--hero:url('<?php echo esc_url( $hero ); ?>')">
 	<div class="container hero-inner">
-		<span class="eyebrow light"><?php echo esc_html( vx( 'vx_hero_eyebrow', 'Under the mentorship of Ms. Meghna Singh' ) ); ?></span>
+		<span class="eyebrow light"><?php echo esc_html( vx( 'vx_hero_eyebrow', 'Cricket Academy in Noida · Mentored by Ms. Meghna Singh' ) ); ?></span>
 		<h1>
 			<?php foreach ( $title_lines as $ln ) echo '<span class="hl">' . esc_html( $ln ) . '<i>.</i></span>'; ?>
 		</h1>
@@ -21,7 +21,7 @@ $title_lines = array_filter( array_map( 'trim', explode( "\n", vx( 'vx_hero_titl
 				<img src="<?php echo esc_url( $img . 'prog-1.jpg' ); ?>" alt="Young cricketers training with their coach" width="312" height="250" fetchpriority="high">
 				<div>
 					<small class="lime">Admissions Open</small>
-					<h3>Velocrix Cricket Academy</h3>
+					<p class="ev-t">Velocrix Cricket Academy</p>
 					<ul>
 						<li><?php echo vx_icon( 'pin' ); // phpcs:ignore ?> Sarvottam International School, Sector 10 Campus, GNW</li>
 						<li><?php echo vx_icon( 'calendar' ); // phpcs:ignore ?> <?php echo esc_html( str_replace( '.', '', explode( '.', vx( 'vx_status', 'Registrations are open. Early bird discount available.' ) )[1] ?? 'Early bird discount available' ) ); ?></li>

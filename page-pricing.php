@@ -20,7 +20,8 @@ get_template_part( 'template-parts/hero-page', null, array(
 <!-- 2. PRICING (tabs) -->
 <section class="section pricing-sec" id="plans">
 	<div class="container">
-		<div class="p-tabs" role="tablist" aria-label="Pricing categories">
+		<h2 class="sr-only">Training plans and registration fee</h2>
+			<div class="p-tabs" role="tablist" aria-label="Pricing categories">
 			<button class="p-tab is-active" role="tab" aria-selected="true" aria-controls="tab-plans" id="t-plans">Training Plans</button>
 			<button class="p-tab" role="tab" aria-selected="false" aria-controls="tab-reg" id="t-reg">Registration</button>
 		</div>

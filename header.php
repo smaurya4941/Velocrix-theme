@@ -12,7 +12,7 @@
 
 <header class="site-header" id="top">
 	<div class="bar">
-		<a class="brand" href="<?php echo esc_url( home_url( '/' ) ); ?>" aria-label="Velocrix Cricket Academy">
+		<a class="brand" href="<?php echo esc_url( home_url( '/' ) ); ?>">
 			<?php if ( has_custom_logo() ) : the_custom_logo(); else : ?>
 				<img class="brand-logo" src="<?php echo esc_url( VX_URI . '/assets/img/logo-mark.png' ); ?>" alt="" width="54" height="50"><span class="brand-txt"><span class="brand-mark">VELOCRIX</span><span class="brand-sub">Cricket Academy</span></span>
 			<?php endif; ?>

@@ -37,7 +37,7 @@
 		?>
 		<div class="foot-grid">
 			<div class="foot-brand">
-				<a class="brand" href="<?php echo esc_url( home_url( '/' ) ); ?>" aria-label="Velocrix Cricket Academy">
+				<a class="brand" href="<?php echo esc_url( home_url( '/' ) ); ?>">
 					<img class="brand-logo" src="<?php echo esc_url( VX_URI . '/assets/img/logo-mark.png' ); ?>" alt="" width="54" height="50"><span class="brand-txt"><span class="brand-mark">VELOCRIX</span><span class="brand-sub">Cricket Academy</span></span>
 				</a>
 				<p class="foot-tag">Where Dreams Meet Discipline.</p>
@@ -85,7 +85,7 @@
 		</div>
 	</div>
 
-	<div class="foot-word" aria-hidden="true">VELOCRIX</div>
+	<div class="foot-word" aria-hidden="true"></div>
 
 	<div class="container copy">
 		<span>&copy; <?php echo esc_html( gmdate( 'Y' ) ); ?> Velocrix Cricket Academy. All rights reserved.</span>

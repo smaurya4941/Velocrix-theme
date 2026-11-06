@@ -23,8 +23,9 @@ get_template_part( 'template-parts/faq-split', null, array(
 	'faqs'  => array(
 		array( 'How do I join the academy?', 'Fill in the registration form on our Join Now page, or call us on ' . $phone . ' or email ' . $email . ' and our team will guide you.' ),
 		array( 'Who can join Velocrix?', 'Aspiring cricketers who want to build skill, fitness and discipline. The 1 Month plan is ideal for beginners to explore and build the basics. Contact us to find the right plan.' ),
+		array( 'Is Velocrix a cricket academy in Noida?', 'Velocrix Cricket Academy is in Greater Noida West (also called Noida Extension), at ' . $address . '.' ),
+		array( 'Who founded Velocrix Cricket Academy?', $mentor . ', an Indian international cricketer, founded Velocrix and mentors the academy.' ),
 		array( 'Where is the academy located?', $address . '.' ),
-		array( 'Who mentors the academy?', 'Velocrix functions under the mentorship of ' . $mentor . ', ' . $role . '.' ),
 	),
 ) );
 
