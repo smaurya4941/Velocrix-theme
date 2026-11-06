@@ -3,6 +3,7 @@
  * FAQ group: title + intro on the left, accordion on the right (FAQ page).
  * Args: title, text, faqs (array of [q, a]), tint (bool, tinted background), open (bool, first item open)
  */
+if ( function_exists( 'vx_seo_collect_faq' ) && ! empty( $args['faqs'] ) ) vx_seo_collect_faq( $args['faqs'] );
 $a = wp_parse_args( $args, array( 'title' => '', 'text' => '', 'faqs' => array(), 'tint' => false, 'open' => true ) );
 ?>
 <section class="section faq-split<?php echo $a['tint'] ? ' tint' : ''; ?>">

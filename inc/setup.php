@@ -108,6 +108,7 @@ function vx_run_setup() {
 		$log[] = 'FAILED to create the menu';
 	}
 
+	if ( function_exists( 'vx_seo_sync' ) ) { vx_seo_sync(); $log[] = 'SEO titles and descriptions applied'; }
 	flush_rewrite_rules( false );
 	$log[] = 'Permalinks refreshed';
 	return $log;

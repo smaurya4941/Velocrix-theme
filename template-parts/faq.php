@@ -2,6 +2,7 @@
 /**
  * Shared FAQ accordion (two columns). Args: eyebrow, title, faqs (array of columns of [q, a]), more_url
  */
+if ( function_exists( 'vx_seo_collect_faq' ) && ! empty( $args['faqs'] ) ) vx_seo_collect_faq( $args['faqs'] );
 $a = wp_parse_args( $args, array( 'eyebrow' => 'FAQ', 'title' => 'Get the Answers You Need', 'faqs' => array(), 'more_url' => home_url( '/contact/' ) ) );
 ?>
 <section class="section faq-sec">
