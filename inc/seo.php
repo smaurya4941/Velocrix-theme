@@ -375,7 +375,7 @@ add_action( 'wp_head', function () {
 		}
 	}
 	$e = vx_seo_current();
-	if ( $e && $e[3] && file_exists( get_template_directory() . '/assets/img/' . $e[3] ) && ( ! is_front_page() || ! vx( 'vx_hero_img' ) ) ) {
+	if ( $e && $e[3] && file_exists( get_template_directory() . '/assets/img/' . $e[3] ) && ( ! is_front_page() || ! vx( 'vx_hero_img' ) ) && ! ( function_exists( 'vx_is_landing' ) && vx_is_landing() ) ) {
 		echo '<link rel="preload" as="image" href="' . esc_url( VX_URI . '/assets/img/' . $e[3] ) . '" fetchpriority="high">' . "\n";
 	}
 }, 3 );

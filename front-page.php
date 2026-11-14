@@ -1,4 +1,9 @@
 <?php
+// Home page set to the "Velocrix Animated Home" template: render the animated one-page instead of the classic home.
+if ( function_exists( 'vx_is_landing' ) && vx_is_landing() ) {
+	require get_template_directory() . '/' . VX_LANDING_TEMPLATE;
+	return;
+}
 get_header();
 $img  = VX_URI . '/assets/img/';
 $hero = vx( 'vx_hero_img' ) ?: $img . 'training-2.jpg';

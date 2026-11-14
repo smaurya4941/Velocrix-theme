@@ -1,0 +1,9 @@
+/* Local fixes on top of the original styles (main.css is kept identical to the live site). */
+
+/* Header CTA was being squeezed by flexbox and clipped to "BOOK A FREE TR". */
+header.top .btn-primary { flex-shrink: 0; }
+
+/* WordPress admin bar (logged-in users only): keep the sticky header below it. */
+.admin-bar .top { top: 32px; }
+@media screen and (max-width: 782px) { .admin-bar .top { top: 46px; } }
+@media screen and (max-width: 600px) { .admin-bar .top { top: 0; } }
