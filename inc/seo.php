@@ -13,7 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
  * Everything uses home_url(), so the domain can change (velocrixx.ureligible.com -> velocrix.com) with no edits.
  */
 
-const VX_SEO_VERSION = 6; // bump when titles/descriptions below change; the next admin visit re-syncs them
+const VX_SEO_VERSION = 7; // bump when titles/descriptions below change; the next admin visit re-syncs them
 
 /** slug => title (full, brand included), description, social image, hero image (for preload) */
 function vx_seo_map() {
@@ -455,9 +455,21 @@ function vx_seo_tsf_settings() {
 		'knowledge_linkedin' => (string) vx( 'vx_linkedin' ),
 		'knowledge_youtube'  => (string) vx( 'vx_youtube' ),
 	);
+	// Home title/description: like the page fields, replace text we wrote earlier but never an editor's own.
+	$prev    = (array) get_option( 'vx_seo_tsf_managed', array() );
+	$retired = array( // texts older versions wrote before this tracking existed
+		'Velocrix Cricket Academy at Sarvottam International School, Sector 10, Greater Noida West. Professional coaching founded by Indian cricketer Meghna Singh.',
+	);
 	foreach ( $set as $k => $v ) {
-		if ( $k === 'homepage_tagline' || ! isset( $o[ $k ] ) || $o[ $k ] === '' || $o[ $k ] === 0 ) $o[ $k ] = $v;
+		$cur  = isset( $o[ $k ] ) ? $o[ $k ] : '';
+		$ours = in_array( $k, array( 'homepage_title', 'homepage_description' ), true )
+			&& ( ( isset( $prev[ $k ] ) && $prev[ $k ] === $cur ) || in_array( $cur, $retired, true ) );
+		if ( $k === 'homepage_tagline' || $cur === '' || $cur === 0 || $ours ) $o[ $k ] = $v;
 	}
+	foreach ( array( 'homepage_title', 'homepage_description' ) as $k ) {
+		if ( $o[ $k ] === $set[ $k ] ) $prev[ $k ] = $set[ $k ]; // remember what we wrote
+	}
+	update_option( 'vx_seo_tsf_managed', $prev );
 	update_option( THE_SEO_FRAMEWORK_SITE_OPTIONS, $o );
 	return true;
 }
