@@ -16,11 +16,11 @@ get_template_part( 'template-parts/hero-page', null, array(
 ?>
 
 <!-- 2. WHO WE ARE -->
-<section class="section about-intro">
+<section class="section about-intro" data-hx-gfx="icons">
 	<div class="container ai-grid">
 		<div class="ai-head">
 			<span class="eyebrow">Who We Are</span>
-			<h2>Nurturing the Next<br>Generation of Cricketers</h2>
+			<h2>Nurturing the Next<br><em>Generation of Cricketers</em></h2>
 		</div>
 		<div class="ai-body">
 			<p class="big-text sm">Velocrix Cricket Academy, founded by <?php echo esc_html( $founder['name'] ); ?> and mentored by Indian international cricketer <?php echo esc_html( $mentor_name ); ?>, aims to nurture the next generation of cricketers through professional coaching, structured training and a performance-driven approach.</p>
@@ -30,10 +30,10 @@ get_template_part( 'template-parts/hero-page', null, array(
 </section>
 
 <!-- 3. VISION & MISSION -->
-<section class="section vm">
+<section class="section vm" data-hx-gfx="seams">
 	<div class="container vm-grid">
 		<div class="vm-left">
-			<h3 class="vm-title">Where players train, grow, and compete.</h3>
+			<h3 class="vm-title">Where players train, grow, and <em>compete.</em></h3>
 			<div class="pills"><?php foreach ( array( 'Cricketing Fundamentals', 'Fitness', 'Mental Resilience', 'Discipline', 'Sportsmanship' ) as $p ) echo '<span>' . esc_html( $p ) . '</span>'; ?></div>
 		</div>
 		<a class="vm-card photo" href="<?php echo esc_url( home_url( '/services/' ) ); ?>">
@@ -52,7 +52,7 @@ get_template_part( 'template-parts/hero-page', null, array(
 <?php get_template_part( 'template-parts/about-founder' ); ?>
 
 <!-- 5. OUR MENTOR (Meghna Singh) -->
-<section class="section profile founder-tease" id="mentor">
+<section class="section profile founder-tease" id="mentor" data-hx-gfx="icons">
 	<div class="container profile-grid">
 		<?php // Poster photo chosen by the owner (2026-11-21): name plate and badge are part of the image, so no overlay tag. ?>
 		<div class="profile-photo is-poster">
@@ -60,7 +60,7 @@ get_template_part( 'template-parts/hero-page', null, array(
 		</div>
 		<div class="profile-body">
 			<span class="eyebrow">Our Mentor</span>
-			<h2>Experience of the<br>Highest Level</h2>
+			<h2>Experience of the<br><em>Highest Level</em></h2>
 			<p class="big-text sm"><?php echo esc_html( $mentor_name ); ?> has represented India across Test, ODI and T20I formats, and brings that international and domestic experience to every Velocrix player.</p>
 			<div class="btn-row">
 				<a class="btn" href="<?php echo esc_url( home_url( '/meghna-singh/' ) ); ?>">Meet Our Mentor</a>
@@ -73,7 +73,7 @@ get_template_part( 'template-parts/hero-page', null, array(
 <?php get_template_part( 'template-parts/partners' ); ?>
 
 <!-- 3. IMPACT -->
-<section class="section dark impact">
+<section class="section dark impact" data-hx-gfx="icons">
 	<div class="container imp-grid">
 		<div class="imp-photo">
 			<img src="<?php echo esc_url( $img . 'prog-1.jpg' ); ?>" alt="Young cricketers training together" loading="lazy" width="800" height="800">
@@ -82,7 +82,7 @@ get_template_part( 'template-parts/hero-page', null, array(
 		<div class="imp-body">
 			<div>
 				<span class="eyebrow">Our Impact</span>
-				<h2>Strong Culture.<br>Real Growth.</h2>
+				<h2>Strong Culture.<br><em>Real Growth.</em></h2>
 			</div>
 			<div>
 				<div class="imp-line"></div>
@@ -98,7 +98,7 @@ get_template_part( 'template-parts/hero-page', null, array(
 
 <?php
 // 4. FAQ (shared part)
-get_template_part( 'template-parts/faq', null, array( 'faqs' => array(
+get_template_part( 'template-parts/faq', null, array( 'title' => 'Get the <em>Answers You Need</em>', 'gfx' => 'icons', 'faqs' => array(
 	array(
 		array( 'What do players get at Velocrix?', 'Expert coaching, scientific training, fitness and skill development, and teamwork and character building, all in a professional training environment.' ),
 		array( 'Is the registration fee separate?', 'Yes. Registration is a one-time fee of ₹' . vx( 'vx_regfee', '1,999' ) . ' and training plans are paid separately. Early bird discount is available and terms & conditions apply, so please confirm current terms with us.' ),
@@ -113,11 +113,11 @@ get_template_part( 'template-parts/faq', null, array( 'faqs' => array(
 ?>
 
 <!-- 5. COACHES -->
-<section class="section coaches">
+<section class="section coaches" data-hx-gfx="icons">
 	<div class="container">
 		<div class="sec-head center">
 			<span class="eyebrow">Our Coaches</span>
-			<h2>Power Your Game with<br>Our Professionals</h2>
+			<h2>Power Your Game with<br><em>Our Professionals</em></h2>
 		</div>
 		<div class="cc-grid">
 			<?php foreach ( vx_coaches() as $c ) get_template_part( "template-parts/coach-card", null, $c ); ?>

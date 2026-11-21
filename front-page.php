@@ -47,7 +47,7 @@ $title_lines = array_filter( array_map( 'trim', explode( "\n", vx( 'vx_hero_titl
 </section>
 
 <!-- 2. ABOUT -->
-<section class="section about">
+<section class="section about" data-hx-gfx="icons">
 	<div class="container">
 		<div class="about-top">
 			<div>
@@ -77,11 +77,11 @@ $title_lines = array_filter( array_map( 'trim', explode( "\n", vx( 'vx_hero_titl
 <?php get_template_part( 'template-parts/home/nets' ); ?>
 
 <!-- 3. WHY CHOOSE US -->
-<section class="section why">
+<section class="section why" data-hx-gfx="icons">
 	<div class="container why-grid">
 		<div>
 			<span class="eyebrow">Why Choose Us</span>
-			<h2>Experience the Difference</h2>
+			<h2>Experience the <em>Difference</em></h2>
 			<a class="btn" href="<?php echo esc_url( $join ); ?>">Book a Trial</a>
 		</div>
 		<div class="acc">
@@ -101,11 +101,11 @@ $title_lines = array_filter( array_map( 'trim', explode( "\n", vx( 'vx_hero_titl
 <?php get_template_part( 'template-parts/partners' ); ?>
 
 <!-- 4. SERVICES -->
-<section class="section dark programs">
+<section class="section dark programs" data-hx-gfx="icons">
 	<div class="container">
 		<div class="sec-head center">
 			<span class="eyebrow">Our Services</span>
-			<h2>Services Built to<br>Grow Your Game</h2>
+			<h2>Services Built to<br><em>Grow Your Game</em></h2>
 		</div>
 		<div class="prog-grid">
 			<?php
@@ -128,7 +128,7 @@ $title_lines = array_filter( array_map( 'trim', explode( "\n", vx( 'vx_hero_titl
 <section class="section facilities">
 	<div class="container">
 		<div class="fac-head">
-			<div><span class="eyebrow">Our Facilities</span><h2>Your Ground to<br>Train and Grow</h2></div>
+			<div><span class="eyebrow">Our Facilities</span><h2>Your Ground to<br><em>Train and Grow</em></h2></div>
 			<p>From first-time drills to match-ready sessions &mdash; Velocrix offers a safe, professional space for every young cricketer.</p>
 		</div>
 		<div class="fac-top">
@@ -162,11 +162,11 @@ $title_lines = array_filter( array_map( 'trim', explode( "\n", vx( 'vx_hero_titl
 ) ); ?>
 
 <!-- 7. HOW TO JOIN -->
-<section class="section join">
+<section class="section join" data-hx-gfx="seams">
 	<div class="container">
 		<div class="sec-head center">
 			<span class="eyebrow">How To Join</span>
-			<h2>Start Your Journey<br>with Velocrix</h2>
+			<h2>Start Your Journey<br><em>with Velocrix</em></h2>
 		</div>
 		<div class="join-grid">
 			<div class="join-photo" style="background-image:url('<?php echo esc_url( $img . 'coach-lg.jpg' ); ?>')">
@@ -195,11 +195,11 @@ $title_lines = array_filter( array_map( 'trim', explode( "\n", vx( 'vx_hero_titl
 <!-- 8. BLOG -->
 <?php $q = new WP_Query( array( 'posts_per_page' => 4, 'ignore_sticky_posts' => true ) );
 if ( $q->have_posts() ) : ?>
-<section class="section blog">
+<section class="section blog" data-hx-gfx="icons">
 	<div class="container">
 		<div class="sec-head center">
 			<span class="eyebrow">Blog &amp; Articles</span>
-			<h2>Inspiring Stories to<br>Grow Your Game</h2>
+			<h2>Inspiring Stories to<br><em>Grow Your Game</em></h2>
 		</div>
 		<div class="blog-grid">
 			<?php $n = 0; while ( $q->have_posts() ) : $q->the_post(); $n++;

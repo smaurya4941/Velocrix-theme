@@ -11,7 +11,7 @@ $mentor = vx( 'vx_mentor_name', 'Ms. Meghna Singh' );
 $parts  = explode( ' ', $f['name'], 2 );
 $first  = $parts[0];
 ?>
-<section class="hx hx-founder" id="founder" aria-labelledby="founder-h" data-hx-gfx="contour">
+<section class="hx hx-founder" id="founder" aria-labelledby="founder-h" data-hx-gfx="icons">
 	<div class="container fd-grid">
 		<div class="fd-portrait hx-rv">
 			<div class="fd-photo"><img src="<?php echo esc_url( $f['img'] ); ?>" alt="<?php echo esc_attr( $f['name'] ); ?>, founder of Velocrix Cricket Academy" width="1003" height="1254" loading="lazy"></div>

@@ -11,7 +11,7 @@ $vx_faqs = array(
 	array( 'Is the registration fee separate?', 'Yes. Registration is a one-time fee of ₹' . vx( 'vx_regfee', '1,999' ) . ' and training plans are paid separately. Early bird discount is available and terms & conditions apply, so please confirm current terms with us.' ),
 	array( 'How do I register?', 'Fill in the registration form on our Join Now page, call us on ' . vx( 'vx_phone' ) . ' or email ' . vx( 'vx_email' ) . ' and our team will guide you.' ),
 	array( 'Where is the academy located?', vx( 'vx_address' ) . '.' ),
-	array( 'Who mentors the academy?', 'Velocrix was founded by ' . $vx_name . ', an Indian international cricketer, who also mentors the academy.' ),
+	array( 'Who founded and mentors the academy?', 'Velocrix was founded by ' . vx_founder()['name'] . ', who runs the academy day to day. ' . $vx_name . ', an Indian international cricketer, mentors the coaching programme.' ),
 );
 if ( function_exists( 'vx_seo_collect_faq' ) ) vx_seo_collect_faq( $vx_faqs );
 ?>

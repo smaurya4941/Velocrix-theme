@@ -49,6 +49,13 @@ function vx_assets() {
 			wp_enqueue_style( 'vx-founder', VX_URI . '/assets/css/founder.css', array( 'vx-home-extras' ), VX_VER . '.' . filemtime( get_template_directory() . '/assets/css/founder.css' ) );
 		}
 	}
+	// Classic refresh layer (paper backgrounds, line art, gradient headings, card polish) on the pages in vx_refresh_pages().
+	if ( ! $is_animated && vx_is_refresh_page() ) {
+		// line art + reveal helpers come from home-extras (already queued on Home/About; enqueue is a no-op then)
+		wp_enqueue_style( 'vx-home-extras', VX_URI . '/assets/css/home-extras.css', array( 'vx-main' ), VX_VER . '.' . filemtime( get_template_directory() . '/assets/css/home-extras.css' ) );
+		wp_enqueue_script( 'vx-home-extras', VX_URI . '/assets/js/home-extras.js', array(), VX_VER . '.' . filemtime( get_template_directory() . '/assets/js/home-extras.js' ), array( 'in_footer' => true, 'strategy' => 'defer' ) );
+		wp_enqueue_style( 'vx-refresh', VX_URI . '/assets/css/refresh.css', array( 'vx-main', 'vx-motion', 'vx-home-extras' ), VX_VER . '.' . filemtime( get_template_directory() . '/assets/css/refresh.css' ) );
+	}
 }
 add_action( 'wp_enqueue_scripts', 'vx_assets' );
 
@@ -67,6 +74,25 @@ function vx_founder() {
 		'img'      => vx( 'vx_founder_img' ) ?: vx_landing_uri( 'media/kirti-sharma.jpg' ),
 	);
 }
+
+/**
+ * Classic pages that get the refresh design layer (assets/css/refresh.css): page slugs, or 'front' for the classic Home.
+ * 2026-11-21: Home + About approved; the other pages wait for the client's approval.
+ */
+function vx_refresh_pages() {
+	return array( 'front', 'about' );
+}
+function vx_is_refresh_page() {
+	if ( function_exists( 'vx_is_landing' ) && vx_is_landing() ) return false;
+	$pages = vx_refresh_pages();
+	if ( is_front_page() ) return in_array( 'front', $pages, true );
+	$slugs = array_values( array_diff( $pages, array( 'front' ) ) );
+	return $slugs ? is_page( $slugs ) : false; // is_page( array() ) would match every page
+}
+add_filter( 'body_class', function ( $c ) {
+	if ( vx_is_refresh_page() ) $c[] = 'vx-refresh';
+	return $c;
+} );
 
 /** "Book a free trial" link: WhatsApp chat with a ready message (the number comes from Customizer > Phone). */
 function vx_trial_url() {

@@ -1,11 +1,11 @@
 <?php
 /**
- * Shared FAQ accordion (two columns). Args: eyebrow, title, faqs (array of columns of [q, a]), more_url
+ * Shared FAQ accordion (two columns). Args: eyebrow, title, faqs (array of columns of [q, a]), more_url, gfx (optional line-art background, see assets/js/home-extras.js)
  */
 if ( function_exists( 'vx_seo_collect_faq' ) && ! empty( $args['faqs'] ) ) vx_seo_collect_faq( $args['faqs'] );
-$a = wp_parse_args( $args, array( 'eyebrow' => 'FAQ', 'title' => 'Get the Answers You Need', 'faqs' => array(), 'more_url' => home_url( '/contact/' ) ) );
+$a = wp_parse_args( $args, array( 'eyebrow' => 'FAQ', 'title' => 'Get the Answers You Need', 'faqs' => array(), 'more_url' => home_url( '/contact/' ), 'gfx' => '' ) );
 ?>
-<section class="section faq-sec">
+<section class="section faq-sec"<?php echo $a['gfx'] ? ' data-hx-gfx="' . esc_attr( $a['gfx'] ) . '"' : ''; ?>>
 	<div class="container">
 		<div class="sec-head center">
 			<span class="eyebrow"><?php echo esc_html( $a['eyebrow'] ); ?></span>

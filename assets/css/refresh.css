@@ -1,0 +1,143 @@
+/* Classic refresh layer: gives the original Velocrix sections the look of the animated design.
+   Scoped to body.vx-refresh (pages in vx_refresh_pages(), functions.php): Home + About.
+   Ingredients: warm paper backgrounds + lime line art (home-extras.js, data-hx-gfx), kicker labels,
+   two-tone gradient headings (<em>), hairline-bordered cards with soft shadows and hover lift. */
+
+.vx-refresh{
+  --paper:#FAFBF7; --tint:#F3F8E4; --olive:#5E7A00; --olive-2:#4E6600;
+  --hair:rgba(94,122,0,.22); --hair-dk:rgba(183,230,0,.28);
+  --sh:0 1px 1px rgba(11,11,13,.04),0 10px 30px -12px rgba(11,11,13,.16);
+  --sh-hi:0 2px 4px rgba(11,11,13,.05),0 30px 70px -24px rgba(11,11,13,.32);
+  --ease:cubic-bezier(.2,.8,.2,1);
+  --grad:linear-gradient(115deg,#445900 0%,#5E7A00 40%,#9CC800 55%,#4E6600 100%);
+  --grad-dk:linear-gradient(115deg,#9CC800,#E6F8A8 45%,#B7E600);
+}
+
+/* ---------- section rhythm: paper / white / tint / ink ---------- */
+/* Home: about, why, facilities, blog on white; join on paper */
+.vx-refresh .section.about:not(.dark),.vx-refresh .section.why:not(.dark),.vx-refresh .section.facilities:not(.dark),.vx-refresh .section.blog:not(.dark){background:#fff}
+.vx-refresh .section:not(.dark){background:var(--paper)}
+.vx-refresh .section.profile.founder-tease:not(.dark),.vx-refresh .section.coaches:not(.dark){background:#fff}
+.vx-refresh [data-hx-gfx]{position:relative;isolation:isolate;overflow:clip}
+.vx-refresh [data-hx-gfx]>.container{position:relative;z-index:1}
+.vx-refresh .section+.section:not(.dark):not(.hx){border-top:1px solid rgba(94,122,0,.08)}
+
+/* ---------- labels: "• Our Mentor" becomes "—— OUR MENTOR" ---------- */
+.vx-refresh .eyebrow{gap:14px;font-size:.74rem;font-weight:600;letter-spacing:.32em;text-transform:uppercase;color:var(--olive)}
+.vx-refresh .eyebrow::before{width:34px;height:1px;border-radius:0;box-shadow:none;background:linear-gradient(90deg,transparent,var(--olive))}
+.vx-refresh .sec-head.center .eyebrow::after{content:"";width:34px;height:1px;background:linear-gradient(270deg,transparent,var(--olive))}
+.vx-refresh .dark .eyebrow,.vx-refresh .page-hero .eyebrow,.vx-refresh .eyebrow.light{color:#B7E600}
+.vx-refresh .dark .eyebrow::before,.vx-refresh .page-hero .eyebrow::before,.vx-refresh .eyebrow.light::before{background:linear-gradient(90deg,transparent,#B7E600)}
+
+/* ---------- two-tone headings ---------- */
+.vx-refresh h2 em,.vx-refresh h3 em{font-style:normal;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.vx-refresh .dark h2 em{background-image:var(--grad-dk)}
+.vx-refresh .section h2{letter-spacing:-.01em}
+
+/* ---------- Who we are ---------- */
+.vx-refresh .about-intro .big-text{color:#2E3238}
+.vx-refresh .about-intro .ai-body>p:not(.big-text){padding-left:18px;border-left:2px solid #B7E600}
+
+/* ---------- Vision & Mission ---------- */
+.vx-refresh .pills span{display:inline-flex;align-items:center;gap:10px;background:#fff;border:1px solid var(--hair);box-shadow:var(--sh);font-size:1rem;transition:background .25s,border-color .25s,transform .3s var(--ease)}
+.vx-refresh .pills span::before{content:"";width:8px;height:8px;border-radius:50%;background:#B7E600;box-shadow:0 0 0 4px rgba(183,230,0,.22)}
+.vx-refresh .pills span:hover{background:var(--tint);border-color:var(--olive);transform:translateY(-2px)}
+.vx-refresh .vm-card{border-radius:28px;box-shadow:var(--sh-hi);transition:transform .45s var(--ease),box-shadow .45s var(--ease)}
+.vx-refresh .vm-card:hover{transform:translateY(-6px)}
+.vx-refresh .vm-card.dk{background:radial-gradient(90% 70% at 100% 0%,rgba(183,230,0,.22),transparent 60%),linear-gradient(160deg,#1B1E24,#0B0B0D);border:1px solid var(--hair-dk)}
+.vx-refresh .vm-card.dk .vm-cap h3{color:#E6F8A8}
+
+/* ---------- Our Mentor ---------- */
+.vx-refresh .founder-tease .profile-body{position:relative}
+.vx-refresh .founder-tease .big-text{color:#3A3F46}
+
+/* ---------- Partners ---------- */
+.vx-refresh .partners{background:linear-gradient(180deg,var(--tint),#EAF3D2);padding:80px 0}
+.vx-refresh .partners h3{font-size:.74rem;font-weight:600;letter-spacing:.32em;text-transform:uppercase;color:var(--olive);margin-bottom:10px}
+.vx-refresh .partners .p-sub{margin:0 auto 30px;color:#4A4F57}
+.vx-refresh .partner-logo{background:#fff;border:1px solid var(--hair);border-radius:24px;padding:28px 44px 22px;box-shadow:var(--sh-hi);transition:transform .4s var(--ease)}
+.vx-refresh .partner-logo:hover{transform:translateY(-4px)}
+
+/* ---------- Impact (dark) ---------- */
+.vx-refresh .impact{background:radial-gradient(55% 70% at 100% 0%,rgba(183,230,0,.16),transparent 60%),radial-gradient(40% 60% at 0% 100%,rgba(183,230,0,.08),transparent 60%),#0B0B0D}
+.vx-refresh .imp-photo{border:1px solid var(--hair-dk);box-shadow:0 30px 70px -30px rgba(0,0,0,.8)}
+.vx-refresh .imp-stats b{background:var(--grad-dk);-webkit-background-clip:text;background-clip:text;color:transparent}
+.vx-refresh .imp-stats>div{padding-left:18px;border-left:2px solid rgba(183,230,0,.5)}
+
+/* ---------- FAQ: each question is a card ---------- */
+.vx-refresh .faq-grid{gap:0 24px}
+.vx-refresh :is(.faq-grid,.why) .acc-item{background:#fff;border:1px solid var(--hair);border-radius:18px;padding:0 22px;margin-bottom:14px;box-shadow:var(--sh);transition:border-color .3s,box-shadow .3s,transform .3s var(--ease)}
+.vx-refresh :is(.faq-grid,.why) .acc-item:hover{transform:translateY(-2px)}
+.vx-refresh :is(.faq-grid,.why) .acc-item.is-open{border-color:rgba(94,122,0,.45);box-shadow:inset 4px 0 0 #B7E600,var(--sh-hi)}
+.vx-refresh :is(.faq-grid,.why) .acc-head{padding:20px 0;font-size:clamp(1.05rem,1.4vw,1.3rem);font-weight:500}
+.vx-refresh :is(.faq-grid,.why) .acc-head svg{width:36px;height:36px;padding:8px;border-radius:50%;background:var(--tint);color:var(--ink);transition:transform .3s,background .3s}
+.vx-refresh :is(.faq-grid,.why) .acc-item.is-open .acc-head svg{background:#B7E600}
+.vx-refresh :is(.faq-grid,.why) .acc-body p{font-size:1rem;padding-bottom:22px}
+.vx-refresh .faq-more a{color:var(--olive);font-weight:600;text-decoration-color:#B7E600;text-decoration-thickness:2px;text-underline-offset:4px}
+
+/* ---------- Coaches ---------- */
+.vx-refresh .cc{transition:transform .45s var(--ease)}
+.vx-refresh .cc:hover{transform:translateY(-6px)}
+.vx-refresh .cc-photo{border-radius:24px;border:1px solid var(--hair);box-shadow:var(--sh)}
+.vx-refresh .cc.soon .cc-photo{background:radial-gradient(80% 60% at 50% 30%,#fff,transparent 70%),linear-gradient(160deg,var(--tint),#E2EFC0)}
+.vx-refresh .cc.soon .cc-photo .sil{fill:rgba(94,122,0,.2)}
+.vx-refresh .cc-name{border-radius:20px;background:linear-gradient(160deg,#1B1E24,#0B0B0D);border:1px solid var(--hair-dk);margin-top:16px;transition:border-color .3s}
+.vx-refresh .cc:hover .cc-name{border-color:#B7E600}
+
+
+/* ================= Home (front-page.php) ================= */
+/* About: stat cards + wide photo */
+.vx-refresh .about .big-text{color:#2E3238}
+.vx-refresh .stat-card{border-radius:28px;background:radial-gradient(90% 70% at 100% 0%,rgba(183,230,0,.22),transparent 60%),linear-gradient(160deg,#1B1E24,#0B0B0D);border:1px solid var(--hair-dk);box-shadow:var(--sh-hi);transition:transform .45s var(--ease),border-color .3s}
+.vx-refresh .stat-card:hover{border-color:#B7E600}
+.vx-refresh .stat-card b{background:var(--grad-dk);-webkit-background-clip:text;background-clip:text;color:transparent}
+.vx-refresh .about-media{border-radius:28px;box-shadow:var(--sh-hi)}
+
+/* Why choose us: accordion items are cards (shared with FAQ above) */
+.vx-refresh .why .acc-item{margin-bottom:14px}
+
+/* Services (dark) */
+.vx-refresh .programs{background:radial-gradient(50% 60% at 100% 0%,rgba(183,230,0,.14),transparent 60%),radial-gradient(40% 50% at 0% 100%,rgba(183,230,0,.08),transparent 60%),#0B0B0D}
+.vx-refresh .programs::before{display:none}
+.vx-refresh .prog-img{border-radius:28px;border:1px solid var(--hair-dk);box-shadow:0 30px 70px -30px rgba(0,0,0,.8)}
+.vx-refresh .prog-text{border-radius:28px;background:linear-gradient(160deg,rgba(255,255,255,.08),rgba(255,255,255,.03));border:1px solid var(--hair-dk);transition:border-color .3s,transform .45s var(--ease)}
+.vx-refresh .prog-text:hover{border-color:#B7E600;transform:translateY(-4px)}
+.vx-refresh .prog-text h3{color:#E6F8A8}
+
+/* Facilities */
+.vx-refresh .fac{border-radius:24px;box-shadow:var(--sh-hi);transition:transform .45s var(--ease)}
+.vx-refresh .fac:hover{transform:translateY(-6px)}
+.vx-refresh .fac-head p{color:#4A4F57}
+@media (max-width:640px){
+  /* the 985:437 card is only ~157px tall on a phone, so the caption ran into the arrow */
+  .vx-refresh .fac.wide{aspect-ratio:4/3}
+  .vx-refresh .fac-cap{padding:48px 20px 20px}
+}
+
+/* Mentor quote (dark split) */
+.vx-refresh .quote-split{background:radial-gradient(60% 70% at 0% 0%,rgba(183,230,0,.12),transparent 60%),#0B0B0D}
+.vx-refresh .qs-quote{color:#E8EAEE}
+
+/* How to join */
+.vx-refresh .join-photo{border-radius:28px;box-shadow:var(--sh-hi)}
+.vx-refresh .join-photo::after{border-radius:28px}
+.vx-refresh .steps li>div{flex:1;background:#fff;border:1px solid var(--hair);border-radius:18px;padding:16px 22px;box-shadow:var(--sh);transition:border-color .3s,transform .35s var(--ease)}
+.vx-refresh .steps li:hover>div{border-color:var(--olive);transform:translateX(4px)}
+.vx-refresh .steps h3{margin-top:0}
+.vx-refresh .step-n{border-radius:22px;background:linear-gradient(160deg,#1B1E24,#0B0B0D);border:1px solid var(--hair-dk);box-shadow:var(--sh)}
+.vx-refresh .steps li:not(:last-child)::before{width:0;background:none;border-left:2px dashed rgba(94,122,0,.45)}
+
+/* Blog */
+.vx-refresh .blog-feat{border-radius:28px;box-shadow:var(--sh-hi)}
+.vx-refresh .bi-img{border-radius:20px;border:1px solid var(--hair)}
+.vx-refresh .blog-item{padding:12px;border-radius:24px;transition:background .3s}
+.vx-refresh .blog-item:hover{background:var(--tint)}
+
+@media (max-width:900px){
+  .vx-refresh .faq-grid{gap:0}
+  .vx-refresh .partner-logo{padding:22px 26px 18px}
+}
+@media (prefers-reduced-motion:reduce){
+  .vx-refresh .stat-card,.vx-refresh .prog-text,.vx-refresh .fac,.vx-refresh .steps li>div,.vx-refresh .vm-card,.vx-refresh .cc,.vx-refresh .pills span,.vx-refresh :is(.faq-grid,.why) .acc-item,.vx-refresh .partner-logo{transition:none}
+  .vx-refresh .stat-card:hover,.vx-refresh .prog-text:hover,.vx-refresh .fac:hover,.vx-refresh .steps li:hover>div,.vx-refresh .vm-card:hover,.vx-refresh .cc:hover,.vx-refresh .partner-logo:hover,.vx-refresh :is(.faq-grid,.why) .acc-item:hover{transform:none}
+}

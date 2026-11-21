@@ -13,7 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
       <details><summary>Is training against the bowling machine safe?</summary><p>Helmets and pads are compulsory against the machine, and the speed is set to each child's level. A coach runs the machine at all times.</p></details>
       <details><summary>What if my child misses a month?</summary><p>Tell us in advance. If your child is away for a month, a 50% fee keeps their place. After two months away, they re-register.</p></details>
       <details><summary>Do girls and boys train together?</summary><p>Yes. Girls train in the same programme, levels and match days as every batch, mentored by a former India international. Ask about girls' cricket when you book the trial.</p></details>
-      <details><summary>What is the Training Lab on this site?</summary><p>Two 3D tools we use to explain technique: the Delivery Lab shows how pace, length, swing and seam change a ball, and the Stance Studio shows the right bat size and a balanced stance for any height. They help, but nothing replaces coaching on the ground.</p></details>
+      <details><summary>What is the Training Lab on this site?</summary><p>Free tools we use to explain the game, each on its own page: bowl a delivery or set a batting stance in 3D, play a batting game, learn the fielding positions, tour our ground, see how a session runs, check your child's level and find the right bat size. They help, but nothing replaces coaching on the ground.</p></details>
       <details><summary>Do you offer refunds?</summary><p>Fees are not refundable, so start with the monthly plan if you are unsure. You can move to a longer plan at any time.</p></details>
     </div>
   </section>

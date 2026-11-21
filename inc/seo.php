@@ -13,7 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
  * Everything uses home_url(), so the domain can change (velocrixx.ureligible.com -> velocrix.com) with no edits.
  */
 
-const VX_SEO_VERSION = 5; // bump when titles/descriptions below change; the next admin visit re-syncs them
+const VX_SEO_VERSION = 6; // bump when titles/descriptions below change; the next admin visit re-syncs them
 
 /** slug => title (full, brand included), description, social image, hero image (for preload) */
 function vx_seo_map() {
@@ -28,17 +28,17 @@ function vx_seo_map() {
 	$map = array(
 		'home' => array(
 			'Cricket Academy in Noida | Velocrix at Sarvottam School',
-			'Velocrix Cricket Academy at Sarvottam International School, Sector 10, Greater Noida West. Professional coaching founded by Indian cricketer Meghna Singh.',
+			'Velocrix Cricket Academy at Sarvottam International School, Sector 10, Greater Noida West. Founded by Kirti Sharma, mentored by Indian cricketer Meghna Singh.',
 			'training-2.jpg', 'training-2.jpg',
 		),
 		'about' => array(
-			'About Velocrix Cricket Academy | Founded by Meghna Singh',
-			'Founded by Indian international cricketer Meghna Singh, Velocrix builds cricketing fundamentals, fitness, discipline and sportsmanship in Greater Noida West.',
+			'About Velocrix Cricket Academy | Founder Kirti Sharma',
+			'Founded by Kirti Sharma and mentored by Indian international cricketer Meghna Singh, Velocrix builds fundamentals, fitness and discipline in Greater Noida West.',
 			'training-1.jpg', 'training-1.jpg',
 		),
 		'meghna-singh' => array(
-			'Meghna Singh | Indian Cricketer & Founder of Velocrix',
-			'Meghna Singh, Indian international cricketer (Test, ODI and T20I) and right-arm medium-fast bowler from Bijnor, founded Velocrix Cricket Academy.',
+			'Meghna Singh | Indian Cricketer & Mentor at Velocrix',
+			'Meghna Singh, Indian international cricketer (Test, ODI and T20I) and right-arm medium-fast bowler from Bijnor, mentors Velocrix Cricket Academy.',
 			'training-1.jpg', 'training-1.jpg',
 		),
 		'pricing' => array(
@@ -83,7 +83,7 @@ function vx_seo_map() {
 		),
 		'coaches' => array(
 			'Our Coaches & Team | Velocrix Cricket Academy',
-			'Meet the coaching team at Velocrix Cricket Academy in Greater Noida West, led by Indian international cricketer and founder Meghna Singh.',
+			'Meet the coaching team at Velocrix Cricket Academy in Greater Noida West, mentored by Indian international cricketer Meghna Singh.',
 			'hero-team.jpg', 'hero-team.jpg',
 		),
 		'faq' => array(
@@ -213,7 +213,7 @@ add_action( 'wp_head', function () {
 	if ( vx_seo_tsf() || defined( 'WPSEO_VERSION' ) || defined( 'RANK_MATH_VERSION' ) || defined( 'AIOSEO_VERSION' ) ) return;
 	$e     = vx_seo_current();
 	$title = $e ? $e[0] : wp_get_document_title();
-	$desc  = $e ? $e[1] : 'Velocrix Cricket Academy at Sarvottam International School, Greater Noida West. Professional coaching founded by Indian international cricketer Meghna Singh.';
+	$desc  = $e ? $e[1] : 'Velocrix Cricket Academy at Sarvottam International School, Greater Noida West. Founded by Kirti Sharma, mentored by Indian international cricketer Meghna Singh.';
 	if ( ! $e && is_singular() ) {
 		$ex   = has_excerpt() ? get_the_excerpt() : wp_trim_words( wp_strip_all_tags( get_the_content() ), 30, '…' );
 		$desc = $ex ? wp_strip_all_tags( $ex ) : $desc;
@@ -277,7 +277,7 @@ function vx_seo_business() {
 		'@id'         => vx_seo_business_id(),
 		'name'        => 'Velocrix Cricket Academy',
 		'alternateName' => 'Velocrix',
-		'description' => 'Cricket academy at Sarvottam International School, Sector 10 Campus, Greater Noida West, founded by Indian international cricketer Meghna Singh.',
+		'description' => 'Cricket academy at Sarvottam International School, Sector 10 Campus, Greater Noida West, founded by Kirti Sharma and mentored by Indian international cricketer Meghna Singh.',
 		'url'         => home_url( '/' ),
 		'slogan'      => 'Where Dreams Meet Discipline',
 		'logo'        => VX_URI . '/assets/img/logo-mark.png',
@@ -294,12 +294,22 @@ function vx_seo_business() {
 		),
 		'areaServed'  => array( 'Noida', 'Greater Noida', 'Greater Noida West' ),
 		'sport'       => 'Cricket',
-		'founder'     => array( '@type' => 'Person', 'name' => vx( 'vx_mentor_name', 'Meghna Singh' ), 'jobTitle' => 'Founder and Mentor' ),
+		'founder'     => vx_seo_founder_person(),
+		// the academy's mentor (Our Mentor page, #person)
+		'employee'    => array( '@type' => 'Person', '@id' => home_url( '/meghna-singh/#person' ), 'name' => vx( 'vx_mentor_name', 'Meghna Singh' ), 'jobTitle' => 'Mentor' ),
 		'parentOrganization' => array( '@type' => 'EducationalOrganization', 'name' => 'Sarvottam International School' ),
 	);
 	if ( $hrs = vx( 'vx_hours' ) ) $b['openingHours'] = $hrs;
 	if ( $same ) $b['sameAs'] = $same;
 	return $b;
+}
+
+/** Founder for structured data: Kirti Sharma (vx_founder() in functions.php). */
+function vx_seo_founder_person() {
+	$f = function_exists( 'vx_founder' ) ? vx_founder() : array( 'name' => 'Kirti Sharma', 'role' => 'Founder and director', 'ig_url' => '' );
+	$p = array( '@type' => 'Person', 'name' => $f['name'], 'jobTitle' => $f['role'] );
+	if ( ! empty( $f['ig_url'] ) ) $p['sameAs'] = array( $f['ig_url'] );
+	return $p;
 }
 
 function vx_seo_graph() {
@@ -315,7 +325,7 @@ function vx_seo_graph() {
 			'@type'       => 'Person',
 			'@id'         => home_url( '/meghna-singh/#person' ),
 			'name'        => vx( 'vx_mentor_name', 'Meghna Singh' ),
-			'jobTitle'    => 'Founder and Mentor, Velocrix Cricket Academy',
+			'jobTitle'    => 'Mentor, Velocrix Cricket Academy',
 			'description' => 'Indian international cricketer and right-arm medium-fast bowler from Bijnor, Uttar Pradesh, who has represented India in Test, ODI and T20I cricket.',
 			'image'       => vx( 'vx_mentor_img' ),
 			'nationality' => 'IN',

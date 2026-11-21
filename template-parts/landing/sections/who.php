@@ -5,7 +5,7 @@
  */
 if ( ! defined( 'ABSPATH' ) ) exit;
 $vx_name = vx( 'vx_mentor_name', 'Ms. Meghna Singh' );
-$vx_big  = 'Velocrix Cricket Academy, founded by Indian international cricketer ' . $vx_name . ', aims to nurture the next generation of cricketers through professional coaching, structured training and a performance-driven approach.';
+$vx_big  = 'Velocrix Cricket Academy, founded by ' . vx_founder()['name'] . ' and mentored by Indian international cricketer ' . $vx_name . ', aims to nurture the next generation of cricketers through professional coaching, structured training and a performance-driven approach.';
 ?>
 <section class="who-sec" id="who" aria-labelledby="who-h" data-gfx="seams">
   <div class="wrap">

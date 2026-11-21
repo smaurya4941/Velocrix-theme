@@ -24,7 +24,7 @@ get_template_part( 'template-parts/faq-split', null, array(
 		array( 'How do I join the academy?', 'Fill in the registration form on our Join Now page, or call us on ' . $phone . ' or email ' . $email . ' and our team will guide you.' ),
 		array( 'Who can join Velocrix?', 'Aspiring cricketers who want to build skill, fitness and discipline. The 1 Month plan is ideal for beginners to explore and build the basics. Contact us to find the right plan.' ),
 		array( 'Is Velocrix a cricket academy in Noida?', 'Velocrix Cricket Academy is in Greater Noida West (also called Noida Extension), at ' . $address . '.' ),
-		array( 'Who founded Velocrix Cricket Academy?', $mentor . ', an Indian international cricketer, founded Velocrix and mentors the academy.' ),
+		array( 'Who founded Velocrix Cricket Academy?', vx_founder()['name'] . ' founded Velocrix and runs the academy day to day. ' . $mentor . ', an Indian international cricketer, mentors the academy.' ),
 		array( 'Where is the academy located?', $address . '.' ),
 	),
 ) );
@@ -64,7 +64,7 @@ get_template_part( 'template-parts/faq-split', null, array(
 		array( 'What should my child bring?', 'Sports shoes, a water bottle and comfortable clothes for the trial. Once they join, they train in the white Velocrix kit, which you can buy from us.' ),
 		array( 'Is training against the bowling machine safe?', 'Helmets and pads are compulsory against the machine, and the speed is set to each child\'s level. A coach runs the machine at all times.' ),
 		array( 'Do girls and boys train together?', 'Yes. Girls train in the same programme, levels and match days as every batch, mentored by a former India international. Ask about girls\' cricket when you book the trial.' ),
-		array( 'What is the Training Lab on this site?', 'Two 3D tools we use to explain technique: the Delivery Lab shows how pace, length, swing and seam change a ball, and the Stance Studio shows the right bat size and a balanced stance for any height. They help, but nothing replaces coaching on the ground.' ),
+		array( 'What is the Training Lab on this site?', ( function_exists( 'vx_lab_tools' ) ? count( vx_lab_tools() ) : 8 ) . ' free tools we use to explain the game, each on its own page: bowl a delivery or set a batting stance in 3D, play a batting game, learn the fielding positions, tour our ground, see how a session runs, check your child\'s level and find the right bat size. They help, but nothing replaces coaching on the ground.' ),
 	),
 ) );
 

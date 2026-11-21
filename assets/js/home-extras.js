@@ -41,15 +41,6 @@
     s += '<path d="' + arc(150, 260) + '" stroke-width=".5" stroke-dasharray="1 6"/><path d="' + arc(290, 260) + '" stroke-width=".5" stroke-dasharray="1 6"/>';
     return '<svg viewBox="0 0 1600 600" preserveAspectRatio="none">' + s + '</g></svg>';
   }
-  function contour(op) {
-    var s = '<g fill="none" stroke="' + STROKE + '" stroke-width=".8" opacity="' + op + '">';
-    for (var k = 1; k <= 16; k++) {
-      var R = 26 * k, p = '';
-      for (var i = 0; i <= 180; i++) { var a = i / 180 * Math.PI * 2, w = 1 + 0.09 * Math.sin(3 * a + k * 0.4) + 0.05 * Math.sin(5 * a - k * 0.7) + 0.03 * Math.sin(9 * a + k); p += (i ? 'L' : 'M') + f(500 + Math.cos(a) * R * w * 1.15) + ' ' + f(500 + Math.sin(a) * R * w); }
-      s += '<path d="' + p + 'Z"' + (k % 4 === 0 ? ' stroke-width="1.3"' : '') + '/>';
-    }
-    return '<svg viewBox="0 0 1000 1000">' + s + '</g></svg>';
-  }
   var ICONS = {
     ball: '<circle cx="50" cy="50" r="40"/><path d="M14 34 Q50 56 86 34"/><path d="M14 44 Q50 66 86 44"/>',
     stumps: '<path d="M30 20V92M50 20V92M70 20V92"/><path d="M28 17H50M50 17H72" stroke-width="2.4"/><path d="M18 92H82"/>',
@@ -64,23 +55,24 @@
   }
   var PLACE = {
     right: 'right:-18%;top:50%;width:min(1100px,90vw);height:min(1100px,90vw);margin-top:calc(min(1100px,90vw) / -2)',
-    bl: 'left:-16%;bottom:-20%;width:min(900px,80vw);height:min(900px,80vw)',
     band: 'left:0;right:0;top:8%;width:100%;height:84%'
   };
   var par = [], tick = false;
   function decorate(host) {
     var layer = d.createElement('div'); layer.className = 'hx-gfx'; layer.setAttribute('aria-hidden', 'true');
+    var light = STROKE; if (host.classList.contains('dark')) STROKE = '#B7E600'; // bright lime on dark sections
     host.getAttribute('data-hx-gfx').split(/\s+/).forEach(function (tok) {
       var kind = tok.split(':')[0], svg = '';
       if (kind === 'icons') { layer.insertAdjacentHTML('beforeend', icons(0.45)); return; }
-      if (kind === 'field') svg = ground(0.42); else if (kind === 'seams') svg = seams(0.32); else if (kind === 'contour') svg = contour(0.25);
+      if (kind === 'field') svg = ground(0.42); else if (kind === 'seams') svg = seams(0.32);
       if (!svg) return;
       var w = d.createElement('div');
-      w.style.cssText = 'position:absolute;' + (kind === 'seams' ? PLACE.band : kind === 'contour' ? PLACE.bl : PLACE.right);
+      w.style.cssText = 'position:absolute;' + (kind === 'seams' ? PLACE.band : PLACE.right);
       w.setAttribute('data-par', kind === 'seams' ? '0.08' : '0.18');
       w.innerHTML = svg.replace('<svg ', '<svg style="width:100%;height:100%;position:static" ' + (kind === 'field' ? 'class="spin-slow" ' : ''));
       layer.appendChild(w); par.push(w);
     });
+    STROKE = light;
     host.insertBefore(layer, host.firstChild);
   }
   function runPar() {

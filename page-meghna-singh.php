@@ -10,7 +10,7 @@ $quote  = vx( 'vx_mentor_quote' );
 get_template_part( 'template-parts/hero-page', null, array(
 	'eyebrow' => 'Our Mentor',
 	'title'   => 'Mentorship That Inspires.<br>Training That Transforms',
-	'text'    => 'Velocrix Cricket Academy was founded by ' . $name . ', an Indian international cricketer who mentors every player at the academy.',
+	'text'    => $name . ', an Indian international cricketer, mentors every player at Velocrix Cricket Academy, founded by ' . vx_founder()['name'] . '.',
 	'image'   => $img . 'training-1.jpg',
 ) );
 ?>
@@ -23,12 +23,12 @@ get_template_part( 'template-parts/hero-page', null, array(
 			<div class="profile-tag"><b><?php echo esc_html( $name ); ?></b><small><?php echo esc_html( $role ); ?></small></div>
 		</div>
 		<div class="profile-body">
-			<span class="eyebrow">Founder Profile</span>
+			<span class="eyebrow">Mentor Profile</span>
 			<h2><?php echo esc_html( $name ); ?></h2>
 			<span class="chip"><?php echo esc_html( $role ); ?></span>
 			<p class="big-text sm"><?php echo esc_html( $name ); ?> is an Indian international cricketer and right-arm medium-fast bowler from Bijnor, Uttar Pradesh. She has represented India across Test, ODI and T20I formats and brings valuable international and domestic cricket experience to Velocrix Cricket Academy.</p>
 			<ul class="profile-facts">
-				<li><span>Role</span><b>Founder &amp; Mentor, Velocrix Cricket Academy</b></li>
+				<li><span>Role</span><b>Mentor, Velocrix Cricket Academy</b></li>
 				<li><span>Bowling</span><b>Right-arm medium-fast</b></li>
 				<li><span>From</span><b>Bijnor, Uttar Pradesh</b></li>
 				<li><span>Represented</span><b>India (Test, ODI, T20I), Gujarat Giants (WPL), Uttar Pradesh and Railways</b></li>

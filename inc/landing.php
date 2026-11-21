@@ -29,7 +29,7 @@ function vx_landing_optional_pages() {
  */
 function vx_landing_sections( $view = 'home' ) {
 	$map = array(
-		// Home: short overview. Only Velocrix's own (brochure) data: the Netlify "founder" section is retired; fees come from vx_plans().
+		// Home: short overview; fees come from vx_plans(). The founder (Kirti Sharma) section lives on the classic About page (template-parts/about-founder.php).
 		'home'         => array( 'hero', 'board', 'partner', 'delivery', 'moments', 'pillars', 'explore', 'fees', 'visit' ),
 		// /about/: page-about.php. All text from inc/content.php / Customizer (same facts as the classic About).
 		'about'        => array( 'page-hero', 'who', 'vision', 'pillars', 'values', 'mentor-tease', 'partner', 'impact', 'about-faq', 'cta' ),
@@ -106,7 +106,7 @@ function vx_landing_page_hero( $view ) {
 		'about'        => array(
 			'kicker' => 'About Velocrix',
 			'title'  => array( 'Where dreams', 'meet discipline.' ),
-			'lede'   => 'Founded by Indian international cricketer ' . vx( 'vx_mentor_name', 'Ms. Meghna Singh' ) . ', Velocrix nurtures the next generation of cricketers through professional coaching, structured training and a performance-driven approach.',
+			'lede'   => 'Founded by ' . vx_founder()['name'] . ' and mentored by Indian international cricketer ' . vx( 'vx_mentor_name', 'Ms. Meghna Singh' ) . ', Velocrix nurtures the next generation of cricketers through professional coaching, structured training and a performance-driven approach.',
 			'jumps'  => array( 'who' => 'Who we are', 'pillars' => 'Our pillars', 'values' => 'Our values', 'faq' => 'Questions' ),
 			'stats'  => array( array( '1', 'international mentor' ), array( '4', 'flexible plans' ), array( (string) count( vx_copy( 'pillars' ) ), 'training pillars' ) ),
 		),
