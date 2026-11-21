@@ -1,0 +1,70 @@
+/* =====================================================================
+   Velocrix typography on the animated pages (Home, About, Training, Lab).
+   Loaded LAST, after brand/fixes/pages/header/footer. Replaces the
+   original Playfair Display + Jost with the Velocrix font, Public Sans
+   (same as the classic pages, header and footer; loaded as 'vx-fonts').
+   Hand-written: safe to edit. Do not edit landing main.css.
+   ===================================================================== */
+/* specificity (0,3,1) beats main.css ':root[data-theme="dark"]' and ':root:not([data-theme="light"])' (0,2,0) */
+html:root:root:root,
+html:root:root:root[data-theme]{
+  --display:'Public Sans',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+  --body:'Public Sans',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+  --f-display:var(--display);
+  --f-body:var(--body);
+  /* same content width and side gap as the classic pages (.container: 1280px, 24px / 18px),
+     so text starts at the same place on every page and lines up with the shared header and footer */
+  --wrap:1280px;
+  --gut:24px;
+}
+@media (max-width:640px){html:root:root:root,html:root:root:root[data-theme]{--gut:18px}}
+body{font-family:var(--body)}
+
+/* Headings: Velocrix style = Public Sans, medium weight, upright, tight tracking */
+h1,h2,h3,h4{font-family:var(--display);font-style:normal;font-stretch:normal;font-weight:500;letter-spacing:-.015em}
+h1{line-height:1.02}
+h2{line-height:1.06}
+h3{line-height:1.15}
+/* the highlighted word keeps its lime/green colour but is upright, like the classic pages */
+h1 em,h2 em,h3 em,h1 i,h2 i,h3 i{font-style:normal;font-weight:500}
+
+/* everything else that asked for the old display face */
+.lede,.kicker,.btn,button,input,select,textarea{font-family:var(--body)}
+/* The old design set italics all over (table cells, labels, quotes, tickers). Velocrix text is upright;
+   only the VELOCRIX wordmark in the header stays italic, as on the classic pages. */
+body *:not(.brand-mark):not(.foot-word){font-style:normal!important}
+
+/* Home hero: Public Sans is wider than Playfair, so cap the size so "meet discipline." stays on one line */
+@media (min-width:900px){.hero h1{font-size:min(5.7vw,4.5rem)}}
+
+/* Fees rate card: keep plan names ("1 Month") on one line on phones */
+.ratecard td:first-child,.ratecard th:first-child{white-space:nowrap}
+@media (max-width:560px){.ratecard th,.ratecard td{padding-inline:10px}}
+
+/* Contrast (WCAG AA 4.5:1, flagged by Lighthouse): rate-card headings and the chat time stamp */
+.ratecard thead th{color:#4a6100}
+.ax-bubble .t{color:#5b6169}
+#rVerdictText{color:#17663b}
+#chat .bub .t{color:#666}
+
+/* Decorative line-art icons live in the page gutters (lineart-parallax.js). Where the gutters are
+   too narrow for them they would sit on the text, so they are hidden there. */
+@media (max-width:1359px){.gfx svg.float{display:none}}
+
+/* ---------- Performance: never-ending animations ----------
+   box-shadow pulses repaint on the main thread every frame. Same look, done with a ring that only
+   animates transform/opacity (runs on the GPU). */
+.wa-float{animation:none!important;box-shadow:0 14px 30px -10px rgba(0,0,0,.45)}
+.wa-float::after{content:"";position:absolute;inset:0;border-radius:inherit;border:2px solid var(--wa);opacity:0;pointer-events:none}
+.live-dot{position:relative;animation:none!important}
+.live-dot::after{content:"";position:absolute;inset:0;border-radius:50%;border:2px solid #FF4D5E;opacity:0;pointer-events:none}
+@media (prefers-reduced-motion:no-preference){
+  .wa-float::after{animation:vxRing 2.6s ease-out infinite}
+  .live-dot::after{animation:vxRing 1.6s ease-out infinite}
+}
+@keyframes vxRing{0%{transform:scale(1);opacity:.6}70%,100%{transform:scale(1.45);opacity:0}}
+/* sections that are off screen pause their animations (pages.js adds .vx-off) */
+.vx-off,.vx-off *,.vx-off *::before,.vx-off *::after{animation-play-state:paused!important}
+
+/* the big outlined name behind the hero photo */
+.bigtype{font-family:var(--display);font-style:normal;font-weight:600;letter-spacing:-.02em}

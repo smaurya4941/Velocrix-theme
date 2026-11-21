@@ -134,25 +134,7 @@
   }
 })();
 
-/* Gallery lightbox */
-(function () {
-  var items = document.querySelectorAll('.g-item');
-  if (!items.length) return;
-  items.forEach(function (a) {
-    a.addEventListener('click', function (e) {
-      e.preventDefault();
-      var o = document.createElement('div');
-      o.className = 'vx-lb';
-      o.innerHTML = '<img alt=""><button type="button" aria-label="Close">&times;</button>';
-      o.firstChild.src = a.href;
-      function close() { o.remove(); document.removeEventListener('keydown', k); }
-      function k(ev) { if (ev.key === 'Escape') close(); }
-      o.addEventListener('click', close);
-      document.addEventListener('keydown', k);
-      document.body.appendChild(o);
-    });
-  });
-})();
+/* Gallery lightbox: now in assets/js/motion.js (arrows, swipe, keyboard, counter, captions) */
 
 /* Keep the header visible for keyboard users */
 (function () {
@@ -176,4 +158,31 @@
   dlg.querySelectorAll('[data-terms-close]').forEach(function (b) { b.addEventListener('click', close); });
   dlg.addEventListener('click', function (e) { if (e.target === dlg) close(); });
   dlg.addEventListener('close', function () { document.documentElement.classList.remove('modal-open'); if (last) last.focus(); });
+})();
+
+/* Mentor video message (Our Mentor page): one button plays with sound / pauses */
+(function () {
+  var v = document.getElementById('msgVideo'), b = document.getElementById('msgPlay'), p = document.getElementById('msgPlayer');
+  if (!v || !b || !p) return;
+  function sync() {
+    var on = !v.paused;
+    p.classList.toggle('is-playing', on);
+    b.setAttribute('aria-label', on ? 'Pause the video' : 'Play the video with sound');
+    b.querySelector('.msg-lbl').textContent = on ? 'Pause' : (v.currentTime > 0 && !v.ended ? 'Resume' : 'Play with sound');
+  }
+  b.addEventListener('click', function () { if (v.paused) { v.muted = false; var r = v.play(); if (r && r.catch) r.catch(function () {}); } else v.pause(); });
+  v.addEventListener('click', function () { b.click(); });
+  ['play', 'pause', 'ended'].forEach(function (e) { v.addEventListener(e, sync); });
+})();
+
+/* Muted reels (Gallery): play while on screen, pause when scrolled away */
+(function () {
+  var vids = [].slice.call(document.querySelectorAll('video.reel-vid'));
+  if (!vids.length) return;
+  var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduce || !('IntersectionObserver' in window)) { vids.forEach(function (v) { v.controls = true; }); return; }
+  var io = new IntersectionObserver(function (es) {
+    es.forEach(function (e) { var v = e.target; if (e.isIntersecting) { v.preload = 'auto'; var r = v.play(); if (r && r.catch) r.catch(function () {}); } else v.pause(); });
+  }, { threshold: 0.4 });
+  vids.forEach(function (v) { io.observe(v); });
 })();

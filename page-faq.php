@@ -54,5 +54,19 @@ get_template_part( 'template-parts/faq-split', null, array(
 	),
 ) );
 
+// 5. PARENTS (tinted) — moved from the animated home page. Fee/refund policy answers stay out until the owner confirms them.
+get_template_part( 'template-parts/faq-split', null, array(
+	'title' => 'Parents\' Questions',
+	'text'  => 'What parents ask us most before the free trial.',
+	'tint'  => true,
+	'faqs'  => array(
+		array( 'My child has never played. Is that okay?', 'Yes. Our Beginner level is built for children who are new to the game. The free trial tells us where to start.' ),
+		array( 'What should my child bring?', 'Sports shoes, a water bottle and comfortable clothes for the trial. Once they join, they train in the white Velocrix kit, which you can buy from us.' ),
+		array( 'Is training against the bowling machine safe?', 'Helmets and pads are compulsory against the machine, and the speed is set to each child\'s level. A coach runs the machine at all times.' ),
+		array( 'Do girls and boys train together?', 'Yes. Girls train in the same programme, levels and match days as every batch, mentored by a former India international. Ask about girls\' cricket when you book the trial.' ),
+		array( 'What is the Training Lab on this site?', 'Two 3D tools we use to explain technique: the Delivery Lab shows how pace, length, swing and seam change a ball, and the Stance Studio shows the right bat size and a balanced stance for any height. They help, but nothing replaces coaching on the ground.' ),
+	),
+) );
+
 get_template_part( 'template-parts/cta' );
 get_footer();

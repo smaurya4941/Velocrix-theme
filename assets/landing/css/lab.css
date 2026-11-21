@@ -1,0 +1,66 @@
+/* Training Lab (inc/training-lab.php): tool index cards, "more tools" strip and single-tool pages.
+   Design tokens only (brand.css recolours them); fonts come from type.css, which loads after this file. */
+
+/* ---------- tool page hero: shorter, the tool follows straight away ---------- */
+.phero.phero-tool{padding-block:clamp(44px,6vw,84px) clamp(28px,4vw,48px)}
+.phero.phero-tool .phero-h{font-size:clamp(2.5rem,6vw,5.2rem)}
+.phero.phero-tool .phero-scroll{display:none}
+
+/* ---------- a tool on its own page ---------- */
+.lx-solo{padding-top:clamp(20px,3vw,40px)}
+.lx-head h2{font-size:clamp(1.8rem,3.6vw,2.8rem);font-weight:600;display:flex;gap:14px;align-items:baseline;margin:0}
+
+/* ---------- tool index (hub + Training page) ---------- */
+.lxi .wrap{display:grid;gap:clamp(28px,4vw,44px)}
+.lxi-head{margin-bottom:0}
+.lxi-head .lede{color:var(--ink-2)}
+.lxi-grid{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px;counter-reset:none}
+.lxi-card a{position:relative;display:grid;grid-template-rows:auto 1fr;height:100%;border-radius:22px;overflow:hidden;background:var(--surface);border:1px solid var(--line);color:var(--ink);text-decoration:none;box-shadow:var(--shadow);transition:transform .45s var(--ease),box-shadow .45s var(--ease),border-color .3s}
+.lxi-img{display:block;aspect-ratio:16/10;overflow:hidden;background:var(--bg-2,#EEF4DC)}
+.lxi-img img{width:100%;height:100%;object-fit:cover;display:block;transform:scale(1.02);transition:transform 1s var(--ease),filter .5s;filter:saturate(.9)}
+.lxi-body{display:grid;gap:8px;align-content:start;padding:18px 20px 20px}
+.lxi-top{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.lxi-n{font-weight:600;font-size:1.05rem;color:var(--gold)}
+.lxi-tag{font-size:.7rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;padding:5px 10px;border-radius:999px;background:var(--gold-soft,rgba(183,230,0,.14));color:var(--blue-text,#4E6600)}
+.lxi-body b{font-size:1.25rem;font-weight:600;line-height:1.2}
+.lxi-body small{font-size:.92rem;line-height:1.5;color:var(--ink-2)}
+.lxi-go{display:inline-flex;align-items:center;gap:8px;margin-top:6px;font-size:.78rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--ink)}
+.lxi-go svg{transition:transform .3s var(--ease)}
+.lxi-card a:hover,.lxi-card a:focus-visible{transform:translateY(-6px);box-shadow:var(--shadow-hi);border-color:var(--gold)}
+.lxi-card a:hover .lxi-img img,.lxi-card a:focus-visible .lxi-img img{transform:scale(1.08);filter:none}
+.lxi-card a:hover .lxi-go svg,.lxi-card a:focus-visible .lxi-go svg{transform:translateX(5px)}
+.lxi-all{margin:0;display:flex;justify-content:center}
+@media (max-width:1100px){.lxi-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media (max-width:820px){.lxi-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.lxi-body{padding:14px 14px 16px}.lxi-body b{font-size:1.08rem}}
+@media (max-width:420px){.lxi-body small{display:none}.lxi-tag{font-size:.62rem;padding:4px 8px;letter-spacing:.1em}}
+
+/* ---------- "more tools" strip (tool pages) ---------- */
+.lxm{padding-block:clamp(24px,4vw,56px)}
+.lxm-card{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:22px 40px;align-items:center;padding:clamp(22px,3.4vw,40px);border-radius:28px;background:var(--surface);border:1px solid var(--line);box-shadow:var(--shadow)}
+.lxm-head{display:grid;gap:10px}
+.lxm-head h2{font-size:clamp(1.7rem,3.2vw,2.5rem);margin:0}
+.lxm-pn{display:flex;gap:10px;flex-wrap:wrap}
+.lxm-pn a{display:inline-flex;align-items:center;gap:12px;min-height:56px;padding:10px 18px;border-radius:18px;border:1px solid var(--line);background:var(--paper);color:var(--ink);text-decoration:none;transition:background .25s,color .25s,border-color .25s,transform .3s var(--ease)}
+.lxm-pn a span{display:grid;gap:2px;line-height:1.2}
+.lxm-pn small{font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-2)}
+.lxm-pn b{font-weight:600}
+.lxm-pn a:hover,.lxm-pn a:focus-visible{background:var(--ink);color:#fff;border-color:var(--ink);transform:translateY(-2px)}
+.lxm-pn a:hover small,.lxm-pn a:focus-visible small{color:var(--gold-3,#DDF59A)}
+.lxm-list{grid-column:1/-1;list-style:none;margin:0;padding:18px 0 0;border-top:1px solid var(--line);display:flex;flex-wrap:wrap;gap:8px}
+.lxm-list a{display:inline-flex;align-items:center;gap:8px;padding:8px 14px 8px 8px;border-radius:999px;border:1px solid var(--line);color:var(--ink);text-decoration:none;font-size:.9rem;transition:background .25s,color .25s,border-color .25s}
+.lxm-list a i{font-style:normal;font-size:.68rem;font-weight:700;display:grid;place-items:center;width:26px;height:26px;border-radius:50%;background:var(--ink);color:var(--gold-2,#B7E600)}
+.lxm-list a:hover,.lxm-list a:focus-visible{border-color:var(--ink);background:var(--ink);color:#fff}
+.lxm-list a[aria-current]{background:var(--gold-2,#B7E600);border-color:var(--gold-2,#B7E600);color:#0B0B0D;font-weight:600}
+.lxm-list a[aria-current] i{background:#0B0B0D}
+.lxm-list .lxm-hub{padding:8px 16px;font-weight:600}
+@media (max-width:820px){
+  .lxm-card{grid-template-columns:minmax(0,1fr)}
+  .lxm-pn{display:grid;grid-template-columns:1fr 1fr}
+  .lxm-pn a{padding:10px 12px;gap:8px}
+  .lxm-next{justify-content:flex-end;text-align:right}
+}
+
+@media (prefers-reduced-motion:reduce){
+  .lxi-card a,.lxi-img img,.lxm-pn a{transition:none}
+  .lxi-card a:hover,.lxm-pn a:hover{transform:none}
+}

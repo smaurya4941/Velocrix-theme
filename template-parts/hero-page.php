@@ -5,7 +5,7 @@
  */
 $a = wp_parse_args( $args, array( 'eyebrow' => '', 'title' => '', 'text' => '', 'image' => '', 'class' => '', 'side' => '', 'dot' => true ) );
 ?>
-<section class="hero hero-page <?php echo esc_attr( $a['class'] ); ?>" style="--hero:url('<?php echo esc_url( $a['image'] ); ?>')">
+<section class="hero hero-page <?php echo esc_attr( $a['class'] ); ?>" style="<?php echo esc_attr( vx_bg_vars( 'hero', $a['image'] ) ); ?>">
 	<div class="container hero-inner">
 		<div class="ha-row">
 			<div>

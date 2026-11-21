@@ -3,14 +3,14 @@ get_header();
 $img         = VX_URI . '/assets/img/';
 $mentor_name = vx( 'vx_mentor_name', 'Ms. Meghna Singh' );
 $mentor_role = vx( 'vx_mentor_role', 'International Cricketer' );
-$mentor_img  = vx( 'vx_mentor_img' );
 $contact     = home_url( '/contact/' );
+$founder     = vx_founder(); // Kirti Sharma, founder and director; Meghna Singh is the mentor
 
 // 1. HERO (shared part)
 get_template_part( 'template-parts/hero-page', null, array(
 	'eyebrow' => 'About Us',
 	'title'   => 'Where Dreams<br>Meet Discipline',
-	'text'    => 'Founded by Indian international cricketer ' . $mentor_name . ', Velocrix nurtures the next generation of cricketers through professional coaching, structured training and a performance-driven approach.',
+	'text'    => 'Founded by ' . $founder['name'] . ' and mentored by Indian international cricketer ' . $mentor_name . ', Velocrix nurtures the next generation of cricketers through professional coaching, structured training and a performance-driven approach.',
 	'image'   => $img . 'training-1.jpg',
 ) );
 ?>
@@ -23,7 +23,7 @@ get_template_part( 'template-parts/hero-page', null, array(
 			<h2>Nurturing the Next<br>Generation of Cricketers</h2>
 		</div>
 		<div class="ai-body">
-			<p class="big-text sm">Velocrix Cricket Academy, founded by Indian international cricketer <?php echo esc_html( $mentor_name ); ?>, aims to nurture the next generation of cricketers through professional coaching, structured training and a performance-driven approach.</p>
+			<p class="big-text sm">Velocrix Cricket Academy, founded by <?php echo esc_html( $founder['name'] ); ?> and mentored by Indian international cricketer <?php echo esc_html( $mentor_name ); ?>, aims to nurture the next generation of cricketers through professional coaching, structured training and a performance-driven approach.</p>
 			<p>The academy focuses on developing strong cricketing fundamentals, fitness, mental resilience, discipline and sportsmanship. Combining international cricket experience with modern training methods, Velocrix aims to create an environment where aspiring players can learn, grow and prepare for competitive cricket.</p>
 		</div>
 	</div>
@@ -48,15 +48,18 @@ get_template_part( 'template-parts/hero-page', null, array(
 	</div>
 </section>
 
-<!-- 4. FOUNDER -->
-<section class="section profile founder-tease">
+<!-- 4. MEET THE FOUNDER (Kirti Sharma) -->
+<?php get_template_part( 'template-parts/about-founder' ); ?>
+
+<!-- 5. OUR MENTOR (Meghna Singh) -->
+<section class="section profile founder-tease" id="mentor">
 	<div class="container profile-grid">
-		<div class="profile-photo">
-			<img src="<?php echo esc_url( $mentor_img ); ?>" alt="<?php echo esc_attr( $mentor_name ); ?>, <?php echo esc_attr( $mentor_role ); ?>" loading="lazy" width="384" height="776">
-			<div class="profile-tag"><b><?php echo esc_html( $mentor_name ); ?></b><small>Founder &amp; <?php echo esc_html( $mentor_role ); ?></small></div>
+		<?php // Poster photo chosen by the owner (2026-11-21): name plate and badge are part of the image, so no overlay tag. ?>
+		<div class="profile-photo is-poster">
+			<img src="<?php echo esc_url( vx( 'vx_mentor_about_img' ) ?: vx_landing_uri( 'media/meghna-hero.jpg' ) ); ?>" alt="<?php echo esc_attr( $mentor_name ); ?>, India international cricketer and mentor of Velocrix Cricket Academy, holding a red cricket ball" loading="lazy" width="1090" height="1443">
 		</div>
 		<div class="profile-body">
-			<span class="eyebrow">Our Founder</span>
+			<span class="eyebrow">Our Mentor</span>
 			<h2>Experience of the<br>Highest Level</h2>
 			<p class="big-text sm"><?php echo esc_html( $mentor_name ); ?> has represented India across Test, ODI and T20I formats, and brings that international and domestic experience to every Velocrix player.</p>
 			<div class="btn-row">
@@ -104,7 +107,7 @@ get_template_part( 'template-parts/faq', null, array( 'faqs' => array(
 	array(
 		array( 'Who can join the academy?', 'Aspiring cricketers who want to build skill, fitness and discipline. The 1 Month plan is ideal for beginners to explore and build basics. Contact us to find the right plan.' ),
 		array( 'Where is the academy located?', vx( 'vx_address' ) . '.' ),
-		array( 'Who mentors the academy?', 'Velocrix was founded by ' . $mentor_name . ', an Indian international cricketer, who also mentors the academy.' ),
+		array( 'Who founded and mentors the academy?', 'Velocrix was founded by ' . $founder['name'] . ', who runs the academy day to day. ' . $mentor_name . ', an Indian international cricketer, mentors the coaching programme.' ),
 	),
 ) ) );
 ?>

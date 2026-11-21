@@ -1,0 +1,49 @@
+/* Design tokens: one palette in light and dark system modes (the design is light by intent). */
+:root,:root[data-theme="dark"]{
+  --paper:#FAFBF7; --surface:#FFFFFF; --bg-2:#F3F8E4; --line:#E4E9DA; --line-2:#CDD5BC;
+  --ink:#0B0B0D; --ink-2:#4A4F57; --blue:#0B0B0D; --blue-text:#4E6600; --band:#0B0B0D; --on-band:#F5F8EC; --on-band-2:#C5C9CF;
+  --pav:#0B0B0D; --pav-2:#16181D; --pav-3:#1F232A; --navy:#0B0B0D; --navy-2:#16181D;
+  --gold:#5E7A00; --gold-2:#B7E600; --gold-3:#DDF59A; --hair:rgba(94,122,0,.24); --gold-soft:rgba(183,230,0,.14);
+  --gold-grad:linear-gradient(115deg,#8DB800 0%,#B7E600 35%,#DDF59A 50%,#A6D400 70%,#8DB800 100%);
+  --shadow:0 1px 1px rgba(11,11,13,.04),0 10px 30px -12px rgba(11,11,13,.16);
+  --shadow-hi:0 2px 4px rgba(11,11,13,.05),0 30px 70px -24px rgba(11,11,13,.32);
+  --accent:#B7E600; --focus:#7A9E00; --glow:rgba(183,230,0,.26); --accent-line:#B7E600;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --paper:#FAFBF7; --surface:#FFFFFF; --bg-2:#F3F8E4; --line:#E4E9DA; --line-2:#CDD5BC;
+  --ink:#0B0B0D; --ink-2:#4A4F57; --blue:#0B0B0D; --blue-text:#4E6600; --band:#0B0B0D; --on-band:#F5F8EC; --on-band-2:#C5C9CF;
+  --pav:#0B0B0D; --pav-2:#16181D; --pav-3:#1F232A; --navy:#0B0B0D; --navy-2:#16181D;
+  --gold:#5E7A00; --gold-2:#B7E600; --gold-3:#DDF59A; --hair:rgba(94,122,0,.24); --gold-soft:rgba(183,230,0,.14);
+  --gold-grad:linear-gradient(115deg,#8DB800 0%,#B7E600 35%,#DDF59A 50%,#A6D400 70%,#8DB800 100%);
+  --shadow:0 1px 1px rgba(11,11,13,.04),0 10px 30px -12px rgba(11,11,13,.16);
+  --shadow-hi:0 2px 4px rgba(11,11,13,.05),0 30px 70px -24px rgba(11,11,13,.32);
+  --accent:#B7E600; --focus:#7A9E00; --glow:rgba(183,230,0,.26); --accent-line:#B7E600;
+}}
+
+/* Page ground: white with soft lime light, like the logo's lime on white */
+body{background:
+  radial-gradient(1100px 700px at 100% -5%,rgba(183,230,0,.12),transparent 60%),
+  radial-gradient(900px 600px at -10% 30%,rgba(11,11,13,.035),transparent 60%),
+  var(--paper)}
+::selection{background:#B7E600;color:#0B0B0D}
+
+/* Buttons: the site's lime call to action with black text (red stays only for the cricket ball) */
+.btn-primary{background:linear-gradient(135deg,#C9F23A,#A6D400);color:#0B0B0D;box-shadow:inset 0 0 0 1px rgba(255,255,255,.4),0 14px 34px -14px rgba(126,163,0,.75)}
+.btn-primary:hover{color:#0B0B0D;box-shadow:inset 0 0 0 1px rgba(255,255,255,.55),0 18px 36px -12px rgba(126,163,0,.85)}
+.btn-ghost{border-color:#0B0B0D}
+.btn-ghost:hover{background:#0B0B0D;color:#B7E600;border-color:#0B0B0D}
+:is(.parents,.gx,.pcta-card,footer) .btn-ghost{border-color:rgba(255,255,255,.5)}
+
+/* Engraved line art (lineart-parallax.js draws gold strokes as SVG attributes) */
+[data-gfx] g[stroke="#B8913F"]{stroke:#7A9E00}
+[data-gfx] g[stroke="#D9BC72"]{stroke:#9CC800}
+
+/* Intro: black shutters, lime flash instead of red */
+.intro .redwash{background:#B7E600}
+.intro .itag{color:#B7E600}
+
+/* Fees: selected plan row in lime instead of cherry */
+.ratecard tbody tr.sel{background:#F3F8E4}
+.ratecard tbody tr.sel td:first-child{box-shadow:inset 4px 0 0 #9CC800}
+.intro .skip{background:rgba(11,11,13,.62);color:#fff;border-color:rgba(255,255,255,.35)}
+.intro .skip:hover{background:#0B0B0D}

@@ -15,6 +15,8 @@ function vx_setup_pages() {
 		'meghna-singh'         => 'Ms. Meghna Singh',
 		'pricing'              => 'Pricing',
 		'services'             => 'Services',
+		'training'             => 'Training',
+		'training-lab'         => 'Training Lab',
 		'corporate-tournament' => 'Corporate Tournament',
 		'workshops'            => 'Workshops',
 		'guest-lectures'       => 'Guest Lectures',
@@ -48,6 +50,9 @@ function vx_run_setup() {
 		) );
 		$log[] = ( $id && ! is_wp_error( $id ) ) ? "Created page: $title" : "FAILED to create page: $title";
 	}
+
+	// 1b. Training Lab tool pages (children of /training-lab/, see inc/training-lab.php)
+	if ( function_exists( 'vx_lab_setup_pages' ) ) $log = array_merge( $log, vx_lab_setup_pages() );
 
 	// 2. Retire old pages (draft, not deleted)
 	foreach ( array( 'programs', 'facilities', 'admission', 'achievements' ) as $slug ) {
@@ -90,9 +95,14 @@ function vx_run_setup() {
 		$page( 'meghna-singh', 'Our Mentor' );
 		$page( 'pricing', 'Packages' );
 		$svc = $page( 'services', 'Services' );
+		$page( 'training', 'Training', $svc );
 		$page( 'corporate-tournament', 'Corporate Tournament', $svc );
 		$page( 'workshops', 'Workshops', $svc );
 		$page( 'guest-lectures', 'Guest Lectures', $svc );
+		$lab = $page( 'training-lab', 'Training Lab' );
+		if ( function_exists( 'vx_lab_tools' ) ) {
+			foreach ( vx_lab_tools() as $slug => $t ) $page( VX_LAB_HUB . '/' . $slug, $t['title'], $lab );
+		}
 		$res = wp_update_nav_menu_item( $mid, 0, array( 'menu-item-title' => 'Resources', 'menu-item-url' => '#', 'menu-item-type' => 'custom', 'menu-item-status' => 'publish' ) );
 		$page( 'gallery', 'Gallery', $res );
 		$page( 'coaches', 'Team', $res );
@@ -131,10 +141,10 @@ function vx_setup_screen() {
 		<?php endif; ?>
 		<p>One click to bring this site in line with the final design. It will:</p>
 		<ul style="list-style:disc;margin-left:22px">
-			<li>Create the pages that are missing: Services, Corporate Tournament, Workshops, Guest Lectures, FAQ (and the core pages if absent).</li>
+			<li>Create the pages that are missing: Services, Corporate Tournament, Workshops, Guest Lectures, FAQ, the Training Lab and one page per Training Lab tool (and the core pages if absent).</li>
 			<li>Move the retired pages (Programs, Facilities, Admission, Achievements) to <b>Draft</b>. Nothing is deleted.</li>
 			<li>Move the default <b>Sample Page</b> to the trash.</li>
-			<li>Build the menu <b>Velocrix Primary</b> (Home, About, Our Mentor, Packages, Services &#9662;, Resources &#9662;, Contact) and assign it to the Primary Menu location. Your old menu is kept.</li>
+			<li>Build the menu <b>Velocrix Primary</b> (Home, About, Our Mentor, Packages, Services &#9662; (Training, Corporate Tournament, Workshops, Guest Lectures), Training Lab &#9662; (one page per tool), Resources &#9662; (Gallery, Team, FAQ, Blog), Contact) and assign it to the Primary Menu location. Your old menu is kept.</li>
 		</ul>
 		<p>It does <b>not</b> change the content of existing pages, enquiries, users or settings. Safe to run again.</p>
 		<form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>">

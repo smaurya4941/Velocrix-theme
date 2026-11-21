@@ -121,7 +121,7 @@ function ballTextures(){
   x.save(); x.translate(W*.5, H*.29); x.scale(1,1.35);
   const gg = x.createLinearGradient(-150,0,150,0); gg.addColorStop(0,'#E9C46A'); gg.addColorStop(.5,'#FFF0B8'); gg.addColorStop(1,'#D9A93C');
   x.fillStyle = gg; x.textAlign='center';
-  x.font = 'italic 700 74px "Playfair Display", Georgia, serif'; x.fillText('Velocrix',0,0);
+  x.font = '600 74px "Public Sans", Georgia, serif'; x.fillText('Velocrix',0,0);
   x.font = '600 26px Arial, sans-serif'; x.fillText('CRICKET ACADEMY · 156 g',0,40); x.restore();
   bx.save(); bx.translate(W*.5, H*.29); bx.scale(1,1.35); bx.fillStyle='#5a5a5a'; bx.textAlign='center'; bx.font='800 76px Arial'; bx.fillText('VELOCRIX',0,0); bx.restore();
   _ballTex = {map: tex(c), bump: new THREE.CanvasTexture(b)};
@@ -165,7 +165,7 @@ function clayTexture(){
   return c;
 }
 function textSprite(text, o){
-  o = Object.assign({size:44, color:'#0B1D15', bg:'rgba(255,255,255,.95)', weight:700, font:'"Jost", Arial, sans-serif', h:0.25, pad:18, depthTest:true}, o||{});
+  o = Object.assign({size:44, color:'#0B1D15', bg:'rgba(255,255,255,.95)', weight:700, font:'"Public Sans", Arial, sans-serif', h:0.25, pad:18, depthTest:true}, o||{});
   const m = mkCanvas(8,8).getContext('2d'); m.font = o.weight+' '+o.size+'px '+o.font;
   const w = Math.ceil(m.measureText(text).width) + o.pad*2, hh = Math.round(o.size + o.pad*1.15);
   const c = mkCanvas(w, hh), x = c.getContext('2d');
@@ -272,7 +272,7 @@ function buildMachine(parent, x, z){
   [-0.2,0.2].forEach(xx => { const w = new THREE.Mesh(new THREE.CylinderGeometry(0.22,0.22,0.09,28), dark); w.rotation.z = Math.PI/2; w.position.set(xx, 2.02, 0.12); w.castShadow = true; mach.add(w); w.userData.wheel = true; });
   const chute = new THREE.Mesh(new THREE.CylinderGeometry(0.07,0.09,0.5,16), steel); chute.rotation.x = Math.PI/2.2; chute.position.set(0, 2.05, 0.4); mach.add(chute);
   const hop = new THREE.Mesh(new THREE.CylinderGeometry(0.22,0.12,0.3,20,1,true), body); hop.position.set(0, 2.32, -0.12); mach.add(hop);
-  const badge = textSprite('Velocrix', {size:44, h:0.13, color:'#D9BC72', bg:'rgba(11,51,35,.95)', font:'"Playfair Display", Georgia, serif', weight:'italic 700'}); badge.position.set(0, 1.5, 0.3); mach.add(badge);
+  const badge = textSprite('Velocrix', {size:44, h:0.13, color:'#D9BC72', bg:'rgba(11,51,35,.95)', font:'"Public Sans", Arial, sans-serif', weight:'italic 700'}); badge.position.set(0, 1.5, 0.3); mach.add(badge);
   return mach;
 }
 function buildPitch(parent){
@@ -295,7 +295,7 @@ function buildGround(parent, radius, rep){
 }
 function boards(parent, r){
   const c = mkCanvas(2048,96), x = c.getContext('2d');
-  for (let i=0;i<8;i++){ x.fillStyle = i%2 ? '#F7F1E3' : '#0B3323'; x.fillRect(i*256,0,256,96); x.fillStyle = i%2 ? '#0B3323':'#D9BC72'; x.font='italic 700 34px "Playfair Display", Georgia, serif'; x.textAlign='center'; x.textBaseline='middle'; x.fillText(i%2?'Velocrix':'Cricket Academy',i*256+128,50); }
+  for (let i=0;i<8;i++){ x.fillStyle = i%2 ? '#F7F1E3' : '#0B3323'; x.fillRect(i*256,0,256,96); x.fillStyle = i%2 ? '#0B3323':'#D9BC72'; x.font='600 34px "Public Sans", Georgia, serif'; x.textAlign='center'; x.textBaseline='middle'; x.fillText(i%2?'Velocrix':'Cricket Academy',i*256+128,50); }
   const t = tex(c, [-8,1]);
   const m = new THREE.Mesh(new THREE.CylinderGeometry(r, r, 1.1, 160, 1, true), new THREE.MeshStandardMaterial({map:t, side:THREE.BackSide, roughness:.7}));
   m.position.y = 0.55; parent.add(m);
@@ -453,7 +453,7 @@ function makeBatMesh(L){
     const sc = mkCanvas(160,640), sx = sc.getContext('2d');
     sx.fillStyle = '#0A3D24'; sx.fillRect(0,0,160,640); sx.fillStyle = '#D7192F'; sx.fillRect(0,0,160,90); sx.fillRect(0,550,160,90);
     sx.fillStyle = '#E9C46A'; sx.fillRect(0,90,160,6); sx.fillRect(0,544,160,6);
-    sx.save(); sx.translate(80,320); sx.rotate(-Math.PI/2); sx.fillStyle='#fff'; sx.font='italic 700 80px "Playfair Display", Georgia, serif'; sx.textAlign='center'; sx.textBaseline='middle'; sx.fillText('Velocrix',0,0); sx.restore();
+    sx.save(); sx.translate(80,320); sx.rotate(-Math.PI/2); sx.fillStyle='#fff'; sx.font='600 80px "Public Sans", Georgia, serif'; sx.textAlign='center'; sx.textBaseline='middle'; sx.fillText('Velocrix',0,0); sx.restore();
     makeBatMesh.mats = {
       wood: new THREE.MeshPhysicalMaterial({map:tex(wc), roughness:.5, clearcoat:.4, clearcoatRoughness:.4}),
       grip: new THREE.MeshStandardMaterial({map:tex(gc,[2,6]), roughness:.85}),

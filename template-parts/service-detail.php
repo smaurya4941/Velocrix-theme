@@ -38,6 +38,29 @@ get_template_part( 'template-parts/hero-page', null, array(
 	</div>
 </section>
 
+<?php if ( ! empty( $s['camps'] ) ) : $c = $s['camps']; ?>
+<!-- 2b. HOLIDAY CAMPS (optional, e.g. Workshops) -->
+<section class="section camps-sec" id="camps">
+	<div class="container">
+		<div class="sec-head">
+			<span class="eyebrow"><?php echo esc_html( $c[0] ); ?></span>
+			<h2><?php echo esc_html( $c[1] ); ?></h2>
+			<p class="lead"><?php echo esc_html( $c[2] ); ?></p>
+		</div>
+		<div class="camp-cards">
+			<?php foreach ( $c[3] as $camp ) : ?>
+			<article class="camp-card<?php echo $camp[3] ? ' is-next' : ''; ?>">
+				<span class="camp-when"><?php echo esc_html( $camp[0] ); ?></span>
+				<h3><?php echo esc_html( $camp[1] ); ?></h3>
+				<p><?php echo esc_html( $camp[2] ); ?></p>
+				<?php if ( $camp[3] ) : ?><a class="btn btn-sm" href="<?php echo esc_url( add_query_arg( 'interest', rawurlencode( $camp[1] ), $contact ) ); ?>">Register interest</a><?php endif; ?>
+			</article>
+			<?php endforeach; ?>
+		</div>
+	</div>
+</section>
+<?php endif; ?>
+
 <!-- 3. WHAT YOU GET -->
 <section class="section svc-why">
 	<div class="container">

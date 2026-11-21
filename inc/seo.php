@@ -13,7 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
  * Everything uses home_url(), so the domain can change (velocrixx.ureligible.com -> velocrix.com) with no edits.
  */
 
-const VX_SEO_VERSION = 3; // bump when titles/descriptions below change; the next admin visit re-syncs them
+const VX_SEO_VERSION = 5; // bump when titles/descriptions below change; the next admin visit re-syncs them
 
 /** slug => title (full, brand included), description, social image, hero image (for preload) */
 function vx_seo_map() {
@@ -25,7 +25,7 @@ function vx_seo_map() {
 	}
 	$from = $min ? 'Plans start at ₹' . number_format_i18n( $min ) . '. ' : '';
 
-	return array(
+	$map = array(
 		'home' => array(
 			'Cricket Academy in Noida | Velocrix at Sarvottam School',
 			'Velocrix Cricket Academy at Sarvottam International School, Sector 10, Greater Noida West. Professional coaching founded by Indian cricketer Meghna Singh.',
@@ -54,6 +54,16 @@ function vx_seo_map() {
 		'corporate-tournament' => array(
 			'Corporate Cricket Tournament in Noida | Velocrix',
 			'Corporate cricket tournaments for office teams at Velocrix Cricket Academy, Greater Noida West. Team matches, fair play and fun. Enquire for dates and fees.',
+			'fac-nets.jpg', 'fac-nets.jpg',
+		),
+		'training' => array(
+			'Cricket Training Programme in Noida | Velocrix',
+			'How training works at Velocrix Cricket Academy, Greater Noida West: four training days, three ability levels, a session plan and a weekly report for parents.',
+			'prog-1.jpg', 'prog-1.jpg',
+		),
+		'training-lab' => array(
+			'Cricket Training Lab in 3D | Velocrix Cricket Academy',
+			'Bowl a delivery, set a batter\'s stance, learn every fielding position and play a batting game in 3D, from Velocrix Cricket Academy, Greater Noida West.',
 			'fac-nets.jpg', 'fac-nets.jpg',
 		),
 		'workshops' => array(
@@ -97,6 +107,11 @@ function vx_seo_map() {
 			'hero-pricing.jpg', 'hero-pricing.jpg',
 		),
 	);
+	// Training Lab tool pages (inc/training-lab.php). No hero image to preload: their hero is text.
+	if ( function_exists( 'vx_lab_tools' ) ) {
+		foreach ( vx_lab_tools() as $slug => $t ) $map[ $slug ] = array( $t['seo'][0], $t['seo'][1], $t['seo'][2], '' );
+	}
+	return $map;
 }
 
 function vx_seo_tsf() {
@@ -141,6 +156,7 @@ function vx_seo_sync() {
 		$page = ( $slug === 'home' )
 			? ( get_option( 'page_on_front' ) ? get_post( (int) get_option( 'page_on_front' ) ) : null )
 			: get_page_by_path( $slug );
+		if ( ! $page && function_exists( 'vx_lab_tool' ) && vx_lab_tool( $slug ) ) $page = vx_lab_tool_page( $slug ); // child of /training-lab/
 		if ( ! $page ) continue;
 		$id   = $page->ID;
 		$prev = (array) get_post_meta( $id, '_vx_seo_managed', true );
@@ -323,8 +339,9 @@ function vx_seo_graph() {
 	// Breadcrumbs for inner pages
 	if ( is_page() && $slug && $slug !== 'home' ) {
 		$crumbs = array( array( 'Home', home_url( '/' ) ) );
-		if ( in_array( $slug, array( 'corporate-tournament', 'workshops', 'guest-lectures' ), true ) ) $crumbs[] = array( 'Services', home_url( '/services/' ) );
+		if ( in_array( $slug, array( 'corporate-tournament', 'workshops', 'guest-lectures', 'training' ), true ) ) $crumbs[] = array( 'Services', home_url( '/services/' ) );
 		if ( in_array( $slug, array( 'gallery', 'coaches', 'faq' ), true ) ) $crumbs[] = array( 'Resources', home_url( '/blog/' ) );
+		if ( function_exists( 'vx_lab_tool' ) && vx_lab_tool( $slug ) ) $crumbs[] = array( 'Training Lab', vx_lab_hub_url() );
 		$crumbs[] = array( $e ? preg_replace( '/\s*\|.*$/', '', $e[0] ) : get_the_title(), get_permalink() );
 		$items = array();
 		foreach ( $crumbs as $i => $c ) $items[] = array( '@type' => 'ListItem', 'position' => $i + 1, 'name' => $c[0], 'item' => $c[1] );

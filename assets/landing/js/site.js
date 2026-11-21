@@ -6,14 +6,16 @@
   var inr=function(n){return '₹'+Math.round(n).toLocaleString('en-IN')};
   function waUrl(t){return 'https://wa.me/'+PHONE+'?text='+encodeURIComponent(t)}
   function store(k,v){try{if(v===undefined)return JSON.parse(localStorage.getItem(k));localStorage.setItem(k,JSON.stringify(v))}catch(e){return null}}
+  /* Each block below only runs when its section is on the page (the animated design is split over several pages). */
   /* shutter intro + hero reveal */
   var intro=$('intro'),sc=$('showcase');
+  if(sc){
   function heroGo(){sc.classList.add('go')}
   if(!reduce)sc.classList.add('armed');
   function finishIntro(){if(!intro||intro.hidden)return;intro.classList.add('open');document.documentElement.style.overflow='';setTimeout(heroGo,250);setTimeout(function(){intro.hidden=true;intro.classList.remove('open')},1300)}
   if(window.__vxIntro){var it=setTimeout(finishIntro,1300);$('skipIntro').addEventListener('click',function(){clearTimeout(it);finishIntro()});setTimeout(function(){if(!intro.hidden)finishIntro()},4000)}
   else requestAnimationFrame(function(){requestAnimationFrame(heroGo)});
-  $('replay').addEventListener('click',function(){
+  if($('replay')&&intro)$('replay').addEventListener('click',function(){
     if(reduce)return;scrollTo(0,0);sc.classList.remove('go');void sc.offsetWidth;
     var fresh=intro.cloneNode(true);intro.parentNode.replaceChild(fresh,intro);intro=fresh;intro.hidden=false;intro.classList.remove('open');document.documentElement.style.overflow='hidden';
     var t2=setTimeout(finishIntro,1300);intro.querySelector('.skip').addEventListener('click',function(){clearTimeout(t2);finishIntro()});
@@ -23,6 +25,7 @@
     sc.addEventListener('mousemove',function(e){var r=sc.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;layers.forEach(function(l){var d=+l.dataset.depth;l.style.transform='translate('+(-x*d)+'px,'+(-y*d)+'px)'})});
     sc.addEventListener('mouseleave',function(){layers.forEach(function(l){l.style.transform=''})});}
   if(!reduce){var bt=sc.querySelector('.bigtype');addEventListener('scroll',function(){var y=Math.min(scrollY,900);bt.style.translate=(-y*.12)+'px 0'},{passive:true})}
+  }
 
   var NS='http://www.w3.org/2000/svg';
   function el(t,a){var e=document.createElementNS(NS,t);for(var k in a)e.setAttribute(k,a[k]);return e}
@@ -39,23 +42,25 @@
   var links=[].slice.call(document.querySelectorAll('.nav a'));
   addEventListener('scroll',function(){
     var y=scrollY,h=document.documentElement.scrollHeight-innerHeight;
-    prog.style.setProperty('--p',h>0?(y/h).toFixed(4):0);
-    top.classList.toggle('scrolled',y>8);
-    if(!$('nav').classList.contains('open'))top.classList.toggle('hide',y>lastY+2&&y>400);
+    if(prog)prog.style.setProperty('--p',h>0?(y/h).toFixed(4):0);
+    if(top){top.classList.toggle('scrolled',y>8);
+    if(!$('nav').classList.contains('open'))top.classList.toggle('hide',y>lastY+2&&y>400);}
     lastY=y;
     var cur='';secs.forEach(function(s){if(s.getBoundingClientRect().top<innerHeight*.35)cur=s.id});
     links.forEach(function(a){a.classList.toggle('on',a.getAttribute('href')==='#'+cur)});
   },{passive:true});
   var nav=$('nav'),mb=$('menuBtn');
-  mb.addEventListener('click',function(){var o=nav.classList.toggle('open');mb.setAttribute('aria-expanded',o)});
-  nav.addEventListener('click',function(e){if(e.target.tagName==='A'){nav.classList.remove('open');mb.setAttribute('aria-expanded','false')}});
+  if(mb&&nav)mb.addEventListener('click',function(){var o=nav.classList.toggle('open');mb.setAttribute('aria-expanded',o)});
+  if(nav)nav.addEventListener('click',function(e){if(e.target.tagName==='A'){nav.classList.remove('open');mb.setAttribute('aria-expanded','false')}});
 
   /* live training status (India time) */
   var days=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'],train=[1,3,5,6],full={1:'Monday',3:'Wednesday',5:'Friday',6:'Saturday'},dow;
   try{dow=days.indexOf(new Date().toLocaleString('en-US',{timeZone:'Asia/Kolkata',weekday:'short'}))}catch(e){dow=-1}
   if(dow<0)dow=new Date().getDay();
+  if($('status')){ /* header status pill (not used with the shared site header) */
   if(train.indexOf(dow)>=0){$('status').classList.add('live');$('statusTxt').textContent='Training today'}
   else{var n=dow;do{n=(n+1)%7}while(train.indexOf(n)<0);$('statusTxt').textContent='Next session: '+full[n]}
+  }
   [].forEach.call(document.querySelectorAll('.day'),function(d){if(+d.dataset.dow===dow){d.classList.add('today');var s=document.createElement('span');s.className='now';s.textContent='Today';d.appendChild(s)}});
 
   /* reveal + counters + chat */
@@ -68,13 +73,13 @@
     })},{threshold:.6});
     [].forEach.call(document.querySelectorAll('[data-count]'),function(x){co.observe(x)});
     var cho=new IntersectionObserver(function(es){if(es[0].isIntersecting&&!reduce){$('chat').classList.add('play');cho.disconnect()}},{threshold:.4});
-    cho.observe($('chat'));
+    if($('chat'))cho.observe($('chat'));
   }
 
   /* marquee */
   var words=['Bat','Bowl','Field','Keep','Think','Where dreams meet discipline'],html='';
   for(var r=0;r<2;r++)words.forEach(function(w){html+='<span>'+w+'<i class="ball"></i></span>'});
-  $('track').innerHTML=html;
+  if($('track'))$('track').innerHTML=html;
 
   /* autoplay muted videos while visible */
   var autos=[].slice.call(document.querySelectorAll('video.auto'));
@@ -84,6 +89,7 @@
   } else autos.forEach(function(v){v.controls=true});
 
   /* hero: stepped fan */
+  if($('fan')){
   var cards=[].slice.call(document.querySelectorAll('.card-m')),cur=0,timer=null,DUR=5000;
   var caps=[['At the nets','Ball 1 of 3: batting, catching, repeat'],['The load-up','Ball 2 of 3: high arm, eyes on the target'],['Focus','Ball 3 of 3: every delivery starts in the head']];
   var dots=[].slice.call($('dots').children);
@@ -103,6 +109,7 @@
       cards.forEach(function(c){c.style.setProperty('--ry',(x*14)+'deg');c.style.setProperty('--rx',(-y*10)+'deg')})});
   }
   auto();
+  }
 
   /* tilt, magnetic buttons, cursor ring (mouse only) */
   if(fine&&!reduce){
@@ -115,27 +122,35 @@
       b.addEventListener('mouseleave',function(){b.style.transform=''});
     });
     var cu=$('cursor'),mx=0,my=0,cx=0,cy=0;
-    addEventListener('mousemove',function(e){mx=e.clientX;my=e.clientY;cu.classList.add('on');var t=e.target.closest&&e.target.closest('a,button,label,.card-m,.pos,.fielder,.stops li,.reel,input,select,summary,.handle,tbody tr');cu.classList.toggle('big',!!t)});
+    if(cu){
+    addEventListener('mousemove',function(e){mx=e.clientX;my=e.clientY;cu.classList.add('on');if(!curRun){curRun=true;requestAnimationFrame(curLoop)}var t=e.target.closest&&e.target.closest('a,button,label,.card-m,.pos,.fielder,.stops li,.reel,input,select,summary,.handle,tbody tr');cu.classList.toggle('big',!!t)});
     document.addEventListener('mouseleave',function(){cu.classList.remove('on')});
-    (function loop(){cx+=(mx-cx)*.2;cy+=(my-cy)*.2;cu.style.transform='translate('+cx+'px,'+cy+'px)';requestAnimationFrame(loop)})();
+    /* runs only while the cursor is catching up, then stops (an endless loop kept the page busy every frame) */
+    var curRun=false;function curLoop(){cx+=(mx-cx)*.2;cy+=(my-cy)*.2;cu.style.transform='translate('+cx+'px,'+cy+'px)';if(Math.abs(mx-cx)>.4||Math.abs(my-cy)>.4)requestAnimationFrame(curLoop);else curRun=false}
+    }
   }
 
   /* mentor video */
   var mv=$('manifesto'),pb=$('playBtn'),pl=$('player');
+  if(mv&&pb&&pl){
   function setBtn(){var on=!mv.paused;pl.classList.toggle('playing',on);pb.querySelector('use').setAttribute('href',on?'#i-pause':'#i-sound');pb.querySelector('span').textContent=on?'Pause':(mv.currentTime>0&&!mv.ended?'Resume':'Play with sound')}
   pb.addEventListener('click',function(){if(mv.paused){mv.muted=false;var p=mv.play();if(p&&p.catch)p.catch(function(){})}else mv.pause()});
   mv.addEventListener('play',setBtn);mv.addEventListener('pause',setBtn);mv.addEventListener('ended',setBtn);
   mv.addEventListener('click',function(){pb.click()});
+  }
 
   /* pitch: rolling ball */
+  if($('stops')){
   var stops=[].slice.call($('stops').children),pball=$('pball'),pitch=$('pitch'),pon=0;
   function rollTo(i){pon=i;stops.forEach(function(s,k){s.classList.toggle('on',k===i)});var pr=pitch.getBoundingClientRect(),r=stops[i].getBoundingClientRect();
     pball.style.transform='translate('+(r.left-pr.left+9)+'px,'+(r.top-pr.top+9)+'px) rotate('+(i*220)+'deg)'}
   stops.forEach(function(s,i){s.addEventListener('click',function(){rollTo(i)});s.addEventListener('mouseenter',function(){if(fine)rollTo(i)});s.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();rollTo(i)}})});
   rollTo(0);addEventListener('resize',function(){rollTo(pon)});
   if(!reduce&&'IntersectionObserver' in window){var po=new IntersectionObserver(function(es){if(es[0].isIntersecting){po.disconnect();var k=0,t=setInterval(function(){k++;if(k>4){clearInterval(t);return}rollTo(k)},700)}},{threshold:.5});po.observe(pitch)}
+  }
 
   /* level quiz */
+  if($('qbody')){
   var Q=[
     {q:"How old is your child?",o:["5 to 8","9 to 12","13 to 16","17 or older"],s:[0,1,2,2],key:'Age'},
     {q:"How much cricket have they played?",o:["None yet","Gully or park cricket","Some coaching before","School or club team"],s:[0,1,2,3],key:'Experience'},
@@ -171,9 +186,10 @@
     var L=$('levels');L.classList.add('picked');[].forEach.call(L.children,function(c){c.classList.toggle('match',c.dataset.lv===lv)});
   }
   qrender();
-
+  }
 
   /* field explorer */
+  if($('posG')){
   var P=[
     ['Wicket-keeper',50,34,'Behind the stumps','Takes the ball when the batter misses it. Catches edges, makes stumpings and run-outs.'],
     ['Slips',43.5,33.5,'Off side, close','Stand next to the keeper, waiting for the thin edge off a fast bowler.'],
@@ -212,37 +228,46 @@
   fsvg.addEventListener('pointerup',function(){fdrag=false});fsvg.addEventListener('pointercancel',function(){fdrag=false});
   fd.addEventListener('keydown',function(e){var m={ArrowLeft:[-2,0],ArrowRight:[2,0],ArrowUp:[0,-2],ArrowDown:[0,2]}[e.key];if(m){e.preventDefault();moveF(fx+m[0],fy+m[1])}});
   showPos(11);
+  }
 
   /* fees */
-  var plans=[{k:'m',name:'Monthly',price:3000,months:1},{k:'q',name:'Quarterly',price:8500,months:3},{k:'h',name:'Half-yearly',price:16200,months:6},{k:'a',name:'Annual',price:30000,months:12}];
-  var tb=$('rateBody'),seg=$('planSeg'),rows=[];
+  if($('rateBody')){
+  /* plans come from Velocrix's own data: data-plans on #rateBody (vx_plans() in functions.php) */
+  var tb=$('rateBody'),seg=$('planSeg'),rows=[],plans=[];
+  try{plans=JSON.parse(tb.getAttribute('data-plans')||'[]')}catch(e){}
+  var monthly=(plans.filter(function(p){return p.months===1})[0]||{}).price||0,def=Math.min(1,plans.length-1);
   plans.forEach(function(p,i){
-    var pm=p.price/p.months,save=3000*p.months-p.price,tr=document.createElement('tr');
+    var pm=p.price/p.months,save=monthly?Math.max(0,monthly*p.months-p.price):0,tr=document.createElement('tr');
     tr.innerHTML='<td>'+p.name+'</td><td class="n">'+inr(p.price)+'</td><td class="n">'+inr(pm)+'</td><td class="n '+(save?'save':'')+'">'+(save?inr(save):'–')+'</td>';
-    tr.addEventListener('click',function(){$('plan-'+p.k).checked=true;calc()});tb.appendChild(tr);rows.push(tr);
-    var l=document.createElement('label');l.innerHTML='<input type="radio" name="plan" value="'+i+'" id="plan-'+p.k+'"'+(i===1?' checked':'')+'><span>'+p.name+'</span>';seg.appendChild(l);
+    tr.addEventListener('click',function(){$('fplan-'+i).checked=true;calc()});tb.appendChild(tr);rows.push(tr);
+    var l=document.createElement('label');l.innerHTML='<input type="radio" name="fplan" value="'+i+'" id="fplan-'+i+'"'+(i===def?' checked':'')+'><span>'+p.name+'</span>';seg.appendChild(l);
   });
-  var sarv=$('sarv'),sib=$('sib'),shown=8500;
+  var shown=plans.length?plans[def].price:0,join=$('feeJoin');
   function calc(){
-    var i=+(document.querySelector('input[name=plan]:checked')||{value:1}).value,p=plans[i];
+    if(!plans.length)return;
+    var i=+(seg.querySelector('input[name=fplan]:checked')||{value:def}).value,p=plans[i],t=p.price;
     rows.forEach(function(r,k){r.classList.toggle('sel',k===i)});
-    var d=(sarv.checked?.10:0)+(sib.checked?.05:0),t=p.price*(1-d);
-    $('totLabel').textContent=p.name+' plan'+(d?' with '+Math.round(d*100)+'% off':'');
-    $('totNote').textContent=p.months>1?'Works out to '+inr(t/p.months)+' a month':'Billed every calendar month';
+    $('totLabel').textContent=p.name+' plan';
+    $('totNote').textContent=p.months>1?'Works out to '+inr(t/p.months)+' a month':'Registration fee is extra';
+    if(join)join.href=join.getAttribute('data-base')+'?plan='+encodeURIComponent(p.name);
     var from=shown,t0=performance.now();shown=t;
     if(reduce){$('totAmt').textContent=inr(t);return}
     (function step(n){var k=Math.min(1,(n-t0)/450);$('totAmt').textContent=inr(from+(t-from)*(1-Math.pow(1-k,3)));if(k<1)requestAnimationFrame(step)})(t0);
   }
-  seg.addEventListener('change',calc);sarv.addEventListener('change',calc);sib.addEventListener('change',calc);calc();
+  seg.addEventListener('change',calc);calc();
+  }
 
   /* bat size */
+  if($('hgt')){
   var chart=[[0,122,'Size 0','Usually under 5'],[122,130,'Size 1','Usually ages 4 to 6'],[130,137,'Size 2','Usually ages 6 to 8'],[137,145,'Size 3','Usually ages 8 to 10'],[145,150,'Size 4','Usually ages 9 to 11'],[150,157,'Size 5','Usually ages 10 to 12'],[157,165,'Size 6','Usually ages 11 to 13'],[165,173,'Harrow','Usually ages 12 to 14'],[173,999,'Full size (SH)','Teens and adults']];
   function bat(){var h=+$('hgt').value,ci=0;chart.forEach(function(c,k){if(h>=c[0]&&h<c[1])ci=k});var c=chart[ci];
     $('hval').textContent=h+' cm';$('bsize').textContent=c[2];$('bage').textContent=c[3];
     $('kidBar').style.height=(h-62)+'px';$('batBar').style.height=(52+ci*7)+'px'}
   $('hgt').addEventListener('input',bat);bat();
+  }
 
   /* warm-up timer */
+  if($('tstart')){
   var M=[['Arm circles','Big circles forwards, then backwards.'],['Leg swings','Hold a wall and swing each leg front to back.'],['High knees','Quick feet on the spot, knees up to the waist.'],['Lunge with a twist','Step forward and turn your chest over the front knee.'],['Side shuffles','Low and quick, like chasing a ball to the boundary.'],['Shadow bowling','Three slow bowling actions without a ball, then three quicker.']];
   var mi=0,left=20,tick=null,C=301.6;
   function tdraw(){var fin=mi>=M.length;$('mstep').textContent=fin?'All six done':'Move '+(mi+1)+' of '+M.length;$('mname').textContent=fin?'Warm-up complete':M[mi][0];$('mtip').textContent=fin?'Ready to train. See you at the nets!':M[mi][1];
@@ -256,11 +281,14 @@
   });
   $('tnext').addEventListener('click',function(){if(mi<M.length){mi++;left=20;if(mi>=M.length)tstop()}tdraw()});
   tdraw();
+  }
 
   /* checklist */
+  if($('check')){
   var items=['Sports shoes with grip','Water bottle','Cap','Comfortable clothes','Small towel','A snack for after','Arrive 10 minutes early'];
   var ticked=store('vx-check')||{};
   $('check').innerHTML=items.map(function(t,i){return '<li><label for="ck'+i+'"><input type="checkbox" id="ck'+i+'"'+(ticked[i]?' checked':'')+'><span>'+t+'</span></label></li>'}).join('');
   $('check').addEventListener('change',function(e){var i=+e.target.id.slice(2);ticked[i]=e.target.checked;store('vx-check',ticked)});
+  }
 
 })();

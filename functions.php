@@ -1,7 +1,7 @@
 <?php
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-define( 'VX_VER', '1.0.8' );
+define( 'VX_VER', '1.1.0' );
 define( 'VX_URI', get_template_directory_uri() );
 
 require get_template_directory() . '/inc/content.php';
@@ -13,6 +13,7 @@ require get_template_directory() . '/inc/setup.php';
 require get_template_directory() . '/inc/services.php';
 require get_template_directory() . '/inc/seo.php';
 require get_template_directory() . '/inc/landing.php';
+require get_template_directory() . '/inc/training-lab.php';
 
 /** Theme setup */
 function vx_setup() {
@@ -30,11 +31,49 @@ add_action( 'after_setup_theme', 'vx_setup' );
 
 /** Assets */
 function vx_assets() {
-	wp_enqueue_style( 'vx-fonts', 'https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,400;0,500;0,600;1,600&display=swap', array(), null );
+	wp_enqueue_style( 'vx-fonts', 'https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,400;0,500;0,600;0,700;1,600&display=swap', array(), null );
 	wp_enqueue_style( 'vx-main', VX_URI . '/assets/css/main.css', array(), VX_VER . '.' . filemtime( get_template_directory() . '/assets/css/main.css' ) );
 	wp_enqueue_script( 'vx-main', VX_URI . '/assets/js/main.js', array(), VX_VER . '.' . filemtime( get_template_directory() . '/assets/js/main.js' ), array( 'in_footer' => true, 'strategy' => 'defer' ) );
+	// Motion layer for the classic pages (hero text, plan cards, gallery lightbox). Vanilla, respects reduced motion.
+	wp_enqueue_style( 'vx-motion', VX_URI . '/assets/css/motion.css', array( 'vx-main' ), VX_VER . '.' . filemtime( get_template_directory() . '/assets/css/motion.css' ) );
+	wp_enqueue_script( 'vx-motion', VX_URI . '/assets/js/motion.js', array( 'vx-main' ), VX_VER . '.' . filemtime( get_template_directory() . '/assets/js/motion.js' ), array( 'in_footer' => true, 'strategy' => 'defer' ) );
+	// Sections ported from the animated design onto classic pages (shared .hx styles, reveal, line-art backgrounds):
+	// Home (Life at the nets, 22 yards, bowl faster) and About (Meet the founder).
+	$is_animated = function_exists( 'vx_is_landing' ) && vx_is_landing();
+	$on_home     = is_front_page();
+	$on_about    = is_page( 'about' );
+	if ( ! $is_animated && ( $on_home || $on_about ) ) {
+		wp_enqueue_style( 'vx-home-extras', VX_URI . '/assets/css/home-extras.css', array( 'vx-main' ), VX_VER . '.' . filemtime( get_template_directory() . '/assets/css/home-extras.css' ) );
+		wp_enqueue_script( 'vx-home-extras', VX_URI . '/assets/js/home-extras.js', array(), VX_VER . '.' . filemtime( get_template_directory() . '/assets/js/home-extras.js' ), array( 'in_footer' => true, 'strategy' => 'defer' ) );
+		if ( $on_about ) {
+			wp_enqueue_style( 'vx-founder', VX_URI . '/assets/css/founder.css', array( 'vx-home-extras' ), VX_VER . '.' . filemtime( get_template_directory() . '/assets/css/founder.css' ) );
+		}
+	}
 }
 add_action( 'wp_enqueue_scripts', 'vx_assets' );
+
+/**
+ * Founder of the academy (confirmed by the owner, 2026-11-21): Kirti Sharma, founder and director.
+ * Meghna Singh is the academy's mentor (vx_mentor_name). Each value can be overridden by a theme mod of the same key.
+ */
+function vx_founder() {
+	$ig = vx( 'vx_founder_instagram', 'sharma_kirti_10' );
+	return array(
+		'name'     => vx( 'vx_founder_name', 'Kirti Sharma' ),
+		'initials' => vx( 'vx_founder_initials', 'KS' ),
+		'role'     => vx( 'vx_founder_role', 'Founder and director' ),
+		'ig'       => $ig,
+		'ig_url'   => $ig ? 'https://www.instagram.com/' . rawurlencode( $ig ) . '/' : '',
+		'img'      => vx( 'vx_founder_img' ) ?: vx_landing_uri( 'media/kirti-sharma.jpg' ),
+	);
+}
+
+/** "Book a free trial" link: WhatsApp chat with a ready message (the number comes from Customizer > Phone). */
+function vx_trial_url() {
+	$num = preg_replace( '/\D+/', '', vx( 'vx_phone', '+91 879 644 7595' ) );
+	if ( strlen( $num ) === 10 ) $num = '91' . $num;
+	return 'https://wa.me/' . $num . '?text=' . rawurlencode( "Hello Velocrix! I'd like to book a free trial session for my child." );
+}
 
 /** Preconnect for Google Fonts */
 function vx_preconnect() {
@@ -42,6 +81,32 @@ function vx_preconnect() {
 	echo '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>' . "\n";
 }
 add_action( 'wp_head', 'vx_preconnect', 1 );
+
+/**
+ * Smooth page-to-page transitions (cross-document View Transitions; Chrome/Edge, others just navigate).
+ * Printed inline on every page (classic and animated) because both pages must opt in.
+ * The header keeps its own name so it stays put while the page content cross-fades.
+ */
+function vx_view_transitions() {
+	echo '<style id="vx-vt">@media (prefers-reduced-motion:no-preference){@view-transition{navigation:auto}'
+		. '.site-header{view-transition-name:vx-header}'
+		. '::view-transition-old(root){animation:vxVtOut .25s cubic-bezier(.4,0,1,1) both}'
+		. '::view-transition-new(root){animation:vxVtIn .45s cubic-bezier(.2,.8,.2,1) both}'
+		. '::view-transition-group(vx-header){animation-duration:0s}'
+		. '@keyframes vxVtOut{to{opacity:0;transform:translateY(-14px)}}'
+		. '@keyframes vxVtIn{from{opacity:0;transform:translateY(22px)}}}</style>' . "\n";
+}
+add_action( 'wp_head', 'vx_view_transitions', 2 );
+
+/**
+ * Google Fonts must not block the page: if fonts.googleapis.com is slow or unreachable, a render-blocking
+ * stylesheet also delays every script after it (menus, forms, animations). Load it as print and switch to all.
+ */
+add_filter( 'style_loader_tag', function ( $tag, $handle ) {
+	if ( 'vx-fonts' !== $handle ) return $tag;
+	$async = str_replace( "media='all'", "media='print' onload=\"this.media='all'\"", $tag );
+	return $async . '<noscript>' . $tag . '</noscript>';
+}, 10, 2 );
 
 /** Remove unused WP front-end bloat (keeps site light) */
 remove_action( 'wp_head', 'print_emoji_detection_script', 7 );
@@ -73,10 +138,13 @@ function vx_default_menu() {
 		'Our Mentor'  => home_url( '/meghna-singh/' ),
 		'Packages'    => home_url( '/pricing/' ),
 		'Services'    => array( '_url' => home_url( '/services/' ),
+			'Training'             => home_url( '/training/' ),
 			'Corporate Tournament' => home_url( '/corporate-tournament/' ),
 			'Workshops'            => home_url( '/workshops/' ),
 			'Guest Lectures'       => home_url( '/guest-lectures/' ),
 		),
+		// Training Lab: hub + one page per tool (inc/training-lab.php)
+		'Training Lab' => vx_lab_menu_group(),
 		'Resources'   => array(
 			'Gallery' => home_url( '/gallery/' ),
 			'Team'    => home_url( '/coaches/' ),
@@ -181,14 +249,24 @@ function vx_plans() {
 	return $plans;
 }
 
+/** Months in a plan, read from its name ("3 Months" => 3, "1 Year" => 12). 0 when unknown. */
+function vx_plan_months( $name ) {
+	if ( preg_match( '/(\d+)\s*month/i', $name, $m ) ) return (int) $m[1];
+	if ( preg_match( '/(\d+)?\s*year/i', $name, $m ) ) return 12 * ( ! empty( $m[1] ) ? (int) $m[1] : 1 );
+	return 0;
+}
+
 /** Pricing card (shared by every plan + the registration card) */
 function vx_plan_card( $p, $url, $btn = 'Choose Plan', $unit = '', $badge = '' ) {
+	$amount = (int) preg_replace( '/\D/', '', $p['price'] );
+	$months = isset( $p['months'] ) ? (int) $p['months'] : 0;
 	?>
-	<article class="pcard<?php echo $p['feat'] ? ' is-popular' : ''; ?>">
+	<article class="pcard<?php echo $p['feat'] ? ' is-popular' : ''; ?>" data-price="<?php echo (int) $amount; ?>"<?php if ( $months ) echo ' data-months="' . (int) $months . '"'; ?>>
 		<?php if ( $p['feat'] && $badge ) echo '<span class="p-badge">' . esc_html( $badge ) . '</span>'; ?>
 		<h3><?php echo esc_html( $p['name'] ); ?></h3>
 		<p class="p-desc"><?php echo esc_html( $p['desc'] ); ?></p>
-		<div class="p-price"><span class="cur">&#8377;</span><?php echo esc_html( $p['price'] ); ?><?php if ( $unit ) echo '<small>' . esc_html( $unit ) . '</small>'; ?></div>
+		<div class="p-price"><span class="cur">&#8377;</span><span class="p-num"><?php echo esc_html( $p['price'] ); ?></span><?php if ( $unit ) echo '<small>' . esc_html( $unit ) . '</small>'; ?><small class="p-unit" hidden>/month</small></div>
+		<?php if ( ! empty( $p['sub'] ) ) echo '<p class="p-sub">' . esc_html( $p['sub'] ) . '</p>'; ?>
 		<a class="btn btn-block" href="<?php echo esc_url( $url ); ?>"><?php echo esc_html( $btn ); ?></a>
 		<ul class="p-list">
 			<?php foreach ( $p['features'] as $f ) echo '<li>' . vx_icon( 'check' ) . esc_html( $f ) . '</li>'; // phpcs:ignore ?>
@@ -210,6 +288,29 @@ function vx_coaches() {
 		array( 'name' => 'Head Coach', 'role' => 'Profile coming soon', 'photo' => '', 'soon' => true ),
 		array( 'name' => 'Coach',      'role' => 'Profile coming soon', 'photo' => '', 'soon' => true ),
 	);
+}
+
+/**
+ * WebP versions of a theme photo (assets/img/name.jpg), when they exist:
+ * [0] name.webp for desktop (falls back to the original URL), [1] name-m.webp (900px) for phones, or ''.
+ */
+function vx_img_webp( $url ) {
+	$out  = array( $url, '' );
+	$base = VX_URI . '/assets/img/';
+	if ( strpos( $url, $base ) !== 0 ) return $out;
+	$name = preg_replace( '/\.(jpe?g|png)$/i', '', substr( $url, strlen( $base ) ) );
+	$dir  = get_template_directory() . '/assets/img/';
+	if ( file_exists( $dir . $name . '.webp' ) ) $out[0] = vx_asset( 'assets/img/' . $name . '.webp' );
+	if ( file_exists( $dir . $name . '-m.webp' ) ) $out[1] = vx_asset( 'assets/img/' . $name . '-m.webp' );
+	return $out;
+}
+
+/** Inline style that sets a background photo variable (--hero, --cta) with a lighter phone version */
+function vx_bg_vars( $var, $url ) {
+	list( $d, $m ) = vx_img_webp( $url );
+	$s = '--' . $var . "-d:url('" . esc_url( $d ) . "')";
+	if ( $m ) $s .= ';--' . $var . "-m:url('" . esc_url( $m ) . "')";
+	return $s;
 }
 
 /** Asset URL with a file-modified version, so replaced images never get stuck in browser cache */

@@ -75,7 +75,7 @@ const GFX = (function(){
   };
   function icons(o){
     o = Object.assign({stroke:'#B8913F', op:.42, set:['ball','stumps','bat','helmet','gloves','trophy']}, o||{});
-    const spots = [[6,12,140,-12],[84,8,120,14],[90,62,150,-8],[3,70,110,10],[48,90,96,-18],[66,30,84,6]];
+    const spots = [[1,4,96,-12],[93.5,6,84,14],[93.5,62,96,-8],[1,70,88,10],[1,40,64,-18],[94,34,64,6]]; // outer gutters only, so they never sit on text
     return o.set.map((k,i) => { const sp = spots[i % spots.length]; return '<svg class="float d'+(i%3+1)+'" viewBox="0 0 100 100" style="left:'+sp[0]+'%;top:'+sp[1]+'%;width:'+sp[2]+'px;height:'+sp[2]+'px;transform:rotate('+sp[3]+'deg)"><g fill="none" stroke="'+o.stroke+'" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" opacity="'+o.op+'">'+ICONS[k]+'</g></svg>'; }).join('');
   }
   const PLACE = {
@@ -87,7 +87,8 @@ const GFX = (function(){
     band:'left:0;right:0;top:8%;width:100%;height:84%'
   };
   function decorate(root){
-    $$('[data-gfx]', root || document).forEach(host => {
+    const list = (root && root.nodeType === 1 && root.matches('[data-gfx]')) ? [root] : $('[data-gfx]', root || document);
+    list.forEach(host => {
       if (host.dataset.gfxDone) return; host.dataset.gfxDone = 1;
       host.classList.add('gfx-host');
       const layer = document.createElement('div'); layer.className = 'gfx'; layer.setAttribute('aria-hidden','true');
@@ -115,15 +116,18 @@ const GFX = (function(){
 })();
 
 
-GFX.decorate();
-/* gentle parallax for the line art */
+/* Line art is built per section only when it comes near the screen (it is heavy SVG, so building it all
+   at load cost about a second of layout work on phones). Parallax picks up each section as it is built. */
 var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
-if (!reduce){
-  var els = $$('[data-par]'), tick = false;
-  var run = function(){ tick = false; var vh = innerHeight;
-    els.forEach(function(el){ var host = el.closest('.gfx-host'); if (!host) return; var r = host.getBoundingClientRect(); if (r.bottom < -200 || r.top > vh + 200) return;
-      var k = +el.dataset.par, prog = (vh - r.top) / (vh + r.height); el.style.translate = '0 ' + ((0.5 - prog) * 520 * k).toFixed(1) + 'px'; }); };
-  addEventListener('scroll', function(){ if (!tick){ tick = true; requestAnimationFrame(run); } }, {passive:true});
-  run();
-}
+var els = [], tick = false;
+var run = function(){ tick = false; var vh = innerHeight;
+  els.forEach(function(el){ var host = el.closest('.gfx-host'); if (!host) return; var r = host.getBoundingClientRect(); if (r.bottom < -200 || r.top > vh + 200) return;
+    var k = +el.dataset.par, prog = (vh - r.top) / (vh + r.height); el.style.translate = '0 ' + ((0.5 - prog) * 520 * k).toFixed(1) + 'px'; }); };
+function built(host){ $$('[data-par]', host).forEach(function(e){ els.push(e); }); if (!reduce) run(); }
+var hosts = $$('[data-gfx]');
+if ('IntersectionObserver' in window){
+  var io = new IntersectionObserver(function(es){ es.forEach(function(e){ if (!e.isIntersecting) return; io.unobserve(e.target); GFX.decorate(e.target); built(e.target); }); }, {rootMargin: '300px 0px'});
+  hosts.forEach(function(h){ io.observe(h); });
+} else { GFX.decorate(); hosts.forEach(built); }
+if (!reduce) addEventListener('scroll', function(){ if (!tick){ tick = true; requestAnimationFrame(run); } }, {passive:true});
 })();

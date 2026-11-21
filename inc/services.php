@@ -53,6 +53,11 @@ function vx_service_data( $slug ) {
 				'Our workshops are short, focused sessions where players work on specific parts of their game with proper guidance. Instead of general practice, each session has a clear goal.',
 				'Players leave with simple drills they can keep using, and a better understanding of how to improve.',
 			), 'prog-2.jpg' ),
+			// Holiday camps (from the animated home page). Rendered by template-parts/service-detail.php when present.
+			'camps'   => array( 'Holiday Camps', 'School\'s Out, Nets Are Open', 'Short, intensive camps in every school holiday, open to children who don\'t train with us yet.', array(
+				array( 'Next up: December–January', 'Winter camp', 'Technique work and fitness through the winter holidays, for students and newcomers. Limited seats.', true ),
+				array( 'May–June', 'Summer camp', 'Our longest camp, ending with a match series.', false ),
+			) ),
 			'facts'   => array( 'Format' => 'Practical group sessions', 'Venue' => $venue, 'Who can join' => 'Players of all levels', 'Schedule & fees' => 'Shared on enquiry' ),
 			'why'     => array( 'What You Get', 'Skills You Can Take to the Match', array(
 				array( 'Skill Drills', 'Targeted drills that build good habits through repetition.' ),

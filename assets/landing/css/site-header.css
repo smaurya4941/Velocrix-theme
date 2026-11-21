@@ -1,0 +1,78 @@
+/* Classic site header (template-parts/site-header.php) on the animated page.
+   Copied from assets/css/main.css (header rules) and scoped to #top.site-header, so the landing CSS
+   (which also styles .nav, .brand, .btn) cannot leak in. If the classic header CSS changes, update this file too. */
+
+/* 1. Undo every landing rule inside the header, then re-apply the classic rules below (higher specificity wins). */
+#top.site-header,#top.site-header *,#top.site-header *::before,#top.site-header *::after{all:revert;box-sizing:border-box}
+#top.site-header{
+  --lime:#B7E600; --ink:#0b0b0d; --gut:24px;
+  --font:'Public Sans',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+  font:400 17px/1.65 var(--font);color:#0b0b0d;-webkit-font-smoothing:antialiased;
+  position:fixed;top:22px;left:0;right:0;z-index:60;padding:0 var(--gut);transition:transform .35s ease,top .3s
+}
+#top.site-header a{color:inherit;text-decoration:none}
+#top.site-header img{max-width:100%;height:auto;display:block}
+#top.site-header ul{margin:0;padding:0;list-style:none}
+#top.site-header button{font:inherit;color:inherit}
+
+/* 2. Classic header rules */
+.admin-bar #top.site-header{top:54px}
+#top.site-header .bar{max-width:1800px;margin:0 auto;display:flex;align-items:center;gap:24px;padding:14px 18px 14px 32px;border-radius:99px;background:rgba(11,11,13,.92);border:1px solid rgba(255,255,255,.28);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);transition:.3s}
+#top.site-header .brand{display:flex;flex-direction:row;align-items:center;gap:12px;line-height:1;color:#fff}
+#top.site-header .brand-mark{font:italic 600 1.9rem var(--font);letter-spacing:.06em}
+#top.site-header .brand-sub{font:500 .6rem var(--font);letter-spacing:.34em;text-transform:uppercase;color:var(--lime);margin-top:4px}
+#top.site-header .brand img{max-height:52px;width:auto}
+#top.site-header .brand-logo{width:auto;height:46px}
+#top.site-header .brand-txt{display:flex;flex-direction:column;line-height:1}
+#top.site-header .nav{margin-left:auto;display:flex;align-items:center;gap:14px}
+#top.site-header .nav-cta{white-space:nowrap}
+#top.site-header .nav-list{display:flex;gap:6px;align-items:center}
+#top.site-header .nav-list>li>a{display:block;white-space:nowrap;padding:12px 12px;font:500 .95rem var(--font);letter-spacing:.09em;text-transform:uppercase;color:#fff;transition:.2s}
+#top.site-header .nav-list>li>a:hover,#top.site-header .nav-list>.current-menu-item>a,#top.site-header .nav-list>.current-menu-parent>a{color:var(--lime)}
+#top.site-header .nav-list li{position:relative}
+#top.site-header .menu-item-has-children>a::after{content:"";display:inline-block;width:8px;height:8px;border-right:2px solid currentColor;border-bottom:2px solid currentColor;transform:rotate(45deg) translateY(-3px);margin-left:10px}
+#top.site-header .nav-list .sub-menu{position:absolute;left:0;top:100%;min-width:210px;background:rgba(11,11,13,.96);border:1px solid rgba(255,255,255,.14);border-radius:18px;display:none;padding:8px;margin-top:0}
+#top.site-header .nav-list .sub-menu::before{content:"";position:absolute;left:0;right:0;top:-30px;height:30px}
+#top.site-header .nav-list>li>.sub-menu{top:calc(100% + 12px)}
+#top.site-header .nav-list .sub-menu a{display:block;padding:11px 16px;font-size:.92rem;letter-spacing:.08em;text-transform:uppercase;color:#fff;border-radius:10px}
+#top.site-header .nav-list .sub-menu a:hover{background:rgba(255,255,255,.08);color:var(--lime)}
+#top.site-header .nav-list li:hover>.sub-menu,#top.site-header .nav-list li:focus-within>.sub-menu{display:block}
+#top.site-header .btn{display:inline-block;background:var(--lime);color:#000;font:500 .95rem/1 var(--font);letter-spacing:.14em;text-transform:uppercase;padding:20px 38px;border:2px solid var(--lime);border-radius:99px;cursor:pointer;transition:.25s}
+#top.site-header .btn:hover{background:#fff;border-color:#fff;transform:translateY(-2px)}
+#top.site-header .btn-sm{padding:15px 28px;font-size:.82rem}
+#top.site-header .nav-toggle{display:none;margin-left:auto;background:none;border:0;padding:10px;cursor:pointer}
+#top.site-header .nav-toggle span{display:block;width:26px;height:2px;background:#fff;margin:6px 0;transition:.25s}
+/* hide on scroll down (site.js adds .hide; classic main.js uses .nav-hidden) */
+#top.site-header.hide,#top.site-header.nav-hidden{transform:translateY(-160%)}
+
+/* 8 menu items (Training Lab added): same steps as main.css */
+@media (max-width:1600px){#top.site-header .nav-list>li>a{padding:12px 8px;letter-spacing:.06em}#top.site-header .nav{gap:10px}}
+@media (max-width:1440px){#top.site-header .nav-list>li>a{padding:10px 7px;font-size:.86rem;letter-spacing:.04em}}
+@media (max-width:1200px){
+  #top.site-header .nav-list>li>a{padding:10px 8px;font-size:.84rem;letter-spacing:.05em}
+  #top.site-header .nav{gap:8px}
+}
+@media (max-width:1320px){
+  #top.site-header .bar{padding:12px 14px 12px 22px;border-radius:30px}
+  #top.site-header .nav-toggle{display:block}
+  #top.site-header .nav{position:absolute;left:var(--gut);right:var(--gut);top:calc(100% + 10px);margin:0;flex-direction:column;align-items:stretch;background:#0b0b0d;border:0;border-radius:24px;padding:0 22px;max-height:0;overflow:hidden;transition:max-height .35s,padding .35s;gap:0}
+  #top.site-header .nav.open{max-height:82vh;overflow:auto;padding:12px 22px 24px;border:1px solid rgba(255,255,255,.14)}
+  #top.site-header .nav-list{flex-direction:column;align-items:stretch}
+  #top.site-header .nav-list>li>a{padding:15px 0;border-bottom:1px solid rgba(255,255,255,.08);font-size:1rem}
+  #top.site-header .nav-list .sub-menu,#top.site-header .nav-list>li>.sub-menu{position:static;display:block;border:0;background:none;padding:0 0 0 14px;margin:0}
+  #top.site-header .nav-list .sub-menu::before{display:none}
+  #top.site-header .menu-item-has-children>a::after{display:none}
+  #top.site-header .nav-cta{margin-top:18px;text-align:center}
+  #top.site-header .nav-toggle[aria-expanded=true] span:nth-child(1){transform:translateY(8px) rotate(45deg)}
+  #top.site-header .nav-toggle[aria-expanded=true] span:nth-child(2){opacity:0}
+  #top.site-header .nav-toggle[aria-expanded=true] span:nth-child(3){transform:translateY(-8px) rotate(-45deg)}
+}
+@media (max-width:640px){
+  #top.site-header{--gut:18px}
+  #top.site-header .btn{width:100%;text-align:center}
+}
+
+/* 3. The old landing header took 68px in the page flow; keep that space so every section stays where it was. */
+.vx-landing #home{padding-top:68px}
+/* Smaller screens: the hero content starts higher, so add room for the floating pill (bottom edge ~99px). */
+@media (max-width:1320px){.vx-landing #home{padding-top:92px}}

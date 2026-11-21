@@ -47,7 +47,7 @@ function suggest(){
   var lv = quizLevel;
   if (!lv){ var e = val('exp'); lv = { 'New to cricket':'Beginner', 'Gully or park cricket':'Beginner', 'Has had coaching before':'Development', 'Plays for a school or club team':'Development' }[e] || null; }
   var note = $('#aRecNote');
-  if (!lv){ note.textContent = 'we confirm it at the trial'; return; }
+  if (!lv){ note.textContent = 'the coach confirms it'; return; }
   var o = $('#aLevels .ax-opt[data-k="'+lv+'"]'); if (o) o.insertAdjacentHTML('afterbegin', '<i class="rec">Suggested</i>');
   note.textContent = (quizLevel ? 'from your level check: ' : 'suggested: ') + lv;
 }
@@ -68,11 +68,11 @@ document.addEventListener('click', function(e){
 function message(){
   if (mode === 'trial'){
     var v = function(id){ return $(id).value.trim(); };
-    return ['*Free trial request · Velocrix Cricket Academy*', '',
+    return ['*Enquiry · Velocrix Cricket Academy*', '',
       'Parent: ' + (v('#tParent') || '—'),
       'Mobile: ' + (digits(v('#tPhone')) || '—'),
       'Child: ' + (v('#tChild') || '—') + (v('#tAge') ? ', age ' + v('#tAge') : ''),
-      'Interested in: ' + v('#interest')].concat(v('#tNote') ? ['Note: ' + v('#tNote')] : []).concat(['', 'Can we book a free trial? Thank you.']).join('\n');
+      'Interested in: ' + v('#interest')].concat(v('#tNote') ? ['Note: ' + v('#tNote')] : []).concat(['', 'Please call me back with the details. Thank you.']).join('\n');
   }
   var age = ageFrom(val('dob')), b = batHint();
   var L = ['*Admission form · Velocrix Cricket Academy*', '', '*Player*', 'Name: ' + (val('name') || '—')];
@@ -84,20 +84,18 @@ function message(){
   L.push('', '*Cricket*', 'Role: ' + (val('role').join(', ') || '—'), 'Bats: ' + val('bats') + ' · Bowls: ' + val('bowls'), 'Experience: ' + (val('exp') || '—'), 'Leather ball: ' + val('leather'));
   if (val('prev')) L.push('Previous team: ' + val('prev'));
   L.push('', '*Level and plan*', 'Starting level: ' + (val('level') || '—') + (quizLevel ? ' (website level check: ' + quizLevel + ')' : ''));
-  if (val('extra').length) L.push('Also interested in: ' + val('extra').join(', '));
   L.push('Plan: ' + val('plan'));
-  if (val('disc').length) L.push('Discount: ' + val('disc').join(', '));
   if (val('goals').length) L.push('Goals: ' + val('goals').join(', '));
   L.push('Start: ' + val('start'));
   L.push('', '*Parent or guardian*', 'Name: ' + (val('pname') || '—') + ' (' + val('rel') + ')', 'Mobile: ' + (digits(val('phone')) || '—'));
   if (val('email')) L.push('Email: ' + val('email'));
   L.push('Heard about us: ' + val('heard'));
   if (val('note')) L.push('Note: ' + val('note'));
-  L.push('', 'Please share the batch timing and a trial slot. Thank you.');
+  L.push('', 'Please share the batch timing and next steps. Thank you.');
   return L.join('\n');
 }
 var esc = function(s){ return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); };
-var NAMES = ['name','dob','gender','school','area','height','role','bats','bowls','exp','leather','prev','level','extra','plan','disc','goals','start','pname','rel','phone','email','heard','note'];
+var NAMES = ['name','dob','gender','school','area','height','role','bats','bowls','exp','leather','prev','level','plan','goals','start','pname','rel','phone','email','heard','note'];
 function update(){
   var m = message(), now = new Date();
   var tm = String(now.getHours()).padStart(2,'0') + ':' + String(now.getMinutes()).padStart(2,'0');
@@ -182,7 +180,7 @@ document.addEventListener('vx:level', function(e){
   suggest(); update();
 });
 $('#copyPhone').addEventListener('click', function(){
-  var btn = this; try{ navigator.clipboard.writeText('+91 87964 47595').then(function(){ btn.textContent = 'Copied'; setTimeout(function(){ btn.textContent = 'Copy'; }, 1600); }); }catch(e){}
+  var btn = this; try{ navigator.clipboard.writeText(($('#phoneTxt')||{}).textContent||'+91 879 644 7595').then(function(){ btn.textContent = 'Copied'; setTimeout(function(){ btn.textContent = 'Copy'; }, 1600); }); }catch(e){}
 });
 
 ageChip(); batHint(); suggest(); goStep(0); update();

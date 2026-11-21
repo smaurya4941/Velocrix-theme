@@ -21,6 +21,10 @@ $title_lines = array_filter( array_map( 'trim', explode( "\n", vx( 'vx_hero_titl
 		<h1>
 			<?php foreach ( $title_lines as $ln ) echo '<span class="hl">' . esc_html( $ln ) . '<i>.</i></span>'; ?>
 		</h1>
+		<div class="hero-ctas">
+			<a class="btn hx-mag" href="<?php echo esc_url( vx_trial_url() ); ?>" target="_blank" rel="noopener">Book a Free Trial</a>
+			<a class="btn btn-ghost hero-ghost hx-mag" href="<?php echo esc_url( home_url( '/meghna-singh/#message' ) ); ?>"><?php echo vx_icon( 'play' ); // phpcs:ignore ?>Watch Meghna's Message</a>
+		</div>
 		<div class="hero-row">
 			<div class="glass-card event">
 				<img src="<?php echo esc_url( $img . 'prog-1.jpg' ); ?>" alt="Young cricketers training with their coach" width="312" height="250" fetchpriority="high">
@@ -69,6 +73,9 @@ $title_lines = array_filter( array_map( 'trim', explode( "\n", vx( 'vx_hero_titl
 	</div>
 </section>
 
+<!-- 2b. LIFE AT THE NETS (from the animated design) -->
+<?php get_template_part( 'template-parts/home/nets' ); ?>
+
 <!-- 3. WHY CHOOSE US -->
 <section class="section why">
 	<div class="container why-grid">
@@ -112,6 +119,10 @@ $title_lines = array_filter( array_map( 'trim', explode( "\n", vx( 'vx_hero_titl
 		<p class="center"><a class="btn btn-ghost" href="<?php echo esc_url( home_url( '/services/' ) ); ?>">View All Services</a></p>
 	</div>
 </section>
+
+<!-- 4b. ONE SESSION ON 22 YARDS + 4c. BOWL FASTER (from the animated design) -->
+<?php get_template_part( 'template-parts/home/yards' ); ?>
+<?php get_template_part( 'template-parts/home/bowl' ); ?>
 
 <!-- 5. FACILITIES -->
 <section class="section facilities">

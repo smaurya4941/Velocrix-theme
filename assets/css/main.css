@@ -322,6 +322,9 @@ a:hover>.round-btn,.round-btn:hover{background:var(--lime);transform:rotate(45de
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.js .reveal{opacity:1;transform:none}html{scroll-behavior:auto}}
 
 /* ===== Responsive ===== */
+/* 8 menu items (Training Lab added): tighten the bar on laptops, switch to the burger below 1320px */
+@media (max-width:1600px){.nav-list>li>a{padding:12px 8px;letter-spacing:.06em}.nav{gap:10px}}
+@media (max-width:1440px){.nav-list>li>a{padding:10px 7px;font-size:.86rem;letter-spacing:.04em}}
 @media (max-width:1200px){
   .nav-list>li>a{padding:10px 8px;font-size:.84rem;letter-spacing:.05em}
   .nav{gap:8px}
@@ -343,10 +346,10 @@ a:hover>.round-btn,.round-btn:hover{background:var(--lime);transform:rotate(45de
   .event{flex-direction:column;align-items:flex-start}.event img{width:100%;height:220px}
   .hero-stat{justify-content:flex-start}.hero-stat div{text-align:left}
 }
-@media (max-width:1150px){
+@media (max-width:1320px){
   .bar{padding:12px 14px 12px 22px;border-radius:30px}
   .nav-toggle{display:block}
-  .nav{position:absolute;left:var(--gut);right:var(--gut);top:calc(100% + 10px);margin:0;flex-direction:column;align-items:stretch;background:rgba(11,11,13,.97);border:0;border-radius:24px;padding:0 22px;max-height:0;overflow:hidden;transition:max-height .35s,padding .35s;gap:0}
+  .nav{position:absolute;left:var(--gut);right:var(--gut);top:calc(100% + 10px);margin:0;flex-direction:column;align-items:stretch;background:#0b0b0d;border:0;border-radius:24px;padding:0 22px;max-height:0;overflow:hidden;transition:max-height .35s,padding .35s;gap:0}
   .nav.open{max-height:82vh;overflow:auto;padding:12px 22px 24px;border:1px solid rgba(255,255,255,.14)}
   .nav-list{flex-direction:column;align-items:stretch}
   .nav-list>li>a{padding:15px 0;border-bottom:1px solid rgba(255,255,255,.08);font-size:1rem}
@@ -799,7 +802,7 @@ a:hover>.round-btn,.round-btn:hover{background:var(--lime);transform:rotate(45de
 .about .pills span{display:inline-flex;align-items:center;height:32px;padding:0 16px;font-size:.95rem;line-height:1;white-space:nowrap;border-radius:99px}
 
 /* ===== Footer: brand + link columns + contact ===== */
-.foot-grid{grid-template-columns:1.5fr .9fr 1.15fr .9fr 1.5fr;gap:clamp(28px,3.4vw,56px);padding:64px 0 48px;align-items:start}
+.foot-grid{grid-template-columns:1.4fr .8fr 1.1fr 1fr .8fr 1.4fr;gap:clamp(24px,2.8vw,48px);padding:64px 0 48px;align-items:start}
 .foot-grid h4{font-size:1.25rem;font-weight:500;margin:0 0 22px;color:#fff}
 .foot-grid h4 a:hover{color:var(--lime)}
 .foot-list{margin:0;padding:0;list-style:none}
@@ -815,7 +818,8 @@ a:hover>.round-btn,.round-btn:hover{background:var(--lime);transform:rotate(45de
 .site-footer .copy{display:flex;justify-content:space-between;gap:12px 30px;flex-wrap:wrap;padding-top:22px;padding-bottom:30px;border-top:0;position:relative;color:#9fa2aa;font-size:.95rem}
 @media (max-width:1100px){.foot-grid{grid-template-columns:repeat(3,1fr)}.foot-brand{grid-column:1/-1}.foot-contact{grid-column:span 1}}
 @media (max-width:700px){.foot-grid{grid-template-columns:1fr 1fr;gap:34px 24px}.foot-contact{grid-column:1/-1}}
-@media (max-width:420px){.foot-grid{grid-template-columns:1fr}}
+@media (max-width:420px){.foot-grid{grid-template-columns:1fr 1fr;gap:30px 18px}}
+@media (max-width:560px){.news-form{flex-wrap:nowrap}.news-form input[type=email]{flex:1 1 0;padding:18px 22px}.news-form .round-btn{width:56px;height:56px}}
 .site-footer .copy::before{content:"";position:absolute;top:0;left:var(--gut);right:var(--gut);height:1px;background:rgba(255,255,255,.12)}
 
 /* Blog list: fit the narrower container (1280px) */
@@ -1049,3 +1053,85 @@ html.modal-open{overflow:hidden}
 .acc.on-dark .acc-head{color:#8a8d95}
 .foot-word::before{content:"VELOCRIX"}         /* decorative watermark as CSS text, not page content */
 .sr-only{position:absolute!important;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+
+/* ===== 2026-11-14: content moved from the animated home (Mentor video + road, Workshops camps, Gallery reels) ===== */
+/* Mentor: video message */
+.msg-grid{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:clamp(30px,5vw,72px);align-items:center}
+.msg-player{position:relative;border-radius:var(--r);overflow:hidden;background:#000;aspect-ratio:4/5;box-shadow:0 30px 70px -30px rgba(0,0,0,.8)}
+.msg-player video{width:100%;height:100%;object-fit:cover;display:block;cursor:pointer}
+.msg-play{position:absolute;left:50%;bottom:24px;transform:translateX(-50%);display:inline-flex;align-items:center;gap:12px;padding:12px 22px 12px 12px;border:0;border-radius:99px;background:var(--lime);color:#000;font:600 .9rem/1 var(--font);letter-spacing:.08em;text-transform:uppercase;cursor:pointer;transition:transform .25s,background .25s}
+.msg-play:hover{transform:translateX(-50%) translateY(-2px);background:#fff}
+.msg-ico{position:relative;width:38px;height:38px;border-radius:50%;background:#000}
+.msg-ico::before{content:"";position:absolute;left:15px;top:12px;border-left:12px solid var(--lime);border-top:7px solid transparent;border-bottom:7px solid transparent}
+.msg-ico::after{content:"";position:absolute;inset:-6px;border-radius:50%;border:2px solid #000;opacity:.5;animation:msgPulse 1.8s ease-out infinite}
+.is-playing .msg-ico::before{left:13px;top:12px;width:12px;height:14px;border:0;border-left:4px solid var(--lime);border-right:4px solid var(--lime)}
+.is-playing .msg-ico::after{animation:none;opacity:0}
+.is-playing .msg-play{opacity:.85}
+@keyframes msgPulse{from{transform:scale(.85);opacity:.6}to{transform:scale(1.35);opacity:0}}
+.msg-lines{display:grid;gap:22px;margin-top:26px}
+.msg-lines p{margin:0;padding-left:20px;border-left:3px solid var(--lime)}
+.msg-lines b{display:block;font-weight:500;font-size:1.15rem;line-height:1.45;color:#fff}
+.msg-lines span{display:block;margin-top:6px;color:var(--muted);font-size:.98rem}
+@media (max-width:980px){.msg-grid{grid-template-columns:1fr}.msg-player{max-width:460px;width:100%;margin:0 auto}}
+
+/* Mentor: career road (scrolls sideways) */
+.road{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(230px,1fr);gap:18px;overflow-x:auto;scroll-snap-type:x mandatory;padding:34px 4px 18px;margin:0;position:relative;scrollbar-width:thin}
+.road::before{content:"";position:absolute;left:0;right:0;top:15px;height:2px;background:linear-gradient(90deg,var(--lime),rgba(11,11,13,.15))}
+.road li{position:relative;scroll-snap-align:start;background:#fff;border:1px solid var(--bd);border-radius:var(--r-sm);padding:22px 20px;transition:transform .3s,box-shadow .3s}
+.road li::before{content:"";position:absolute;top:-25px;left:22px;width:14px;height:14px;border-radius:50%;background:#fff;border:3px solid var(--ink)}
+.road li.hot::before{background:var(--lime)}
+.road li.now{background:var(--ink);color:#fff}
+.road li.now::before{background:var(--lime);border-color:var(--lime);box-shadow:0 0 0 6px rgba(183,230,0,.3)}
+.road li:hover{transform:translateY(-4px);box-shadow:0 18px 40px -22px rgba(0,0,0,.4)}
+.road-yr{display:block;font-size:.78rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:#5b7400;margin-bottom:8px}
+.road li.now .road-yr{color:var(--lime)}
+.road b{display:block;font-size:1.15rem;font-weight:600}
+.road p{margin:6px 0 0;font-size:.95rem;color:var(--muted)}
+.road li.now p{color:#c9cbd1}
+
+/* Workshops: holiday camps */
+.camps-sec .lead{color:var(--muted);margin-top:14px}
+.camp-cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px}
+.camp-card{display:grid;gap:12px;align-content:start;padding:clamp(26px,4vw,40px);border-radius:var(--r);background:var(--card);border:1px solid var(--bd);transition:transform .3s,box-shadow .3s}
+.camp-card:hover{transform:translateY(-4px);box-shadow:0 22px 50px -28px rgba(0,0,0,.45)}
+.camp-card.is-next{background:var(--ink);color:#fff;border-color:var(--ink)}
+.camp-when{justify-self:start;padding:7px 14px;border-radius:99px;background:var(--lime);color:#000;font-size:.78rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase}
+.camp-card:not(.is-next) .camp-when{background:#fff;border:1px solid var(--bd)}
+.camp-card h3{margin:0;font-size:clamp(1.5rem,2.4vw,2rem)}
+.camp-card p{margin:0;color:var(--muted)}
+.camp-card.is-next p{color:#c9cbd1}
+.camp-card .btn{justify-self:start;margin-top:8px}
+@media (max-width:760px){.camp-cards{grid-template-columns:1fr}}
+
+/* Gallery: reels */
+.reel-row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px;max-width:980px;margin:0 auto}
+.reel-card{margin:0;border-radius:var(--r);overflow:hidden;background:#000;position:relative}
+.reel-card video{width:100%;aspect-ratio:9/12;object-fit:cover;display:block}
+.reel-card figcaption{position:absolute;left:0;right:0;bottom:0;padding:40px 22px 20px;background:linear-gradient(transparent,rgba(0,0,0,.85));color:#fff;font-size:.98rem}
+.reel-more{text-align:center;margin-top:28px;color:var(--muted)}
+.reel-more a{color:var(--lime);font-weight:600}
+@media (max-width:640px){.reel-row{grid-template-columns:1fr}}
+
+/* Smooth cross-fade between pages (Chrome/Edge/Safari support it; other browsers just navigate normally) */
+@media (prefers-reduced-motion:no-preference){
+  @view-transition{navigation:auto}
+  ::view-transition-old(root){animation:vxVtOut .28s ease both}
+  ::view-transition-new(root){animation:vxVtIn .38s ease both}
+}
+@keyframes vxVtOut{to{opacity:0;transform:translateY(-8px)}}
+@keyframes vxVtIn{from{opacity:0;transform:translateY(10px)}}
+
+/* Background photos as WebP: desktop version (--*-d), lighter 900px version on phones (--*-m). Set by vx_bg_vars(). */
+.hero-page{--hero:var(--hero-d)}
+.cta-img{--cta:var(--cta-d)}
+@media (max-width:760px){.hero-page{--hero:var(--hero-m,var(--hero-d))}.cta-img{--cta:var(--cta-m,var(--cta-d))}}
+
+/* About "Our Impact" on tablets/phones: one column, photo on top with a real height
+   (.impact .imp-grid above is more specific than the 1-column media rule, so it kept 2 squeezed columns) */
+@media (max-width:980px){
+  .impact .imp-grid{grid-template-columns:minmax(0,1fr);gap:40px}
+  .imp-photo{min-height:0;aspect-ratio:4/3}
+  .imp-stats{gap:28px 44px}
+}
+/* Impact stats: all three on one row on desktop */
+@media (min-width:981px){.imp-stats{flex-wrap:nowrap;gap:clamp(24px,3.4vw,56px)}.imp-stats b{font-size:clamp(3rem,4.6vw,4.6rem)}}

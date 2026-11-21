@@ -115,7 +115,8 @@ function vx_chips( $name, $values, $selected ) {
 					<div class="fld"><span class="lbl">Wicket keeping <i class="req">*</i></span><?php vx_chips( 'keeper', $opt['keeper'], $o( 'keeper' ) ); ?></div>
 					<label><span>Training plan you are interested in</span>
 						<select name="plan"><option value="">Not sure yet</option>
-							<?php $sel = $o( 'plan' ); foreach ( vx_plans() as $p ) echo '<option value="' . esc_attr( $p['name'] ) . '"' . selected( $sel, $p['name'], false ) . '>' . esc_html( $p['name'] . ' (₹' . $p['price'] . ')' ) . '</option>'; ?>
+							<?php $sel = $o( 'plan' ); if ( ! $sel && isset( $_GET['plan'] ) ) $sel = sanitize_text_field( wp_unslash( $_GET['plan'] ) ); // "Join Now" on the Home fees card passes ?plan=
+							foreach ( vx_plans() as $p ) echo '<option value="' . esc_attr( $p['name'] ) . '"' . selected( $sel, $p['name'], false ) . '>' . esc_html( $p['name'] . ' (₹' . $p['price'] . ')' ) . '</option>'; ?>
 						</select></label>
 				</fieldset>
 
