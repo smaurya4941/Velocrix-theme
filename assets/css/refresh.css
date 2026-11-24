@@ -141,3 +141,25 @@
   .vx-refresh .stat-card,.vx-refresh .prog-text,.vx-refresh .fac,.vx-refresh .steps li>div,.vx-refresh .vm-card,.vx-refresh .cc,.vx-refresh .pills span,.vx-refresh :is(.faq-grid,.why) .acc-item,.vx-refresh .partner-logo{transition:none}
   .vx-refresh .stat-card:hover,.vx-refresh .prog-text:hover,.vx-refresh .fac:hover,.vx-refresh .steps li:hover>div,.vx-refresh .vm-card:hover,.vx-refresh .cc:hover,.vx-refresh .partner-logo:hover,.vx-refresh :is(.faq-grid,.why) .acc-item:hover{transform:none}
 }
+
+/* ---------- Home photo grade (classic Home only) ----------
+   The real academy photos are overcast phone shots: grey sky, flat grass, low contrast.
+   A light colour grade brings back green grass and blue sky. The hero photo moves to
+   ::before so it can be graded without touching the text, and the full-width dark
+   scrim becomes a lighter one that sits only behind the text (left + bottom). */
+.home.vx-refresh{--vx-grade:saturate(1.32) contrast(1.1) brightness(1.06)}
+.home.vx-refresh .hero:not(.hero-page){background:#0b0b0d;isolation:isolate}
+.home.vx-refresh .hero:not(.hero-page)::before{content:"";position:absolute;inset:0;z-index:-2;background:var(--hero) center/cover no-repeat}
+.home.vx-refresh .hero:not(.hero-page)::after{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;background:
+  linear-gradient(90deg,rgba(11,11,13,.62) 0%,rgba(11,11,13,.38) 34%,rgba(11,11,13,0) 60%),
+  linear-gradient(0deg,rgba(11,11,13,.6) 0%,rgba(11,11,13,.2) 26%,rgba(11,11,13,0) 45%),
+  linear-gradient(180deg,rgba(11,11,13,.32) 0%,rgba(11,11,13,0) 18%)}
+@media (max-width:980px){
+  .home.vx-refresh .hero:not(.hero-page)::before{background-position:74% center}
+  .home.vx-refresh .hero:not(.hero-page)::after{background:
+    linear-gradient(180deg,rgba(11,11,13,.55) 0%,rgba(11,11,13,.42) 45%,rgba(11,11,13,.5) 75%,rgba(11,11,13,.7) 100%)}
+}
+.home.vx-refresh :is(.hero .event,.about-media,.prog-img,.fac,.bi-img) img,
+.home.vx-refresh .qs-img{filter:var(--vx-grade)}
+.home.vx-refresh .join-photo::before{content:"";position:absolute;inset:0;border-radius:inherit;background:inherit;filter:var(--vx-grade)}
+.home.vx-refresh .join-photo>*{position:relative;z-index:1}

@@ -29,6 +29,19 @@ if ( ! $items ) {
 		$items[] = array( 'full' => $p, 'html' => '<img src="' . esc_url( $p ) . '" alt="Velocrix Cricket Academy training" loading="lazy">' );
 	}
 }
+// Stills from the training video shoot (assets/img/training, WebP) always lead the grid.
+$stills = array();
+foreach ( array(
+	'coach-demo'      => 'Coach with bat and glove, tossing the ball on the ground',
+	'ball-toss'       => 'A cricket ball tossed from the hand, close up',
+	'stumps-hit'      => 'Ball hitting the stumps',
+	'ground-fielding' => 'Coach showing a low ground-fielding position',
+	'bat-stance'      => 'Coach walking out with the bat',
+) as $n => $alt ) {
+	$p        = vx_asset( 'assets/img/training/' . $n . '.webp' );
+	$stills[] = array( 'full' => $p, 'html' => '<img src="' . esc_url( $p ) . '" alt="' . esc_attr( $alt ) . '" loading="lazy" width="1080" height="1920">' );
+}
+$items = array_merge( $stills, $items );
 ?>
 
 <!-- 2. GALLERY -->
@@ -45,6 +58,44 @@ if ( ! $items ) {
 	</div>
 </section>
 
+<!-- 2b. LAUNCH DAY (academy opening; photos in assets/img/launch, WebP) -->
+<section class="section gal-sec gal-launch" id="launch-day">
+	<div class="container">
+		<div class="sec-head center">
+			<span class="eyebrow">Launch Day</span>
+			<h2>The Day Velocrix<br>Opened Its Gates</h2>
+		</div>
+		<div class="g-masonry">
+			<?php foreach ( array(
+				'ribbon-cut'    => 'Ribbon cutting to open the academy ground',
+				'machine-start' => 'Guest starting the bowling machine at the launch',
+				'coconut'       => 'Breaking a coconut at the ribbon, a traditional start',
+				'ribbon-line'   => 'Team and guests at the ribbon on the turf',
+				'team-cheer'    => 'Students cheering in their new academy jerseys',
+				'young-bowler'  => 'A young student bowling on the outfield',
+				'smile'         => 'A smiling student on the ground after his delivery',
+				'school-cheer'  => 'School students cheering at the launch',
+				'gift-tray'     => 'Students welcoming a guest with a gift tray',
+				'plant-gift'    => 'A student honoured with a plant gift',
+				'workshop-coach'=> 'Coach talking to students on the ground',
+				'jersey-launch' => 'Guests and team launching the new jerseys on stage',
+				'audience'      => 'Students in front of the Velocrix banner',
+				'guest-talk'    => 'Audience at the launch talk',
+				'cake-cut'      => 'Guests and team cutting the launch cake',
+				'cake-kids'     => 'Students gathered around the launch cake',
+				'cake'          => 'The Velocrix launch cake',
+				'team-photo'    => 'Velocrix students in academy jerseys',
+			) as $n => $alt ) :
+				$p = vx_asset( 'assets/img/launch/' . $n . '.webp' ); ?>
+			<a class="g-item" href="<?php echo esc_url( $p ); ?>" aria-label="View photo: <?php echo esc_attr( $alt ); ?>">
+				<img src="<?php echo esc_url( $p ); ?>" alt="<?php echo esc_attr( $alt ); ?>" loading="lazy" width="1400" height="935">
+				<span class="round-btn is-lime"><?php echo vx_icon( 'arrow' ); // phpcs:ignore ?></span>
+			</a>
+			<?php endforeach; ?>
+		</div>
+	</div>
+</section>
+
 <!-- 3. VIDEOS (from the animated design) -->
 <section class="section dark gal-videos" id="videos">
 	<div class="container">
@@ -54,11 +105,16 @@ if ( ! $items ) {
 		</div>
 		<div class="reel-row">
 			<?php foreach ( array(
-				array( 'reel-technique.mp4', 'poster-technique.jpg', 'Batting, catching, repeat: a normal Velocrix week' ),
-				array( 'reel-pov.mp4', 'poster-pov.jpg', 'POV: you\'re a Velocrix student. Practice mode on.' ),
+				// Training shoot (assets/video, muted 540x960 clips + WebP posters)
+				array( vx_asset( 'assets/video/reel-coach.mp4' ), vx_asset( 'assets/video/reel-coach.webp' ), 'Coach on the ground: bat, glove and a quick demo' ),
+				array( vx_asset( 'assets/video/reel-throwdowns.mp4' ), vx_asset( 'assets/video/reel-throwdowns.webp' ), 'Throwdowns in the nets' ),
+				array( vx_asset( 'assets/video/reel-grip.mp4' ), vx_asset( 'assets/video/reel-grip.webp' ), 'Ball in hand: grip and release' ),
+				array( vx_asset( 'assets/video/reel-stumps.mp4' ), vx_asset( 'assets/video/reel-stumps.webp' ), 'Hit the stumps' ),
+				array( vx_landing_uri( 'media/reel-technique.mp4' ), vx_landing_uri( 'media/poster-technique.jpg' ), 'Batting, catching, repeat: a normal Velocrix week' ),
+				array( vx_landing_uri( 'media/reel-pov.mp4' ), vx_landing_uri( 'media/poster-pov.jpg' ), 'POV: you\'re a Velocrix student. Practice mode on.' ),
 			) as $v ) : ?>
 			<figure class="reel-card">
-				<video class="reel-vid" src="<?php echo esc_url( vx_landing_uri( 'media/' . $v[0] ) ); ?>" poster="<?php echo esc_url( vx_landing_uri( 'media/' . $v[1] ) ); ?>" muted loop playsinline preload="none" aria-label="<?php echo esc_attr( $v[2] ); ?>"></video>
+				<video class="reel-vid" src="<?php echo esc_url( $v[0] ); ?>" poster="<?php echo esc_url( $v[1] ); ?>" muted loop playsinline preload="none" aria-label="<?php echo esc_attr( $v[2] ); ?>"></video>
 				<figcaption><?php echo esc_html( $v[2] ); ?></figcaption>
 			</figure>
 			<?php endforeach; ?>

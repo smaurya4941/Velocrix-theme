@@ -1,0 +1,92 @@
+/* =========================================================================
+   Velocrix: media fit (classic pages)
+   Photos show in full instead of being cropped by fixed-height frames.
+   Rule of thumb: a frame takes the photo's own shape (height:auto or the
+   photo's aspect-ratio), and where a caption used to sit on top of the photo
+   on small screens, it moves below the photo instead.
+   `:is(.vx-refresh, body)` gives these rules enough weight to beat both
+   main.css and refresh.css without !important.
+   ========================================================================= */
+
+/* ---------- 1. Home hero: "Admissions Open" card thumbnail (3:2 photo, shown whole) ---------- */
+.hero:not(.hero-page) .event img{width:210px;height:auto;aspect-ratio:640/427}
+@media (max-width:980px){
+  .hero:not(.hero-page) .event{display:grid;grid-template-columns:120px minmax(0,1fr);column-gap:16px;align-items:center}
+  .hero:not(.hero-page) .event>div{display:contents}
+  .hero:not(.hero-page) .event img{grid-row:1 / span 2;width:120px;height:auto}
+  .hero:not(.hero-page) .event small{grid-column:2;align-self:end;margin:0 0 4px}
+  .hero:not(.hero-page) .event .ev-t{grid-column:2;align-self:start;margin:0}
+  .hero:not(.hero-page) .event ul{grid-column:1 / -1;margin:14px 0 0}
+}
+
+/* ---------- 2. Home about strip: wide photo keeps its 1400x646 shape ---------- */
+:is(.vx-refresh, body) .about .about-media{min-height:0;aspect-ratio:1400/646;align-self:center}
+:is(.vx-refresh, body) .about .stat-card{min-height:0}
+@media (max-width:640px){:is(.vx-refresh, body) .about .stat-card{min-height:200px}}
+
+/* ---------- 3. Facilities wide card: on phones the caption sits under the photo ---------- */
+@media (max-width:640px){
+  :is(.vx-refresh, body) .fac.wide{aspect-ratio:auto;display:flex;flex-direction:column}
+  :is(.vx-refresh, body) .fac.wide img{height:auto}
+  :is(.vx-refresh, body) .fac.wide .fac-cap{position:static;background:var(--ink);padding:18px 20px 22px}
+}
+
+/* ---------- 4. Home mentor quote: photo keeps its 4:3 shape ---------- */
+:is(.vx-refresh, body) .quote-split{min-height:0}
+:is(.vx-refresh, body) .qs-img{aspect-ratio:4/3;min-height:0;background-position:center}
+
+/* ---------- 5. Home "Start your journey" photo ---------- */
+/* the glass card would cover half the photo: photo on top (3:2, whole), card underneath */
+:is(.vx-refresh, body) .join-photo{min-height:0;aspect-ratio:auto;align-self:start;background-size:100% auto;background-position:center top;background-repeat:no-repeat;background-color:#0B0B0D;padding:calc(66.8% + 20px) 20px 20px}
+:is(.vx-refresh, body) .join-photo::after{display:none}
+:is(.vx-refresh, body) .join-photo .glass-card.mini{max-width:none;width:100%}
+@media (min-width:981px){:is(.vx-refresh, body) .join-photo{position:sticky;top:120px}}
+@media (max-width:640px){:is(.vx-refresh, body) .join-photo{padding:calc(66.8% + 16px) 16px 16px}}
+
+/* ---------- 6. Blog: featured post and thumbnails use the photo's own shape ---------- */
+:is(.vx-refresh, body) .blog-feat{min-height:0;align-self:start}
+@media (min-width:981px){:is(.vx-refresh, body) .blog-feat{position:sticky;top:120px}}
+:is(.vx-refresh, body) .blog-feat img{position:static;height:auto;display:block}
+@media (max-width:980px){
+  :is(.vx-refresh, body) .blog-feat{min-height:0;display:flex;flex-direction:column}
+  :is(.vx-refresh, body) .blog-feat img{position:static;height:auto}
+  :is(.vx-refresh, body) .bf-cap{position:static;background:var(--ink);padding:24px 22px 26px}
+}
+:is(.vx-refresh, body) .bi-img,
+:is(.vx-refresh, body) .pr-img{aspect-ratio:auto}
+:is(.vx-refresh, body) .bi-img img,
+:is(.vx-refresh, body) .pr-img img{height:auto;display:block}
+
+/* ---------- 7. Home "Want to bowl faster?" portrait photo (1080x1435) ---------- */
+:is(.vx-refresh, body) .hx-bowl .hx-photo{aspect-ratio:1080/1435}
+
+/* ---------- 8. Service pages: photo in full, facts box under it ---------- */
+:is(.vx-refresh, body) .svc-photo{min-height:0;align-self:center}
+:is(.vx-refresh, body) .svc-photo>img{min-height:0;height:auto}
+:is(.vx-refresh, body) .svc-photo:not(.plain){display:flex;flex-direction:column}
+:is(.vx-refresh, body) .svc-facts{position:static;margin:0;border:0;border-radius:0 0 var(--r) var(--r);background:var(--ink2);-webkit-backdrop-filter:none;backdrop-filter:none}
+
+/* ---------- 10. Gallery reels: vertical clips shown whole (9:16), 3 per row, 2 on phones ---------- */
+:is(.vx-refresh, body) .reel-row{grid-template-columns:repeat(3,minmax(0,1fr));max-width:1080px}
+:is(.vx-refresh, body) .reel-card video{aspect-ratio:9/16}
+@media (max-width:640px){
+  :is(.vx-refresh, body) .reel-row{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+  :is(.vx-refresh, body) .reel-card figcaption{padding:28px 12px 12px;font-size:.82rem;line-height:1.35}
+}
+
+/* ---------- 9. About impact photo: shown whole at every width ---------- */
+:is(.vx-refresh, body) .imp-photo{min-height:0;align-self:center}
+:is(.vx-refresh, body) .imp-photo img{position:static;height:auto;display:block}
+
+/* ---------- 11. Join CTA banner (team cheering photo, every classic page) ----------
+   No fixed-background parallax: it showed a random slice of the photo. The photo is
+   anchored so the raised arms stay in view; the scrim is lighter so the jerseys keep their colour. */
+:is(.vx-refresh, body) .cta-img{
+  background:
+    linear-gradient(180deg,rgba(11,11,13,0) 30%,rgba(11,11,13,.72) 100%),
+    linear-gradient(90deg,rgba(11,11,13,.5) 0%,rgba(11,11,13,.12) 55%,transparent 75%),
+    var(--cta) 50% 62%/cover no-repeat}
+@media (max-width:760px){
+  /* phones: photo on top, heading and button on dark below it, so text never sits on faces */
+  :is(.vx-refresh, body) .cta-img{min-height:0;padding:330px 0 48px;background:linear-gradient(180deg,rgba(11,11,13,0) 55%,#0B0B0D 92%) 50% 0/100% 400px no-repeat,var(--cta) 50% 0/auto 400px no-repeat,#0B0B0D}
+}

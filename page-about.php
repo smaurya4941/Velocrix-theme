@@ -76,7 +76,7 @@ get_template_part( 'template-parts/hero-page', null, array(
 <section class="section dark impact" data-hx-gfx="icons">
 	<div class="container imp-grid">
 		<div class="imp-photo">
-			<img src="<?php echo esc_url( $img . 'prog-1.jpg' ); ?>" alt="Young cricketers training together" loading="lazy" width="800" height="800">
+			<img src="<?php echo esc_url( $img . 'launch/school-cheer.webp' ); ?>" alt="School students cheering at the Velocrix launch" loading="lazy" width="1400" height="935">
 			<?php if ( $v = vx( 'vx_video' ) ) : ?><a class="play" href="<?php echo esc_url( $v ); ?>" target="_blank" rel="noopener" aria-label="Watch video"><?php echo vx_icon( 'play' ); // phpcs:ignore ?></a><?php endif; ?>
 		</div>
 		<div class="imp-body">

@@ -179,9 +179,7 @@ html.mo-lock{overflow:hidden}
 .msg-lines>p.mo-rise.in{border-left-color:var(--lime)}
 
 /* ---------- 7. Services ---------- */
-/* 7a. parallax photos (scale gives room for the drift) */
-.mo-par{scale:1.1;will-change:translate}
-.prog-img:hover img.mo-par{transform:scale(1.04)}
+/* 7a. photo parallax removed 2026-11-24 (it cropped photos); see media-fit.css */
 
 /* 7b. spotlight on cards */
 .mo-spot{position:relative;isolation:isolate}

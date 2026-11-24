@@ -52,7 +52,7 @@ function vx_service_data( $slug ) {
 			'overview'=> array( 'Learn by Doing, Improve by Practising', array(
 				'Our workshops are short, focused sessions where players work on specific parts of their game with proper guidance. Instead of general practice, each session has a clear goal.',
 				'Players leave with simple drills they can keep using, and a better understanding of how to improve.',
-			), 'prog-2.jpg' ),
+			), 'launch/workshop-coach.webp' ),
 			// Holiday camps (from the animated home page). Rendered by template-parts/service-detail.php when present.
 			'camps'   => array( 'Holiday Camps', 'School\'s Out, Nets Are Open', 'Short, intensive camps in every school holiday, open to children who don\'t train with us yet.', array(
 				array( 'Next up: December–January', 'Winter camp', 'Technique work and fitness through the winter holidays, for students and newcomers. Limited seats.', true ),
@@ -93,7 +93,7 @@ function vx_service_data( $slug ) {
 			'overview'=> array( 'Stories and Lessons from the Game', array(
 				'Guest lectures bring cricket experience into the room. Speakers share their journey, the habits that helped them and what it takes to keep going when things get tough.',
 				'Each session leaves time for questions, so players, students and parents can ask what they really want to know.',
-			), 'fac-run.jpg' ),
+			), 'launch/guest-talk.webp' ),
 			'facts'   => array( 'Format' => 'Talk and Q&A session', 'Audience' => 'Students, players and parents', 'Venue' => 'To be confirmed', 'Schedule & booking' => 'Shared on enquiry' ),
 			'why'     => array( 'What You Get', 'Inspiration with a Purpose', array(
 				array( 'Real Cricket Stories', 'First-hand experiences from the world of cricket.' ),

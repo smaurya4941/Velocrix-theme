@@ -6,7 +6,7 @@ if ( function_exists( 'vx_is_landing' ) && vx_is_landing() ) {
 }
 get_header();
 $img  = VX_URI . '/assets/img/';
-$hero = vx( 'vx_hero_img' ) ?: $img . 'training-2.jpg';
+$hero = vx( 'vx_hero_img' ) ?: $img . 'hero-home.webp';
 $mentor_name = vx( 'vx_mentor_name', 'Ms. Meghna Singh' );
 $mentor_role = vx( 'vx_mentor_role', 'International Cricketer' );
 $mentor_img  = vx( 'vx_mentor_img' );
@@ -27,7 +27,7 @@ $title_lines = array_filter( array_map( 'trim', explode( "\n", vx( 'vx_hero_titl
 		</div>
 		<div class="hero-row">
 			<div class="glass-card event">
-				<img src="<?php echo esc_url( $img . 'prog-1.jpg' ); ?>" alt="Young cricketers training with their coach" width="312" height="250" fetchpriority="high">
+				<img src="<?php echo esc_url( $img . 'launch/team-cheer-sm.webp' ); ?>" alt="Velocrix students cheering in their academy jerseys" width="640" height="427" fetchpriority="high">
 				<div>
 					<small class="lime">Admissions Open</small>
 					<p class="ev-t">Velocrix Cricket Academy</p>
@@ -133,19 +133,19 @@ $title_lines = array_filter( array_map( 'trim', explode( "\n", vx( 'vx_hero_titl
 		</div>
 		<div class="fac-top">
 			<a class="fac wide" href="<?php echo esc_url( home_url( '/gallery/' ) ); ?>">
-				<img src="<?php echo esc_url( $img . 'fac-run.jpg' ); ?>" alt="Players running drills on the turf practice ground" loading="lazy" width="1400" height="620">
+				<img src="<?php echo esc_url( vx_asset( 'assets/img/training/fac-ground.webp' ) ); ?>" alt="Velocrix players sprinting through a cone drill on the turf ground" loading="lazy" width="1600" height="711">
 				<span class="round-btn is-lime"><?php echo vx_icon( 'arrow' ); // phpcs:ignore ?></span>
 				<div class="fac-cap"><h3>Turf Practice Ground</h3><p>Open turf ground for fielding, fitness and drills.</p></div>
 			</a>
 			<a class="fac tall" href="<?php echo esc_url( home_url( '/gallery/' ) ); ?>">
-				<img src="<?php echo esc_url( $img . 'fac-nets.jpg' ); ?>" alt="Batter training in the net practice cage" loading="lazy" width="800" height="800">
+				<img src="<?php echo esc_url( vx_asset( 'assets/img/training/fac-nets.webp' ) ); ?>" alt="Bowling machine throwdowns to a batter in the net practice cage" loading="lazy" width="1000" height="924">
 				<span class="round-btn light"><?php echo vx_icon( 'arrow' ); // phpcs:ignore ?></span>
 			</a>
 		</div>
 		<div class="fac-row">
-			<?php foreach ( array( array( 'fac-3.jpg', 'Warm-up & Fitness Zone' ), array( 'fac-4.jpg', 'Drills & Conditioning' ), array( 'fac-5.jpg', 'Nets & Goal Area' ) ) as $f ) : ?>
+			<?php foreach ( array( array( 'fac-warmup', 'Warm-up & Fitness Zone' ), array( 'fac-drills', 'Drills & Conditioning' ), array( 'fac-goal', 'Nets & Goal Area' ) ) as $f ) : ?>
 			<a class="fac" href="<?php echo esc_url( home_url( '/gallery/' ) ); ?>">
-				<img src="<?php echo esc_url( $img . $f[0] ); ?>" alt="<?php echo esc_attr( $f[1] ); ?>" loading="lazy" width="800" height="800">
+				<img src="<?php echo esc_url( vx_asset( 'assets/img/training/' . $f[0] . '.webp' ) ); ?>" alt="<?php echo esc_attr( $f[1] ); ?>" loading="lazy" width="1000" height="926">
 				<span class="round-btn light"><?php echo vx_icon( 'arrow' ); // phpcs:ignore ?></span>
 				<div class="fac-cap"><h3><?php echo esc_html( $f[1] ); ?></h3></div>
 			</a>
@@ -169,7 +169,7 @@ $title_lines = array_filter( array_map( 'trim', explode( "\n", vx( 'vx_hero_titl
 			<h2>Start Your Journey<br><em>with Velocrix</em></h2>
 		</div>
 		<div class="join-grid">
-			<div class="join-photo" style="background-image:url('<?php echo esc_url( $img . 'coach-lg.jpg' ); ?>')">
+			<div class="join-photo" style="background-image:url('<?php echo esc_url( $img . 'launch/jersey-handover.webp' ); ?>')">
 				<div class="glass-card mini">
 					<b>Velocrix Cricket Academy</b> <small>&ndash; Under <?php echo esc_html( $mentor_name ); ?></small>
 					<p>Champions are not born, they are trained!</p>

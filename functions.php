@@ -56,6 +56,13 @@ function vx_assets() {
 		wp_enqueue_script( 'vx-home-extras', VX_URI . '/assets/js/home-extras.js', array(), VX_VER . '.' . filemtime( get_template_directory() . '/assets/js/home-extras.js' ), array( 'in_footer' => true, 'strategy' => 'defer' ) );
 		wp_enqueue_style( 'vx-refresh', VX_URI . '/assets/css/refresh.css', array( 'vx-main', 'vx-motion', 'vx-home-extras' ), VX_VER . '.' . filemtime( get_template_directory() . '/assets/css/refresh.css' ) );
 	}
+	// Photos in full (no fixed-height crops) on every classic page; loads last so it wins over main/refresh.
+	if ( ! $is_animated ) {
+		$deps = array( 'vx-main', 'vx-motion' );
+		if ( wp_style_is( 'vx-refresh', 'enqueued' ) ) $deps[] = 'vx-refresh';
+		if ( wp_style_is( 'vx-founder', 'enqueued' ) ) $deps[] = 'vx-founder';
+		wp_enqueue_style( 'vx-media-fit', VX_URI . '/assets/css/media-fit.css', $deps, VX_VER . '.' . filemtime( get_template_directory() . '/assets/css/media-fit.css' ) );
+	}
 }
 add_action( 'wp_enqueue_scripts', 'vx_assets' );
 
@@ -185,8 +192,8 @@ function vx_default_menu() {
 function vx_services() {
 	return array(
 		array( 'Corporate Tournament', 'Competitive cricket for corporate teams, built around fitness, fun and fair play.', 'fac-nets.jpg', '/corporate-tournament/' ),
-		array( 'Workshops', 'Hands-on sessions focused on skills, fitness and the fundamentals of the game.', 'prog-3.jpg', '/workshops/' ),
-		array( 'Guest Lectures', 'Talks from cricket experts to inspire and guide the next generation of players.', 'prog-2.jpg', '/guest-lectures/' ),
+		array( 'Workshops', 'Hands-on sessions focused on skills, fitness and the fundamentals of the game.', 'launch/workshop-coach-sq.webp', '/workshops/' ),
+		array( 'Guest Lectures', 'Talks from cricket experts to inspire and guide the next generation of players.', 'launch/guest-talk-sq.webp', '/guest-lectures/' ),
 	);
 }
 

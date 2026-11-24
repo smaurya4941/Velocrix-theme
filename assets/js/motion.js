@@ -416,22 +416,7 @@
   })();
 
   /* ---------- 7. Services (and other) pages ---------- */
-  // 7a. photos drift a little slower than the page (parallax inside their rounded frame)
-  (function () {
-    var imgs = Array.prototype.slice.call(d.querySelectorAll('.svc-photo > img, .prog-img img, .vm-card.photo > img, .imp-photo > img, .founder-tease .profile-photo:not(.is-poster) > img')); // poster photos keep their edges (text is printed on them)
-    if (!imgs.length || reduce) return;
-    imgs.forEach(function (im) { im.classList.add('mo-par'); });
-    function update() {
-      var vh = innerHeight;
-      imgs.forEach(function (im) {
-        var r = im.parentNode.getBoundingClientRect();
-        if (r.bottom < 0 || r.top > vh) return;
-        var p = (r.top + r.height / 2 - vh / 2) / (vh / 2 + r.height / 2); // -1 .. 1
-        im.style.translate = '0 ' + (p * -28).toFixed(1) + 'px';
-      });
-    }
-    update(); onScrollJob(update);
-  })();
+  // 7a. (removed 2026-11-24) photo parallax: it zoomed photos to 110%, which cropped their edges. Photos now show in full (media-fit.css).
 
   // 7b. soft spotlight that follows the mouse on content cards
   (function () {

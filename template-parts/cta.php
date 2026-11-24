@@ -9,7 +9,7 @@ $a = wp_parse_args( $args, array(
 	'url'    => home_url( '/registration/' ),
 ) );
 ?>
-<section class="cta-img" style="<?php echo esc_attr( vx_bg_vars( 'cta', VX_URI . '/assets/img/cta-bg.jpg' ) ); ?>">
+<section class="cta-img" style="<?php echo esc_attr( vx_bg_vars( 'cta', VX_URI . '/assets/img/cta-team.jpg' ) ); ?>">
 	<div class="container cta-inner">
 		<h2><?php echo wp_kses( $a['title'], array( 'br' => array(), 'i' => array() ) ); ?></h2>
 		<a class="btn" href="<?php echo esc_url( $a['url'] ); ?>"><?php echo esc_html( $a['button'] ); ?></a>
