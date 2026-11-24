@@ -72,11 +72,12 @@
 #vxFoot .foot-list a{transition:color .2s}
 #vxFoot .foot-brand .brand{display:inline-flex;flex-direction:row;align-items:center;gap:12px;color:#fff}
 #vxFoot .foot-tag{margin:20px 0 24px;color:#c7c9cf;font-size:1.05rem;max-width:280px}
-#vxFoot .foot-brand .social{gap:12px}
-#vxFoot .foot-brand .social a{width:48px;height:48px}
+#vxFoot .foot-brand .social{gap:10px}
+#vxFoot .foot-brand .social a{width:44px;height:44px}
 #vxFoot .foot-contact .fi{display:grid;grid-template-columns:22px 1fr;gap:12px;align-items:start;padding:7px 0}
 #vxFoot .foot-contact .fi svg{color:var(--lime);margin-top:3px}
 #vxFoot .foot-contact .fi a:hover{color:var(--lime)}
+#vxFoot .foot-contact .fi a[href^="mailto:"]{font-size:.88rem;white-space:nowrap}
 #vxFoot.site-footer .copy{display:flex;justify-content:space-between;gap:12px 30px;flex-wrap:wrap;padding-top:22px;padding-bottom:30px;border-top:0;position:relative;color:#9fa2aa;font-size:.95rem}
 @media (max-width:1100px){
 #vxFoot .foot-grid{grid-template-columns:repeat(3,1fr)}
@@ -96,9 +97,9 @@
 #vxFoot .news-form .round-btn{width:56px;height:56px}
 }
 #vxFoot.site-footer .copy::before{content:"";position:absolute;top:0;left:var(--gut);right:var(--gut);height:1px;background:rgba(255,255,255,.12)}
-#vxFoot .foot-brand .social{display:flex;gap:12px;flex-wrap:wrap}
-#vxFoot .foot-brand .social a,#vxFoot .foot-brand .social .soc-pending{width:50px;height:50px;border-radius:50%;background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.12);display:grid;place-items:center;color:#fff;transition:background .25s,color .25s,transform .25s,border-color .25s}
-#vxFoot .foot-brand .social svg{width:20px;height:20px}
+#vxFoot .foot-brand .social{display:flex;gap:10px;flex-wrap:wrap}
+#vxFoot .foot-brand .social a,#vxFoot .foot-brand .social .soc-pending{width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.12);display:grid;place-items:center;color:#fff;transition:background .25s,color .25s,transform .25s,border-color .25s}
+#vxFoot .foot-brand .social svg{width:18px;height:18px}
 #vxFoot .foot-brand .social a:hover,#vxFoot .foot-brand .social a:focus-visible{background:var(--lime);border-color:var(--lime);color:#000;transform:translateY(-4px)}
 #vxFoot .foot-brand .social .soc-pending{cursor:default}
 #vxFoot .foot-brand .social .soc-pending:hover{background:rgba(255,255,255,.14)}

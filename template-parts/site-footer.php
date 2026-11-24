@@ -38,6 +38,10 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 			}
 		}
 		$quick['Join Now'] = home_url( '/registration/' );
+		// Footer keeps the Training Lab list short: drop the two deepest tools, still reachable from the hub page.
+		if ( isset( $groups['Training Lab'] ) ) {
+			foreach ( array( 'Session Plan', 'Level Check' ) as $hide ) unset( $groups['Training Lab'][ $hide ] );
+		}
 		$phone1 = vx( 'vx_phone', '+91 879 644 7595' );
 		$phone2 = vx( 'vx_phone2', '+91 7017810766' );
 		?>
